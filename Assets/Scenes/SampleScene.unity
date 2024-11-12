@@ -1921,8 +1921,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: 0}
-  m_SizeDelta: {x: 1896.76, y: 948.38}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1518.42, y: 945.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994005109
 MonoBehaviour:
@@ -1944,7 +1944,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6732716252116180442, guid: a75cca5e44ecdec4ebc48af54cee03f0, type: 3}
+  m_Sprite: {fileID: 3625672310134169064, guid: dc792d73738fbed4d9309777eb4f5927, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2175,7 +2175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1047747198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2490,7 +2490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1379332507
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3824,6 +3824,7 @@ GameObject:
   - component: {fileID: 5037018187502328154}
   - component: {fileID: 5037018187502328156}
   - component: {fileID: 5037018187502328155}
+  - component: {fileID: 5037018187502328157}
   m_Layer: 0
   m_Name: Pierna
   m_TagString: Untagged
@@ -3860,6 +3861,7 @@ GameObject:
   - component: {fileID: 166938178027721747}
   - component: {fileID: 2412491625614816266}
   - component: {fileID: 2412491625614816265}
+  - component: {fileID: 2412491625614816267}
   m_Layer: 0
   m_Name: Cuerpo
   m_TagString: Untagged
@@ -3905,6 +3907,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2412491625614816264}
   m_CullTransparentMesh: 1
+--- !u!114 &2412491625614816267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412491625614816264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2527153694436369480
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,6 +3933,7 @@ GameObject:
   - component: {fileID: 4332050973555077082}
   - component: {fileID: 4332050973555077084}
   - component: {fileID: 4332050973555077083}
+  - component: {fileID: 4332050973555077085}
   m_Layer: 0
   m_Name: Brazo
   m_TagString: Untagged
@@ -4257,6 +4275,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2527153694436369480}
   m_CullTransparentMesh: 1
+--- !u!114 &4332050973555077085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527153694436369480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!224 &4610459449189823916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4287,6 +4320,7 @@ GameObject:
   - component: {fileID: 463229580571283232}
   - component: {fileID: 4991180762178242729}
   - component: {fileID: 4991180762178242728}
+  - component: {fileID: 4991180762178242730}
   m_Layer: 0
   m_Name: Ceja
   m_TagString: Untagged
@@ -4332,6 +4366,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4991180762178242727}
   m_CullTransparentMesh: 1
+--- !u!114 &4991180762178242730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4991180762178242727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!224 &5004515680838012050
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4408,6 +4457,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2314274799169482085}
   m_CullTransparentMesh: 1
+--- !u!114 &5037018187502328157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2314274799169482085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5396577802412956665
 GameObject:
   m_ObjectHideFlags: 0
@@ -4489,6 +4553,7 @@ GameObject:
   - component: {fileID: 5004515680838012050}
   - component: {fileID: 5677641422960601568}
   - component: {fileID: 5677641422960601567}
+  - component: {fileID: 5677641422960601569}
   m_Layer: 0
   m_Name: Pierna
   m_TagString: Untagged
@@ -4534,6 +4599,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5677641422960601566}
   m_CullTransparentMesh: 1
+--- !u!114 &5677641422960601569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677641422960601566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &6251729016134305596
 GameObject:
   m_ObjectHideFlags: 0
@@ -4545,6 +4625,7 @@ GameObject:
   - component: {fileID: 4610459449189823916}
   - component: {fileID: 6251729016134305598}
   - component: {fileID: 6251729016134305597}
+  - component: {fileID: 6251729016134305599}
   m_Layer: 0
   m_Name: Brazo
   m_TagString: Untagged
@@ -4590,6 +4671,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6251729016134305596}
   m_CullTransparentMesh: 1
+--- !u!114 &6251729016134305599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6251729016134305596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!224 &6618508429790021378
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4620,6 +4716,7 @@ GameObject:
   - component: {fileID: 6618508429790021378}
   - component: {fileID: 7964942991367988146}
   - component: {fileID: 7964942991367988145}
+  - component: {fileID: 7964942991367988147}
   m_Layer: 0
   m_Name: Ceja
   m_TagString: Untagged
@@ -4665,6 +4762,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7964942991367988144}
   m_CullTransparentMesh: 1
+--- !u!114 &7964942991367988147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964942991367988144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -0.97, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
