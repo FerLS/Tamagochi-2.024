@@ -141,8 +141,8 @@ ScriptedImporter:
     spritePosition: {x: 911, y: 570}
   - name: "<Rectangle> - Capa de p\xEDxeles"
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.19786297, y: 0.47326812}
+    alignment: 9
     border: {x: 170, y: 146, z: 191, w: 127}
     customData: 
     rect:
@@ -185,8 +185,8 @@ ScriptedImporter:
     spritePosition: {x: 618, y: 940}
   - name: "<Rectangle> - Capa de p\xEDxeles"
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.1850954, y: 0.48670533}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:

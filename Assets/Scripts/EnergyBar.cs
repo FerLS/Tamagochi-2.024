@@ -8,8 +8,6 @@ public class EnergyBar : MonoBehaviour
     [SerializeField] private RectTransform fill;
 
 
-
-
     public void SetEnergy(float energy)
     {
         this.energy = energy;
