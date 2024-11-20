@@ -36,6 +36,16 @@ public class TamagochiUI : MonoBehaviour
         }
 
     }
+
+    public void ChangeBodyColor(Color newColor)
+    {
+        bodyColor = newColor;
+        foreach (var bodyPart in Body)
+        {
+            bodyPart.color = bodyColor;
+        }
+    }
+
     private void OnValidate()
     {
 
