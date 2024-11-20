@@ -95,6 +95,28 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
+  - name: Elipse 1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 2807
+      y: 4
+      width: 655
+      height: 353
+    spriteID: 022cb3b49b68bbd41a24afe8c47e018c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2804, y: -62}
+    spritePosition: {x: 1762, y: 2196}
   - name: "<Rect\xE1ngulo>"
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -320,6 +342,16 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
+  - name: Elipse 1
+    spriteName: Elipse 1
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 022cb3b49b68bbd41a24afe8c47e018c
+    layerID: 124
+    mosaicPosition: {x: 2807, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Layer 1
     spriteName: 
     isGroup: 1
@@ -333,7 +365,7 @@ ScriptedImporter:
   - name: "<Rect\xE1ngulo>"
     spriteName: "<Rect\xE1ngulo>"
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: 9d62c20d5f5d7a142bec080d484f70e2
     layerID: 114
     mosaicPosition: {x: 2336, y: 2006}
@@ -343,7 +375,7 @@ ScriptedImporter:
   - name: "<Ellipse> - Capa de p\xEDxeles"
     spriteName: "<Ellipse> - Capa de p\xEDxeles"
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: ce2ba62db98d28e49857d339f298187b
     layerID: 117
     mosaicPosition: {x: 3299, y: 1621}
@@ -353,7 +385,7 @@ ScriptedImporter:
   - name: "<Rectangle> - Capa de p\xEDxeles"
     spriteName: "<Rectangle> - Capa de p\xEDxeles"
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: ac299fdffd8c6fe42b22d7ba7df4068d
     layerID: 118
     mosaicPosition: {x: 1870, y: 4}
@@ -363,7 +395,7 @@ ScriptedImporter:
   - name: <Clip Group>
     spriteName: <Clip Group>
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: f8b73e92a80374641a17dbb3d6205af4
     layerID: 119
     mosaicPosition: {x: 4, y: 4}
@@ -373,7 +405,7 @@ ScriptedImporter:
   - name: "<Rectangle> - Capa de p\xEDxeles"
     spriteName: "<Rectangle> - Capa de p\xEDxeles"
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: 43a7509884838604989b19981af8e9d1
     layerID: 120
     mosaicPosition: {x: 2336, y: 1621}
@@ -383,7 +415,7 @@ ScriptedImporter:
   - name: "<Ellipse> - Capa de p\xEDxeles"
     spriteName: "<Ellipse> - Capa de p\xEDxeles"
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: 95dad1d490fadc245a577a7e4623ded0
     layerID: 121
     mosaicPosition: {x: 1870, y: 387}
@@ -393,7 +425,7 @@ ScriptedImporter:
   - name: <Elipse>
     spriteName: <Elipse>
     isGroup: 0
-    parentIndex: 1
+    parentIndex: 2
     spriteID: 3776b31caee85314ab39e2b64bbaf6f8
     layerID: 122
     mosaicPosition: {x: 4, y: 1621}
