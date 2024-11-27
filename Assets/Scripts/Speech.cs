@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Microsoft.CognitiveServices.Speech;
+using System.Threading.Tasks;
+using System.Threading;
 using TMPro;
+using System.Net.Http;
+using System.Text;
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
@@ -23,6 +27,19 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
+    // Variable to store the recognized speech
+    private string recognizedSpeech;
+
+    private const string speechAIKey = "2524cd9f46284cceb673f445eba74e0c";
+    private const string speechAIRegion = "francecentral";
+
+    private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
+    private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
+    private const string openAIModel = "gpt-4";
+    
+
+    private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
 #if PLATFORM_ANDROID || PLATFORM_IOS
     // Required to manifest microphone permission, cf.
     // https://docs.unity3d.com/Manual/android-manifest.html
@@ -31,46 +48,100 @@ public class Speech : MonoBehaviour
 
     public async void ButtonClick()
     {
-        // Creates an instance of a speech config with specified subscription key and service region.
-        // Replace with your own subscription key and service region (e.g., "westus").
-        var config = SpeechConfig.FromSubscription("2524cd9f46284cceb673f445eba74e0c", "francecentral");
+        var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
-        // Make sure to dispose the recognizer after use!
         using (var recognizer = new SpeechRecognizer(config))
         {
-            lock (threadLocker)
-            {
-                waitingForReco = true;
-            }
+            // Indicate that recognition is in progress
+            waitingForReco = true;
 
-            // Starts speech recognition, and returns after a single utterance is recognized. The end of a
-            // single utterance is determined by listening for silence at the end or until a maximum of 15
-            // seconds of audio is processed.  The task returns the recognition text as result.
-            // Note: Since RecognizeOnceAsync() returns only a single utterance, it is suitable only for single
-            // shot recognition like command or query.
-            // For long-running multi-utterance recognition, use StartContinuousRecognitionAsync() instead.
-            var result = await recognizer.RecognizeOnceAsync().ConfigureAwait(false);
+            // Wait for the semaphore to ensure thread safety
+            await semaphore.WaitAsync();
+            try
+            {
+                var result = await recognizer.RecognizeOnceAsync();
 
-            // Checks result.
-            string newMessage = string.Empty;
-            if (result.Reason == ResultReason.RecognizedSpeech)
-            {
-                newMessage = result.Text;
-            }
-            else if (result.Reason == ResultReason.NoMatch)
-            {
-                newMessage = "NOMATCH: Speech could not be recognized.";
-            }
-            else if (result.Reason == ResultReason.Canceled)
-            {
-                var cancellation = CancellationDetails.FromResult(result);
-                newMessage = $"CANCELED: Reason={cancellation.Reason} ErrorDetails={cancellation.ErrorDetails}";
-            }
+                // Process the result
+                if (result.Reason == ResultReason.RecognizedSpeech)
+                {
+                    recognizedSpeech = result.Text;
 
-            lock (threadLocker)
+                    // Call OpenAI for a reply
+                    string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
+                    message = tamagotchiReply;
+                    // Synthesize the reply
+                    await SpeakAsync(tamagotchiReply);
+                }
+                else if (result.Reason == ResultReason.NoMatch)
+                {
+                    recognizedSpeech = string.Empty;
+                    message = "Not Recognized Speech.";
+                }
+                else if (result.Reason == ResultReason.Canceled)
+                {
+                    var cancellation = CancellationDetails.FromResult(result);
+                    message = $"CANCELED: Reason={cancellation.Reason}, ErrorDetails={cancellation.ErrorDetails}";
+                }
+            }
+            finally
             {
-                message = newMessage;
+                // Always release the semaphore
+                semaphore.Release();
                 waitingForReco = false;
+            }
+        }
+    }
+
+    private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
+
+            string requestBody = $@"
+            {{
+                ""messages"": [
+                    {{ ""role"": ""system"", ""content"": ""You are a friendly Tamagotchi with human feelings that always wants to help the user feel better.""}},
+                    {{ ""role"": ""user"", ""content"": ""{userSpeech}""}}
+                ],
+                ""max_tokens"": 100
+            }}";
+
+            var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+
+            string apiUrl = azureOpenAIEndpoint;
+            var response = await client.PostAsync(apiUrl, content);
+
+            if (response.IsSuccessStatusCode)
+            {          
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
+
+                return reply.choices[0].message.content.Trim();
+            }
+            else
+            {
+                Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+                return "I'm sorry, I couldn't process that.";
+            }
+        }
+    }
+
+    public async Task SpeakAsync(string textToSpeak)
+    {
+        var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+
+        using (var synthesizer = new SpeechSynthesizer(config))
+        {
+            var result = await synthesizer.SpeakTextAsync(textToSpeak).ConfigureAwait(false);
+
+            if (result.Reason == ResultReason.SynthesizingAudioCompleted)
+            {
+                Debug.Log("Speech synthesized: " + textToSpeak);
+            }
+            else
+            {
+                Debug.LogError("Speech synthesis failed.");
             }
         }
     }
@@ -135,6 +206,30 @@ public class Speech : MonoBehaviour
             if (outputText != null)
             {
                 outputText.text = message;
+            }
+        }
+    }
+
+    public string GetRecognizedSpeech()
+    {
+        return recognizedSpeech;
+    }
+
+    [System.Serializable]
+    public class OpenAIResponse
+    {
+        public Choice[] choices;
+
+        [System.Serializable]
+        public class Choice
+        {
+            public Message message;
+
+            [System.Serializable]
+            public class Message
+            {
+                public string role;
+                public string content;
             }
         }
     }
