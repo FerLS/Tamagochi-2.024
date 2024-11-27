@@ -68,7 +68,7 @@ public class Speech : MonoBehaviour
 
                     // Call OpenAI for a reply
                     string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
-                    message = "Tamagotchi: " + tamagotchiReply;
+                    message = tamagotchiReply;
                     // Synthesize the reply
                     await SpeakAsync(tamagotchiReply);
                 }
