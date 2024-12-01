@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Microsoft.CognitiveServices.Speech;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections;
 using TMPro;
 using System.Net.Http;
 using System.Text;
@@ -52,30 +53,26 @@ public class Speech : MonoBehaviour
 
         using (var recognizer = new SpeechRecognizer(config))
         {
-            // Indicate that recognition is in progress
             waitingForReco = true;
 
-            // Wait for the semaphore to ensure thread safety
             await semaphore.WaitAsync();
             try
             {
                 var result = await recognizer.RecognizeOnceAsync();
 
-                // Process the result
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeech = result.Text;
 
-                    // Call OpenAI for a reply
                     string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
                     message = tamagotchiReply;
-                    // Synthesize the reply
                     await SpeakAsync(tamagotchiReply);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
                     recognizedSpeech = string.Empty;
-                    message = "Not Recognized Speech.";
+                    message = "Sorry, can you repeat it?";
+                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.Canceled)
                 {
@@ -85,7 +82,6 @@ public class Speech : MonoBehaviour
             }
             finally
             {
-                // Always release the semaphore
                 semaphore.Release();
                 waitingForReco = false;
             }
@@ -110,7 +106,7 @@ public class Speech : MonoBehaviour
                     {{ ""role"": ""system"", ""content"": ""{prompt}""}},
                     {{ ""role"": ""user"", ""content"": ""{userSpeech}""}}
                 ],
-                ""max_tokens"": 100
+                ""max_tokens"": 50
             }}";
 
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
@@ -165,27 +161,47 @@ public class Speech : MonoBehaviour
         }
         else
         {
-            // Continue with normal initialization, Text and Button objects are present.
 #if PLATFORM_ANDROID
-            // Request to use the microphone, cf.
-            // https://docs.unity3d.com/Manual/android-RequestingPermissions.html
-            message = "Waiting for mic permission";
-            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
-            {
-                Permission.RequestUserPermission(Permission.Microphone);
-            }
+        message = "Waiting for mic permission";
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Permission.RequestUserPermission(Permission.Microphone);
+        }
 #elif PLATFORM_IOS
-            if (!Application.HasUserAuthorization(UserAuthorization.Microphone))
-            {
-                Application.RequestUserAuthorization(UserAuthorization.Microphone);
-            }
+        if (!Application.HasUserAuthorization(UserAuthorization.Microphone))
+        {
+            Application.RequestUserAuthorization(UserAuthorization.Microphone);
+        }
 #else
             micPermissionGranted = true;
             message = "Click button to recognize speech";
 #endif
             startRecoButton.onClick.AddListener(ButtonClick);
+
+            StartCoroutine(SpeakGreeting());
         }
     }
+
+    private IEnumerator SpeakGreeting()
+    {
+        yield return new WaitForSeconds(1f);
+
+        string greeting = "Hi! Let's spend some time together. How are you feeling today?";
+        message = greeting;
+
+        var speakTask = SpeakAsync(greeting);
+
+        while (!speakTask.IsCompleted)
+        {
+            yield return null; 
+        }
+
+        if (speakTask.Exception != null)
+        {
+            Debug.LogError("Error during speech synthesis: " + speakTask.Exception.Message);
+        }
+    }
+
 
     void Update()
     {
