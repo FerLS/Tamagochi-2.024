@@ -98,10 +98,16 @@ public class Speech : MonoBehaviour
         {
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
+            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.You have a great knowledge about the emotions, body and feelings.";
+            string feeling = "Right now you are feeling happy.";
+            string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise";
+
+            string prompt = intro + feeling + restrictions;
+
             string requestBody = $@"
             {{
                 ""messages"": [
-                    {{ ""role"": ""system"", ""content"": ""You are a friendly Tamagotchi with human feelings that always wants to help the user feel better.""}},
+                    {{ ""role"": ""system"", ""content"": ""{prompt}""}},
                     {{ ""role"": ""user"", ""content"": ""{userSpeech}""}}
                 ],
                 ""max_tokens"": 100
