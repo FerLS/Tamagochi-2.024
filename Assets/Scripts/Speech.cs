@@ -96,7 +96,7 @@ public class Speech : MonoBehaviour
 
             string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.You have a great knowledge about the emotions, body and feelings.";
             string feeling = "Right now you are feeling happy.";
-            string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise";
+            string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
 
             string prompt = intro + feeling + restrictions;
 
@@ -174,7 +174,6 @@ public class Speech : MonoBehaviour
         }
 #else
             micPermissionGranted = true;
-            message = "Click button to recognize speech";
 #endif
             startRecoButton.onClick.AddListener(ButtonClick);
 
@@ -186,7 +185,7 @@ public class Speech : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        string greeting = "Hi! Let's spend some time together. How are you feeling today?";
+        string greeting = "Hi! Let's spend some time together.\nHow are you feeling today?";
         message = greeting;
 
         var speakTask = SpeakAsync(greeting);
@@ -256,4 +255,3 @@ public class Speech : MonoBehaviour
         }
     }
 }
-// </code
