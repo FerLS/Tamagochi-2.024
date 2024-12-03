@@ -50,7 +50,6 @@ public class Speech : MonoBehaviour
     public async void ButtonClick()
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
-        config.SpeechSynthesisVoiceName = "en-US-AndrewNeural";
 
         using (var recognizer = new SpeechRecognizer(config))
         {
@@ -95,11 +94,12 @@ public class Speech : MonoBehaviour
         {
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
-            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.You have a great knowledge about the emotions, body and feelings.";
-            string feeling = "Right now you are feeling happy.";
+            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
+            string feeling = "Right now you are feeling happy. ";
+            string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
 
-            string prompt = intro + feeling + restrictions;
+            string prompt = intro + feeling + treatment + restrictions;
 
             string requestBody = $@"
             {{
@@ -133,7 +133,6 @@ public class Speech : MonoBehaviour
     public async Task SpeakAsync(string textToSpeak)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
-        config.SpeechSynthesisVoiceName = "en-US-BlueNeural";
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
