@@ -37,7 +37,7 @@ public class Speech : MonoBehaviour
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
     private const string openAIModel = "gpt-4";
-    
+
 
     private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
@@ -96,7 +96,7 @@ public class Speech : MonoBehaviour
 
             string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.You have a great knowledge about the emotions, body and feelings.";
             string feeling = "Right now you are feeling happy.";
-            string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
+            string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted. Dont use the letter a";
 
             string prompt = intro + feeling + restrictions;
 
@@ -115,7 +115,7 @@ public class Speech : MonoBehaviour
             var response = await client.PostAsync(apiUrl, content);
 
             if (response.IsSuccessStatusCode)
-            {          
+            {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
@@ -192,7 +192,7 @@ public class Speech : MonoBehaviour
 
         while (!speakTask.IsCompleted)
         {
-            yield return null; 
+            yield return null;
         }
 
         if (speakTask.Exception != null)
