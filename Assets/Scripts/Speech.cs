@@ -37,7 +37,7 @@ public class Speech : MonoBehaviour
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
     private const string openAIModel = "gpt-4";
-    
+
 
     private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
@@ -116,7 +116,7 @@ public class Speech : MonoBehaviour
             var response = await client.PostAsync(apiUrl, content);
 
             if (response.IsSuccessStatusCode)
-            {          
+            {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
@@ -202,7 +202,7 @@ public class Speech : MonoBehaviour
 
         while (!speakTask.IsCompleted)
         {
-            yield return null; 
+            yield return null;
         }
 
         if (speakTask.Exception != null)

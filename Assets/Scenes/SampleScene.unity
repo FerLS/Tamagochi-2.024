@@ -15874,7 +15874,6 @@ GameObject:
   - component: {fileID: 1243336941}
   - component: {fileID: 1243336943}
   - component: {fileID: 1243336942}
-  - component: {fileID: 1243336944}
   m_Layer: 5
   m_Name: Bubble
   m_TagString: Untagged
@@ -15940,20 +15939,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243336940}
   m_CullTransparentMesh: 1
---- !u!114 &1243336944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243336940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 963eb39d8320c16478575978b621ba73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outputText: {fileID: 85766946}
-  startRecoButton: {fileID: 62372515}
 --- !u!1 &1300448108
 GameObject:
   m_ObjectHideFlags: 0
@@ -25098,7 +25083,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2804519167984227498}
   - component: {fileID: 3901171192785145034}
+  - component: {fileID: 3901171192785145037}
   - component: {fileID: 3901171192785145035}
+  - component: {fileID: 3901171192785145036}
   m_Layer: 0
   m_Name: Elmo
   m_TagString: Untagged
@@ -25155,6 +25142,50 @@ MonoBehaviour:
   - {fileID: 1613828252}
   bodyColor: {r: 0.8980392, g: 0.60732746, b: 0.23921569, a: 1}
   eyesColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!114 &3901171192785145036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901171192785145033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963eb39d8320c16478575978b621ba73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputText: {fileID: 85766946}
+  emotionSystem: {fileID: 3901171192785145037}
+  startRecoButton: {fileID: 62372515}
+--- !u!114 &3901171192785145037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3901171192785145033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009590fb1f01ddb48b3469fc02086c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emotions:
+  - name: Anger
+    intensity: 0
+  - name: Sad
+    intensity: 0
+  - name: Happyness
+    intensity: 0
+  - name: Sleepy
+    intensity: 0
+  - name: Surprise
+    intensity: 0
+  - name: Idle
+    intensity: 0
+  currentEmotion: Idle
+  OnEmotionChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!224 &4124107489623594122
 RectTransform:
   m_ObjectHideFlags: 0
