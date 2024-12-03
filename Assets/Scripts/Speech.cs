@@ -31,8 +31,8 @@ public class Speech : MonoBehaviour
     // Variable to store the recognized speech
     private string recognizedSpeech;
 
-    private const string speechAIKey = "2524cd9f46284cceb673f445eba74e0c";
-    private const string speechAIRegion = "francecentral";
+    private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
+    private const string speechAIRegion = "eastus";
 
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
@@ -94,11 +94,12 @@ public class Speech : MonoBehaviour
         {
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
-            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.You have a great knowledge about the emotions, body and feelings.";
-            string feeling = "Right now you are feeling happy.";
+            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
+            string feeling = "Right now you are feeling happy. ";
+            string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
 
-            string prompt = intro + feeling + restrictions;
+            string prompt = intro + feeling + treatment + restrictions;
 
             string requestBody = $@"
             {{
@@ -135,7 +136,16 @@ public class Speech : MonoBehaviour
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
-            var result = await synthesizer.SpeakTextAsync(textToSpeak).ConfigureAwait(false);
+            string ssml = $@"
+            <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'>
+                <voice name='en-US-BlueNeural'>
+                    <prosody pitch='+20%' rate='1.1'>
+                        {textToSpeak}
+                    </prosody>
+                </voice>
+            </speak>";
+
+            var result = await synthesizer.SpeakSsmlAsync(ssml).ConfigureAwait(false);
 
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
