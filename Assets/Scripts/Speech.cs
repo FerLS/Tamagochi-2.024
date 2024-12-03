@@ -31,8 +31,8 @@ public class Speech : MonoBehaviour
     // Variable to store the recognized speech
     private string recognizedSpeech;
 
-    private const string speechAIKey = "2524cd9f46284cceb673f445eba74e0c";
-    private const string speechAIRegion = "francecentral";
+    private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
+    private const string speechAIRegion = "eastus";
 
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
@@ -50,6 +50,7 @@ public class Speech : MonoBehaviour
     public async void ButtonClick()
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+        config.SpeechSynthesisVoiceName = "en-US-AndrewNeural";
 
         using (var recognizer = new SpeechRecognizer(config))
         {
@@ -132,10 +133,20 @@ public class Speech : MonoBehaviour
     public async Task SpeakAsync(string textToSpeak)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+        config.SpeechSynthesisVoiceName = "en-US-BlueNeural";
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
-            var result = await synthesizer.SpeakTextAsync(textToSpeak).ConfigureAwait(false);
+            string ssml = $@"
+            <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'>
+                <voice name='en-US-BlueNeural'>
+                    <prosody pitch='+20%' rate='1.1'>
+                        {textToSpeak}
+                    </prosody>
+                </voice>
+            </speak>";
+
+            var result = await synthesizer.SpeakSsmlAsync(ssml).ConfigureAwait(false);
 
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
