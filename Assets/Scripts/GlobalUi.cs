@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GlobalUi : MonoBehaviour
 {
@@ -10,10 +11,15 @@ public class GlobalUi : MonoBehaviour
     public GameObject ReportsScreen;
 
     [Header("Inputs")]
-    public TMP_InputField commentInputField; 
-
-    private string selectedEmotion;
+    public TMP_InputField commentInputField;
     private string enteredNote;
+
+    [Header("Emojis")]
+    public Button[] emojiButtons; 
+    private Button selectedEmojiButton; 
+    private string selectedEmotion;
+
+    
 
 
 
@@ -22,15 +28,11 @@ public class GlobalUi : MonoBehaviour
         if (commentInputField == null)
         {
             commentInputField = GameObject.Find("commentInputField").GetComponent<TMP_InputField>();
-
-            if (commentInputField == null)
-            {
-                Debug.LogError("commentInputField could not be found in the scene!");
-            }
-            else
-            {
-                Debug.Log("commentInputField successfully assigned at runtime.");
-            }
+        }
+        if (emojiButtons.Length > 0)
+        {
+            int lastIndex = emojiButtons.Length - 1;
+            SelectEmoji(emojiButtons[lastIndex]); 
         }
     }
 
@@ -58,14 +60,29 @@ public class GlobalUi : MonoBehaviour
         SettingsScreen.SetActive(false);
     }
 
+    public void SelectEmoji(Button selectedButton)
+    {
+        if (selectedEmojiButton != null)
+        { 
+            selectedEmojiButton.GetComponent<Image>().color = Color.white; 
+        }
+
+        selectedButton.GetComponent<Image>().color = Color.yellow; 
+        selectedEmojiButton = selectedButton;
+
+        selectedEmotion = selectedButton.GetComponentInChildren<TextMeshProUGUI>().text; // Assuming the text is the emoji
+    }
+
+
     private void SaveEmotionAndNote()
     {
         enteredNote = commentInputField.text;
 
+        PlayerPrefs.SetString("SelectedEmotion", selectedEmotion);
         PlayerPrefs.SetString("EnteredNote", enteredNote);
         PlayerPrefs.Save();
 
-        Debug.Log($"Comment Added: {enteredNote}");
+        Debug.Log($"Emoción seleccionada: {selectedEmotion}, Nota ingresada: {enteredNote}");
     }
 
 }
