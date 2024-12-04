@@ -7,7 +7,6 @@ public class GlobalUi : MonoBehaviour
     public GameObject InitialScreen;
     public GameObject GameScreen;
     public GameObject SettingsScreen;
-
     public GameObject ReportsScreen;
 
 
@@ -19,7 +18,7 @@ public class GlobalUi : MonoBehaviour
 
     public void EnterGameScreen()
     {
-
+        SaveEmotionAndNote();
         InitialScreen.SetActive(false);
         GameScreen.SetActive(true);
     }
