@@ -7,6 +7,7 @@ using System.Collections;
 using TMPro;
 using System.Net.Http;
 using System.Text;
+using System.Linq;
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
@@ -21,6 +22,8 @@ public class Speech : MonoBehaviour
     public TextMeshProUGUI outputText;
 
     public Button startRecoButton;
+
+    public EmotionSystem emotionSystem;
 
     private object threadLocker = new object();
     private bool waitingForReco;
@@ -47,6 +50,15 @@ public class Speech : MonoBehaviour
     private Microphone mic;
 #endif
 
+    [System.Serializable]
+    public class ResponseData
+    {
+        public string response;
+        public string feeling;
+        public string intensity;
+    }
+
+
     public async void ButtonClick()
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
@@ -65,8 +77,20 @@ public class Speech : MonoBehaviour
                     recognizedSpeech = result.Text;
 
                     string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
-                    message = tamagotchiReply;
-                    await SpeakAsync(tamagotchiReply);
+
+
+                    print(tamagotchiReply);
+
+                    var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+
+
+
+
+                    message = response.response;
+                    emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
@@ -98,8 +122,9 @@ public class Speech : MonoBehaviour
             string feeling = "Right now you are feeling happy. ";
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
+            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 100).";
 
-            string prompt = intro + feeling + treatment + restrictions;
+            string prompt = intro + feeling + treatment + restrictions + format;
 
             string requestBody = $@"
             {{
@@ -121,6 +146,9 @@ public class Speech : MonoBehaviour
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
+
+
+
             }
             else
             {
@@ -157,6 +185,9 @@ public class Speech : MonoBehaviour
             }
         }
     }
+
+
+
 
     void Start()
     {

@@ -10,6 +10,8 @@ public class EmotionSystem : MonoBehaviour
 
     public UnityEvent<string> OnEmotionChange;
 
+    public Animator anim;
+
     // Cambiar la intensidad de una emoción
     public void AdjustEmotion(string name, float amount)
     {
@@ -21,8 +23,15 @@ public class EmotionSystem : MonoBehaviour
                 break;
             }
         }
+        ChangeAnimation(name);
 
         UpdateCurrentEmotion();
+
+
+
+
+
+
     }
 
     // Determinar la emoción predominante
@@ -42,6 +51,15 @@ public class EmotionSystem : MonoBehaviour
         OnEmotionChange.Invoke(currentEmotion);
         Debug.Log($"La emoción predominante es: {currentEmotion}");
 
+
+
+
+    }
+
+
+    public void ChangeAnimation(string emotion)
+    {
+        anim.CrossFade(emotion, 0.1f);
     }
 
 

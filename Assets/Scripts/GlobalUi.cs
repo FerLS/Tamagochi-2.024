@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GlobalUi : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class GlobalUi : MonoBehaviour
     public GameObject SettingsScreen;
 
     public GameObject ReportsScreen;
+
+
+    [Header("Initial Screen")]
+
+    public Image[] emotionFaces;
+
+
+
     public void EnterGameScreen()
     {
 
@@ -30,6 +39,16 @@ public class GlobalUi : MonoBehaviour
     {
 
         SettingsScreen.SetActive(false);
+    }
+
+    public void SetEmotionFace(Image emotionFace)
+    {
+        foreach (var face in emotionFaces)
+        {
+            face.color = new Color(255, 255, 255, 0.5f);
+        }
+
+        emotionFace.color = new Color(255, 255, 255, 1);
     }
 
 
