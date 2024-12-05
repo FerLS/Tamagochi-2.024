@@ -11,14 +11,12 @@ public class GlobalUi : MonoBehaviour
 
 
     [Header("Initial Screen")]
-
     public Image[] emotionFaces;
 
 
 
     public void EnterGameScreen()
     {
-        SaveEmotionAndNote();
         InitialScreen.SetActive(false);
         GameScreen.SetActive(true);
     }

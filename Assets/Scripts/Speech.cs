@@ -167,7 +167,7 @@ public class Speech : MonoBehaviour
             string ssml = $@"
             <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'>
                 <voice name='en-US-BlueNeural'>
-                    <prosody pitch='+20%' rate='1.1'>
+                    <prosody pitch='+18%' rate='1.1'>
                         {textToSpeak}
                     </prosody>
                 </voice>

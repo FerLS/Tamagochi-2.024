@@ -786,7 +786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 448.00003, y: -1986.7}
+  m_AnchoredPosition: {x: 480, y: -1793.056}
   m_SizeDelta: {x: 530, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &126855913
@@ -850,7 +850,7 @@ MonoBehaviour:
         m_MethodName: SetEmotionFace
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 126855914}
+          m_ObjectArgument: {fileID: 1837259063}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -925,7 +925,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1807103131}
-  - {fileID: 1944816121}
   m_Father: {fileID: 360726227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6680,7 +6679,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 360726229}
   m_TextViewport: {fileID: 130175857}
-  m_TextComponent: {fileID: 1944816122}
+  m_TextComponent: {fileID: 0}
   m_Placeholder: {fileID: 1807103133}
   m_VerticalScrollbar: {fileID: 0}
   m_VerticalScrollbarEventHandler: {fileID: 0}
@@ -7339,7 +7338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480.00012, y: -1193}
+  m_AnchoredPosition: {x: 480, y: -1193}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &452708675
@@ -15289,7 +15288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1168.0348, y: -1793.0558}
+  m_AnchoredPosition: {x: 1160, y: -1793.0558}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1098711862
@@ -18092,7 +18091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 448.00003, y: -2709.5}
+  m_AnchoredPosition: {x: 480, y: -2393.138}
   m_SizeDelta: {x: 530, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770091635
@@ -18393,7 +18392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1168.0348, y: -2393.1384}
+  m_AnchoredPosition: {x: 1160, y: -2393.1384}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837259062
@@ -18660,6 +18659,7 @@ MonoBehaviour:
   GameScreen: {fileID: 1975482239}
   SettingsScreen: {fileID: 2074761701}
   ReportsScreen: {fileID: 652008999}
+  emotionFaces: []
 --- !u!1 &1961776652
 GameObject:
   m_ObjectHideFlags: 0
@@ -19199,7 +19199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1168, y: -1193.0001}
+  m_AnchoredPosition: {x: 1160, y: -1193.0001}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2025523421
