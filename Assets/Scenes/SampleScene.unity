@@ -782,11 +782,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -1793.056}
+  m_AnchoredPosition: {x: -288.54993, y: -253.906}
   m_SizeDelta: {x: 530, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &126855913
@@ -850,7 +850,7 @@ MonoBehaviour:
         m_MethodName: SetEmotionFace
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1837259063}
+          m_ObjectArgument: {fileID: 126855914}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -7334,11 +7334,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -1193}
+  m_AnchoredPosition: {x: -288.54993, y: 346.15002}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &452708675
@@ -15284,11 +15284,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1160, y: -1793.0558}
+  m_AnchoredPosition: {x: 391.45007, y: -253.90588}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1098711862
@@ -16193,12 +16193,7 @@ RectTransform:
   m_Children:
   - {fileID: 1234452875}
   - {fileID: 867573130}
-  - {fileID: 452708674}
-  - {fileID: 2025523420}
-  - {fileID: 126855912}
-  - {fileID: 1098711861}
-  - {fileID: 1770091634}
-  - {fileID: 1837259061}
+  - {fileID: 1607558502}
   m_Father: {fileID: 1240484009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -17327,6 +17322,47 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561674666}
   m_CullTransparentMesh: 1
+--- !u!1 &1607558501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1607558502}
+  m_Layer: 5
+  m_Name: Emotions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1607558502
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607558501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 452708674}
+  - {fileID: 2025523420}
+  - {fileID: 126855912}
+  - {fileID: 1098711861}
+  - {fileID: 1770091634}
+  - {fileID: 1837259061}
+  m_Father: {fileID: 1361616536}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1613828250
 GameObject:
   m_ObjectHideFlags: 0
@@ -18087,11 +18123,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -2393.138}
+  m_AnchoredPosition: {x: -288.54993, y: -853.9878}
   m_SizeDelta: {x: 530, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770091635
@@ -18388,11 +18424,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1160, y: -2393.1384}
+  m_AnchoredPosition: {x: 391.45007, y: -853.9884}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837259062
@@ -18659,7 +18695,7 @@ MonoBehaviour:
   GameScreen: {fileID: 1975482239}
   SettingsScreen: {fileID: 2074761701}
   ReportsScreen: {fileID: 652008999}
-  emotionFaces: []
+  EmotionsPanel: {fileID: 1607558501}
 --- !u!1 &1961776652
 GameObject:
   m_ObjectHideFlags: 0
@@ -19195,11 +19231,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1361616536}
+  m_Father: {fileID: 1607558502}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1160, y: -1193.0001}
+  m_AnchoredPosition: {x: 391.45007, y: 346.14978}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2025523421
@@ -19263,7 +19299,7 @@ MonoBehaviour:
         m_MethodName: SetEmotionFace
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2025523422}
+          m_ObjectArgument: {fileID: 452708676}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0

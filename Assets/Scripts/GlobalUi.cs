@@ -10,9 +10,15 @@ public class GlobalUi : MonoBehaviour
     public GameObject ReportsScreen;
 
 
-    [Header("Initial Screen")]
-    public Image[] emotionFaces;
+    [Header("Panels")]
+    public GameObject EmotionsPanel;
+    private Image[] emotionFaces;
 
+
+    private void Start()
+    {
+        emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
+    }
 
 
     public void EnterGameScreen()
@@ -42,9 +48,9 @@ public class GlobalUi : MonoBehaviour
     {
         foreach (var face in emotionFaces)
         {
+            
             face.color = new Color(255, 255, 255, 0.5f);
         }
-
         emotionFace.color = new Color(255, 255, 255, 1);
     }
 
