@@ -7,6 +7,7 @@ using System.Collections;
 using TMPro;
 using System.Net.Http;
 using System.Text;
+using System.Linq;
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
@@ -21,6 +22,8 @@ public class Speech : MonoBehaviour
     public TextMeshProUGUI outputText;
 
     public Button startRecoButton;
+
+    public EmotionSystem emotionSystem;
 
     private object threadLocker = new object();
     private bool waitingForReco;
@@ -37,7 +40,7 @@ public class Speech : MonoBehaviour
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
     private const string openAIModel = "gpt-4";
-    
+
 
     private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
@@ -46,6 +49,15 @@ public class Speech : MonoBehaviour
     // https://docs.unity3d.com/Manual/android-manifest.html
     private Microphone mic;
 #endif
+
+    [System.Serializable]
+    public class ResponseData
+    {
+        public string response;
+        public string feeling;
+        public string intensity;
+    }
+
 
     public async void ButtonClick()
     {
@@ -65,8 +77,20 @@ public class Speech : MonoBehaviour
                     recognizedSpeech = result.Text;
 
                     string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
-                    message = tamagotchiReply;
-                    await SpeakAsync(tamagotchiReply);
+
+
+                    print(tamagotchiReply);
+
+                    var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+
+
+
+
+                    message = response.response;
+                    emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
@@ -98,8 +122,9 @@ public class Speech : MonoBehaviour
             string feeling = "Right now you are feeling happy. ";
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
+            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 100).";
 
-            string prompt = intro + feeling + treatment + restrictions;
+            string prompt = intro + feeling + treatment + restrictions + format;
 
             string requestBody = $@"
             {{
@@ -116,11 +141,14 @@ public class Speech : MonoBehaviour
             var response = await client.PostAsync(apiUrl, content);
 
             if (response.IsSuccessStatusCode)
-            {          
+            {
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
+
+
+
             }
             else
             {
@@ -139,7 +167,7 @@ public class Speech : MonoBehaviour
             string ssml = $@"
             <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='en-US'>
                 <voice name='en-US-BlueNeural'>
-                    <prosody pitch='+20%' rate='1.1'>
+                    <prosody pitch='+18%' rate='1.1'>
                         {textToSpeak}
                     </prosody>
                 </voice>
@@ -157,6 +185,9 @@ public class Speech : MonoBehaviour
             }
         }
     }
+
+
+
 
     void Start()
     {
@@ -202,7 +233,7 @@ public class Speech : MonoBehaviour
 
         while (!speakTask.IsCompleted)
         {
-            yield return null; 
+            yield return null;
         }
 
         if (speakTask.Exception != null)
