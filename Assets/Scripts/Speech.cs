@@ -18,7 +18,6 @@ using System.Collections;
 
 public class Speech : MonoBehaviour
 {
-    // Hook up the two properties below with a Text and Button object in your UI.
     public TextMeshProUGUI outputText;
 
     public Button startRecoButton;
@@ -31,7 +30,8 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
-    // Variable to store the recognized speech
+    private GlobalUi globalUI;
+
     private string recognizedSpeech;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
@@ -162,6 +162,8 @@ public class Speech : MonoBehaviour
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
+        RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
+
         using (var synthesizer = new SpeechSynthesizer(config))
         {
             string ssml = $@"
@@ -178,19 +180,31 @@ public class Speech : MonoBehaviour
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
                 Debug.Log("Speech synthesized: " + textToSpeak);
+                Debug.Log("Bubble should hide");
             }
             else
             {
                 Debug.LogError("Speech synthesis failed.");
             }
         }
+
+        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
     }
 
-
-
+    private void RunOnMainThread(System.Action action)
+    {
+        UnityMainThreadDispatcher.Instance().Enqueue(action);
+    }
 
     void Start()
     {
+        globalUI = FindObjectOfType<GlobalUi>();
+
+        if (globalUI == null)
+        {
+            Debug.LogError("GlobalUI component not found in the scene.");
+        }
+
         if (outputText == null)
         {
             UnityEngine.Debug.LogError("outputText property is null! Assign a UI Text element to it.");
