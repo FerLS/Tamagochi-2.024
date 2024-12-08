@@ -27,7 +27,7 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
-        HighlightButton(playroomButton);
+        HighlightButton(bedroomButton);
     }
 
     public void ChangeScenary(GameObject scenary)
