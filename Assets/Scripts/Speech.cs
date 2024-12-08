@@ -146,9 +146,6 @@ public class Speech : MonoBehaviour
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
-
-
-
             }
             else
             {
@@ -161,6 +158,8 @@ public class Speech : MonoBehaviour
     public async Task SpeakAsync(string textToSpeak)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+
+        message = textToSpeak;
 
         RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
 

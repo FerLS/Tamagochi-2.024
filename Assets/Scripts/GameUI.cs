@@ -23,6 +23,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject kitchenScenary;
     [SerializeField] private Button kitchenButton;
 
+    [Header("Tamagotchi")]
+    [SerializeField] private Speech tamagotchiSpeech; 
+
     private Button lastClickedButton;
 
     void Start()
@@ -39,6 +42,11 @@ public class GameUI : MonoBehaviour
         kitchenScenary.SetActive(false);
 
         scenary.SetActive(true);
+
+        if (scenary == playroomScenary)
+        {
+            tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?");
+        }
     }
 
     public void HighlightButton(Button chosenScenario)
