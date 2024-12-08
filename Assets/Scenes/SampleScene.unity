@@ -373,8 +373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 14.300049, y: 248.30005}
-  m_SizeDelta: {x: -928, y: -1140.3}
+  m_AnchoredPosition: {x: -14.099976, y: 257.69995}
+  m_SizeDelta: {x: -342.8, y: -932.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &85766946
 MonoBehaviour:
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 17.58606, y: 0, z: -35.97064, w: -17.985842}
+  m_margin: {x: 17.58606, y: 0, z: -54.84808, w: -17.985842}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7274,8 +7274,20 @@ MonoBehaviour:
         m_MethodName: ChangeScenary
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2074548147}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 2074548146}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 448142783}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7650,7 +7662,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3509434, g: 0.3509434, b: 0.3509434, a: 1}
+  m_Color: {r: 0.34509805, g: 0.34509805, b: 0.34509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7724,8 +7736,20 @@ MonoBehaviour:
         m_MethodName: ChangeScenary
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1379332507}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 1379332506}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 519097414}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9786,8 +9810,20 @@ MonoBehaviour:
         m_MethodName: ChangeScenary
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 246169770}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 246169769}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 886677736}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -15063,7 +15099,7 @@ GameObject:
   - component: {fileID: 1047747198}
   - component: {fileID: 1047747199}
   m_Layer: 5
-  m_Name: Outdoors
+  m_Name: Park
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15909,7 +15945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1240484009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16651,8 +16687,20 @@ MonoBehaviour:
         m_MethodName: ChangeScenary
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1047747198}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 1047747197}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1468353373}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -18696,6 +18744,7 @@ MonoBehaviour:
   SettingsScreen: {fileID: 2074761701}
   ReportsScreen: {fileID: 652008999}
   EmotionsPanel: {fileID: 1607558501}
+  speechBubble: {fileID: 1243336940}
 --- !u!1 &1961776652
 GameObject:
   m_ObjectHideFlags: 0
@@ -18979,8 +19028,20 @@ MonoBehaviour:
         m_MethodName: ChangeScenary
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 92568738}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 92568737}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: HighlightButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1968936704}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -19024,7 +19085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1975482240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19060,10 +19121,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parkScenary: {fileID: 1047747197}
+  parkButton: {fileID: 1468353373}
   playroomScenary: {fileID: 1379332506}
+  playroomButton: {fileID: 519097414}
   bedroomScenary: {fileID: 2074548146}
+  bedroomButton: {fileID: 448142783}
   bathroomScenary: {fileID: 246169769}
+  bathroomButton: {fileID: 886677736}
   kitchenScenary: {fileID: 92568737}
+  kitchenButton: {fileID: 1968936704}
 --- !u!1 &1975858462
 GameObject:
   m_ObjectHideFlags: 0

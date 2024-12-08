@@ -180,7 +180,6 @@ public class Speech : MonoBehaviour
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
                 Debug.Log("Speech synthesized: " + textToSpeak);
-                Debug.Log("Bubble should hide");
             }
             else
             {
