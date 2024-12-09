@@ -16345,9 +16345,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1379332506}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 219fc02ec6616c94fa60a853625698d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 66ef4266bbc734d44bfc8daa78c7c66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tamagotchiSpeech: {fileID: 3901171192785145036}
 --- !u!1 &1389237924
 GameObject:
   m_ObjectHideFlags: 0
@@ -19143,7 +19144,6 @@ MonoBehaviour:
   bathroomButton: {fileID: 886677736}
   kitchenScenary: {fileID: 92568737}
   kitchenButton: {fileID: 1968936704}
-  tamagotchiSpeech: {fileID: 3901171192785145036}
 --- !u!1 &1975858462
 GameObject:
   m_ObjectHideFlags: 0

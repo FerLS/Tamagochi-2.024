@@ -5,9 +5,12 @@ public class Playroom : MonoBehaviour
     [Header("Tamagotchi")]
     [SerializeField] private Speech tamagotchiSpeech;
 
-    void Start()
+    void OnEnable()
     {
-        tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?");
+        if (tamagotchiSpeech != null)
+        {
+            tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?");
+        }
     }
 
     void Update()
