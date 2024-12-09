@@ -9,7 +9,7 @@ public class Playroom : MonoBehaviour
     {
         if (tamagotchiSpeech != null)
         {
-            tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?");
+            tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
         }
     }
 

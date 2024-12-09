@@ -83,20 +83,16 @@ public class Speech : MonoBehaviour
 
                     var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
 
-
-
-
-
                     message = response.response;
                     emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
-                    await SpeakAsync(message);
+                    await SpeakAsync(message, false);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
                     recognizedSpeech = string.Empty;
                     message = "Sorry, can you repeat it?";
-                    await SpeakAsync(message);
+                    await SpeakAsync(message, false);
                 }
                 else if (result.Reason == ResultReason.Canceled)
                 {
@@ -155,13 +151,14 @@ public class Speech : MonoBehaviour
         }
     }
 
-    public async Task SpeakAsync(string textToSpeak)
+    public async Task SpeakAsync(string textToSpeak, bool isQuestion=false)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
         message = textToSpeak;
 
         RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
+        RunOnMainThread(() => globalUI?.SetQuestionButtons(isQuestion));
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -186,7 +183,11 @@ public class Speech : MonoBehaviour
             }
         }
 
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
+        if (!isQuestion)
+        {
+            RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
+        }
+        
     }
 
     private void RunOnMainThread(System.Action action)

@@ -18,6 +18,10 @@ public class GlobalUi : MonoBehaviour
     [Header("Speech")]
     public GameObject speechBubble;
 
+    [Header("Buttons")]
+    public Button yesButton;
+    public Button noButton;
+
     private void Start()
     {
         emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
@@ -70,6 +74,20 @@ public class GlobalUi : MonoBehaviour
         {
             Debug.LogError("SpeechBubble is not assigned in GlobalUI.");
         }
+    }
+
+    public void SetQuestionButtons(bool isActive)
+    {
+        if (yesButton != null && noButton !=null)
+        {
+            yesButton.gameObject.SetActive(isActive);
+            noButton.gameObject.SetActive(isActive);
+        }
+        else
+        {
+            Debug.LogError("Yes and No buttons are not assigned in GlobalUI.");
+        }
+
     }
 
 }
