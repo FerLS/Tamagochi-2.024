@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e1fd6c015c8fd28429549ae5b00de088
+guid: 404652b3ab9dfd24e8f51ea2941ccdff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8841490917199087839
-    second: table_0
+      213: -7458330060190136583
+    second: tic-tac-toe-circle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: table_0
+      name: tic-tac-toe-circle_0
       rect:
         serializedVersion: 2
-        x: 56
+        x: 0
         y: 0
-        width: 889
-        height: 891
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1277183ead6bc4580800000000000000
-      internalID: -8841490917199087839
+      spriteID: 9f6cfb08350be7890800000000000000
+      internalID: -7458330060190136583
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      table_0: -8841490917199087839
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
