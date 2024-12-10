@@ -23,12 +23,16 @@ public class Playroom : MonoBehaviour
 
     private async void OnEnable() 
     {
+        Background.SetActive(true);
+        SelectGame.SetActive(false);
+        TicTacToe.SetActive(false);
+        Memory.SetActive(false);
+
         if (tamagotchiSpeech != null)
         {
             await tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
             SetButtons(true);
         }
-
     }
 
     public void EnterGameSelectionScreen()
