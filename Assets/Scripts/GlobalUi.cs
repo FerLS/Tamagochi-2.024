@@ -14,7 +14,6 @@ public class GlobalUi : MonoBehaviour
     public GameObject EmotionsPanel;
     private Image[] emotionFaces;
 
-
     [Header("Speech")]
     public GameObject speechBubble;
 
@@ -50,6 +49,11 @@ public class GlobalUi : MonoBehaviour
         SettingsScreen.SetActive(false);
     }
 
+    public void SetGamesScreen()
+    {
+
+    }
+
     public void SetEmotionFace(Image emotionFace)
     {
         foreach (var face in emotionFaces)
@@ -71,5 +75,4 @@ public class GlobalUi : MonoBehaviour
             Debug.LogError("SpeechBubble is not assigned in GlobalUI.");
         }
     }
-
 }

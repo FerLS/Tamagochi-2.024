@@ -58,8 +58,7 @@ public class Speech : MonoBehaviour
         public string intensity;
     }
 
-
-    public async void ButtonClick()
+    public async Task<string> GetRecognizedSpeech()
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
@@ -75,33 +74,16 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeech = result.Text;
-
-                    string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
-
-
-                    print(tamagotchiReply);
-
-                    var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
-
-
-
-
-
-                    message = response.response;
-                    emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
-
-                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
                     recognizedSpeech = string.Empty;
-                    message = "Sorry, can you repeat it?";
-                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.Canceled)
                 {
                     var cancellation = CancellationDetails.FromResult(result);
                     message = $"CANCELED: Reason={cancellation.Reason}, ErrorDetails={cancellation.ErrorDetails}";
+                    return null;
                 }
             }
             finally
@@ -109,6 +91,33 @@ public class Speech : MonoBehaviour
                 semaphore.Release();
                 waitingForReco = false;
             }
+        }
+        return recognizedSpeech;
+    }
+
+    public async void ButtonClick()
+    {
+        recognizedSpeech = await GetRecognizedSpeech();
+        if (recognizedSpeech != null)
+        {
+            if (recognizedSpeech == string.Empty)
+            {
+                message = "Sorry, can you repeat it?";
+                await SpeakAsync(message, false);
+            }
+            else
+            {
+                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
+                print(tamagotchiReply);
+
+                var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+                message = response.response;
+                emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+                await SpeakAsync(message, false);
+            }
+
         }
     }
 
@@ -146,9 +155,6 @@ public class Speech : MonoBehaviour
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
-
-
-
             }
             else
             {
@@ -158,11 +164,23 @@ public class Speech : MonoBehaviour
         }
     }
 
-    public async Task SpeakAsync(string textToSpeak)
+    public async void HideSpeechBubble()
+    {
+        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
+    }
+
+    public async void ShowSpeechBubble()
+    {
+        RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
+    }
+
+    public async Task SpeakAsync(string textToSpeak, bool isQuestion=false)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
+        message = textToSpeak;
+
+        ShowSpeechBubble();
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -187,7 +205,11 @@ public class Speech : MonoBehaviour
             }
         }
 
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
+        if (!isQuestion)
+        {
+            HideSpeechBubble();
+        }
+        
     }
 
     private void RunOnMainThread(System.Action action)
@@ -283,11 +305,6 @@ public class Speech : MonoBehaviour
                 outputText.text = message;
             }
         }
-    }
-
-    public string GetRecognizedSpeech()
-    {
-        return recognizedSpeech;
     }
 
     [System.Serializable]
