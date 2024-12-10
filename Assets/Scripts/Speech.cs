@@ -167,8 +167,6 @@ public class Speech : MonoBehaviour
     public async void HideSpeechBubble()
     {
         RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
-
-        RunOnMainThread(() => globalUI?.SetQuestionButtons(false));
     }
 
     public async void ShowSpeechBubble()
@@ -183,7 +181,6 @@ public class Speech : MonoBehaviour
         message = textToSpeak;
 
         ShowSpeechBubble();
-        RunOnMainThread(() => globalUI?.SetQuestionButtons(isQuestion));
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {

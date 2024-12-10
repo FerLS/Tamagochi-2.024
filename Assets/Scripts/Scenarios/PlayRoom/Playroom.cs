@@ -1,30 +1,58 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Threading.Tasks; 
 
 public class Playroom : MonoBehaviour
 {
+
+    [Header("Global")]
+    [SerializeField] private GlobalUi globalUI;
+
     [Header("Tamagotchi")]
     [SerializeField] private Speech tamagotchiSpeech;
 
-    [Header("UI Elements")]
-    [SerializeField] private GameObject speechBubble;
+    [Header("Screens")]
+    [SerializeField] private GameObject Background;
+    [SerializeField] private GameObject SelectGame;
+    [SerializeField] private GameObject TicTacToe;
+    [SerializeField] private GameObject Memory;
 
-    void OnEnable()
+    [Header("Buttons")]
+    [SerializeField] private Button yesButton;
+    [SerializeField] private Button noButton;
+
+    private async void OnEnable() 
     {
         if (tamagotchiSpeech != null)
         {
-            tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
+            await tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
+            SetButtons(true);
         }
-        tamagotchiSpeech.ShowSpeechBubble();
 
     }
 
-    void OnDisable()
+    public void EnterGameSelectionScreen()
+    {
+        Background.SetActive(false);
+        SelectGame.SetActive(true);
+        SetButtons(false);
+    }
+
+    public void SetButtons(bool isActive)
+    {
+        yesButton.gameObject.SetActive(isActive);
+        noButton.gameObject.SetActive(isActive);
+    }
+
+    private void OnDisable()
     {
         tamagotchiSpeech.HideSpeechBubble();
     }
 
-    void Update()
+    private void Update()
     {
-        
+
     }
+
+
 }
