@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tic-tac-toe-cross_0: 4104984555169479232
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
