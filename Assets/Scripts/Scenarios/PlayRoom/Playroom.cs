@@ -24,9 +24,9 @@ public class Playroom : MonoBehaviour
 
     private async void OnEnable() 
     {
-        Background.SetActive(false);
+        Background.SetActive(true);
         SelectGame.SetActive(false);
-        TicTacToe.SetActive(true);
+        TicTacToe.SetActive(false);
         Memory.SetActive(false);
 
         if (tamagotchiSpeech != null)
