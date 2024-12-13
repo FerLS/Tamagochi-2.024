@@ -130,6 +130,7 @@ public class CupBall : MonoBehaviour
         isPlaying = false;
         messageText.text = "Where is the <color=yellow>Ball</color>?";
         messageText.gameObject.SetActive(true);
+        messageText.transform.GetChild(0).gameObject.SetActive(true);
 
         messageText.DOFade(0, 0);
         messageText.DOFade(1, 0.5f).SetEase(Ease.OutCubic);
