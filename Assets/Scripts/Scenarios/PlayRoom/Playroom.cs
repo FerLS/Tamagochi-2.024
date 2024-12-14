@@ -41,6 +41,7 @@ public class Playroom : MonoBehaviour
     public void EnterGameSelectionScreen()
     {
         Background.SetActive(false);
+        Games.SetActive(false);
         SelectGame.SetActive(true);
         SetButtons(false);
     }
@@ -56,6 +57,7 @@ public class Playroom : MonoBehaviour
         Debug.Log(selectedGame);
         Background.SetActive(false);
         SelectGame.SetActive(false);
+        Games.SetActive(true);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
         Cups.SetActive(false);
