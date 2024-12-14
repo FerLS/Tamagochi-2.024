@@ -14,6 +14,7 @@ public class Playroom : MonoBehaviour
     [Header("Screens")]
     [SerializeField] private GameObject Background;
     [SerializeField] private GameObject SelectGame;
+    [SerializeField] private GameObject Games;
     [SerializeField] private GameObject TicTacToe;
     [SerializeField] private GameObject Memory;
     [SerializeField] private GameObject Cups;
@@ -26,6 +27,7 @@ public class Playroom : MonoBehaviour
     {
         Background.SetActive(true);
         SelectGame.SetActive(false);
+        Games.SetActive(false);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
 
@@ -49,15 +51,18 @@ public class Playroom : MonoBehaviour
         noButton.gameObject.SetActive(isActive);
     }
 
-    public void SetSelectedGame(GameObject gameScreen)
+    public void SetSelectedGame(GameObject selectedGame)
     {
-        Debug.Log("Botón presionado");
+        Debug.Log(selectedGame);
+        Background.SetActive(false);
         SelectGame.SetActive(false);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
         Cups.SetActive(false);
 
-        gameScreen.SetActive(true);
+
+        Games.SetActive(true);
+        selectedGame.SetActive(true);
     }
 
     private void OnDisable()
