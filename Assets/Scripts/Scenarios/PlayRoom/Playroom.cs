@@ -10,7 +10,6 @@ public class Playroom : MonoBehaviour
 
     [Header("Tamagotchi")]
     [SerializeField] private Speech tamagotchiSpeech;
-    [SerializeField] private GameObject tamagotchi;
 
     [Header("Screens")]
     [SerializeField] private GameObject Background;
@@ -62,7 +61,6 @@ public class Playroom : MonoBehaviour
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
         Cups.SetActive(false);
-        tamagotchi.SetActive(false);
 
         selectedGame.SetActive(true);
     }

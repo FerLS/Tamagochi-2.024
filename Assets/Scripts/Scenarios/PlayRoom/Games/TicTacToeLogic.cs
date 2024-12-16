@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class TicTacToeLogic : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class TicTacToeLogic : MonoBehaviour
     public GameObject backButton;
     public Sprite[] images; 
     public GameObject[] tokens;
+    public GameObject FinishSign;
+    public GameObject FinishText;
 
     private void Start()
     {
@@ -22,6 +26,7 @@ public class TicTacToeLogic : MonoBehaviour
         {
             token.SetActive(true);
         }
+        FinishSign.SetActive(false);
     }
 
     public void PlayerMove(int tokenIndex)
@@ -37,7 +42,7 @@ public class TicTacToeLogic : MonoBehaviour
             UpdateTokenSprite(tokenIndex, 0);
             if (CheckWinCondition(1))
             {
-                EndGame("Player wins!");
+                EndGame("You won!");
             }
 
             Invoke(nameof(MachineMove), 0.5f); 
@@ -61,7 +66,7 @@ public class TicTacToeLogic : MonoBehaviour
                 UpdateTokenSprite(randomIndex, 1);
                 if (CheckWinCondition(2))
                 {
-                    EndGame("AI wins!");
+                    EndGame("You lose :(");
                 }
                 played = true;
             }
@@ -109,7 +114,17 @@ public class TicTacToeLogic : MonoBehaviour
 
     private void EndGame(string message)
     {
-        isGameOver = true; 
+        isGameOver = true;
+        FinishSign.SetActive(true);
+        foreach (GameObject token in tokens)
+        {
+            token.SetActive(false);
+        }
+        TextMeshProUGUI tmpComponent = FinishText.GetComponent<TextMeshProUGUI>();
+        if (tmpComponent != null)
+        {
+            tmpComponent.text = message;
+        }
         Debug.Log(message); 
     }
 
