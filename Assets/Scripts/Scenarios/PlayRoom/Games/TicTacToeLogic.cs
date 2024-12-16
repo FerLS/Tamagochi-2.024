@@ -10,12 +10,17 @@ public class TicTacToeLogic : MonoBehaviour
     private int[,] board = new int[3, 3];
     private bool isGameOver = false;
 
+    [Header("Tamagotchi")]
+    public GameObject tamagotchi;
+
+    [Header("TicTacToe")]
     public GameObject boardObject;
     public GameObject backButton;
     public Sprite[] images; 
     public GameObject[] tokens;
     public GameObject FinishSign;
     public GameObject FinishText;
+
 
     private void Start()
     {
@@ -28,6 +33,7 @@ public class TicTacToeLogic : MonoBehaviour
         }
         FinishSign.SetActive(false);
     }
+
 
     public void PlayerMove(int tokenIndex)
     {
