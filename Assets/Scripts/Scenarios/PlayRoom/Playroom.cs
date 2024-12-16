@@ -10,11 +10,11 @@ public class Playroom : MonoBehaviour
 
     [Header("Tamagotchi")]
     [SerializeField] private Speech tamagotchiSpeech;
+    [SerializeField] private GameObject tamagotchi;
 
     [Header("Screens")]
     [SerializeField] private GameObject Background;
     [SerializeField] private GameObject SelectGame;
-    [SerializeField] private GameObject Games;
     [SerializeField] private GameObject TicTacToe;
     [SerializeField] private GameObject Memory;
     [SerializeField] private GameObject Cups;
@@ -27,9 +27,9 @@ public class Playroom : MonoBehaviour
     {
         Background.SetActive(true);
         SelectGame.SetActive(false);
-        Games.SetActive(false);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
+        Cups.SetActive(false);
 
         if (tamagotchiSpeech != null)
         {
@@ -41,8 +41,10 @@ public class Playroom : MonoBehaviour
     public void EnterGameSelectionScreen()
     {
         Background.SetActive(false);
-        Games.SetActive(false);
         SelectGame.SetActive(true);
+        TicTacToe.SetActive(false);
+        Memory.SetActive(false);
+        Cups.SetActive(false);
         SetButtons(false);
     }
 
@@ -57,13 +59,11 @@ public class Playroom : MonoBehaviour
         Debug.Log(selectedGame);
         Background.SetActive(false);
         SelectGame.SetActive(false);
-        Games.SetActive(true);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
         Cups.SetActive(false);
+        tamagotchi.SetActive(false);
 
-
-        Games.SetActive(true);
         selectedGame.SetActive(true);
     }
 

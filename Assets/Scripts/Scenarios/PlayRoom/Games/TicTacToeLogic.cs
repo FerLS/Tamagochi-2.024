@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TicTacToeLogic : MonoBehaviour
 {
@@ -7,12 +8,20 @@ public class TicTacToeLogic : MonoBehaviour
     private int[,] board = new int[3, 3];
     private bool isGameOver = false;
 
+    public GameObject boardObject;
+    public GameObject backButton;
     public Sprite[] images; 
     public GameObject[] tokens;
 
     private void Start()
     {
         ResetBoard();
+        boardObject.SetActive(true);
+        backButton.SetActive(true);
+        foreach (GameObject token in tokens)
+        {
+            token.SetActive(true);
+        }
     }
 
     public void PlayerMove(int tokenIndex)
