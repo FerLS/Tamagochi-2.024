@@ -110,9 +110,6 @@ public class MemoryGameLogic : MonoBehaviour
             btns[firstGuessIndex].interactable = false;
             btns[secondGuessIndex].interactable = false;
 
-            btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
-            btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
-
             CheckIfGameFinished();
         }
         else
@@ -146,5 +143,22 @@ public class MemoryGameLogic : MonoBehaviour
         }
 
     }
+
+    public void RestartGame()
+    {
+        FinishSign.SetActive(false);
+        countCorrectGuesses = 0;
+        ShuffleCards(gamePuzzles);
+        ShowCards();
+        gameGuesses = gamePuzzles.Count / 2;
+    }
     
+    void ShowCards()
+    {
+        for (int i =0; i < btns.Count; i++)
+        {
+            btns[i].interactable = true;
+            btns[i].image.sprite = backImage;
+        }
+    }
 }
