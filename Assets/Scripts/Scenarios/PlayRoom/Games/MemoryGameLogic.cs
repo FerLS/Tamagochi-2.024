@@ -8,6 +8,8 @@ public class MemoryGameLogic : MonoBehaviour
     public Sprite[] animals;
     [SerializeField] private Sprite backImage;
 
+    public GameObject FinishSign;
+
     public List<Sprite> gamePuzzles = new List<Sprite>();
 
     public List<Button> btns = new List<Button>();
@@ -19,12 +21,12 @@ public class MemoryGameLogic : MonoBehaviour
     private int countCorrectGuesses = 0;
     private int gameGuesses ;
 
-
     void Start()
     {
         GetButtons();
         AddListeners();
         AddGamePuzzles();
+        ShuffleCards(gamePuzzles);
         gameGuesses = gamePuzzles.Count/2;
     }
 
@@ -94,16 +96,6 @@ public class MemoryGameLogic : MonoBehaviour
 
             btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
 
-            if (firstGuessAnimal == secondGuessAnimal)
-            {
-                Debug.Log("MATCH");
-            }
-            else
-            {
-
-                Debug.Log("Boo!");
-            }
-
             StartCoroutine(CheckPuzzleMatch());
         }
     }
@@ -138,9 +130,21 @@ public class MemoryGameLogic : MonoBehaviour
         countCorrectGuesses++;
         if (countCorrectGuesses == gameGuesses)
         {
-            Debug.Log("Finished!!");
+            FinishSign.SetActive(true);
         }
     }
 
+    void ShuffleCards(List<Sprite> cards)
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            Sprite aux = cards[i];
+            int randomIndex = Random.Range(i, cards.Count);
+            
+            cards[i] = cards[randomIndex];
+            cards[randomIndex] = aux;
+        }
+
+    }
     
 }
