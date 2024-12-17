@@ -16,6 +16,7 @@ public class Playroom : MonoBehaviour
     [SerializeField] private GameObject SelectGame;
     [SerializeField] private GameObject TicTacToe;
     [SerializeField] private GameObject Memory;
+    [SerializeField] private GameObject Cups;
 
     [Header("Buttons")]
     [SerializeField] private Button yesButton;
@@ -27,6 +28,7 @@ public class Playroom : MonoBehaviour
         SelectGame.SetActive(false);
         TicTacToe.SetActive(false);
         Memory.SetActive(false);
+        Cups.SetActive(false);
 
         if (tamagotchiSpeech != null)
         {
@@ -39,6 +41,9 @@ public class Playroom : MonoBehaviour
     {
         Background.SetActive(false);
         SelectGame.SetActive(true);
+        TicTacToe.SetActive(false);
+        Memory.SetActive(false);
+        Cups.SetActive(false);
         SetButtons(false);
     }
 
@@ -46,6 +51,18 @@ public class Playroom : MonoBehaviour
     {
         yesButton.gameObject.SetActive(isActive);
         noButton.gameObject.SetActive(isActive);
+    }
+
+    public void SetSelectedGame(GameObject selectedGame)
+    {
+        Debug.Log(selectedGame);
+        Background.SetActive(false);
+        SelectGame.SetActive(false);
+        TicTacToe.SetActive(false);
+        Memory.SetActive(false);
+        Cups.SetActive(false);
+
+        selectedGame.SetActive(true);
     }
 
     private void OnDisable()
