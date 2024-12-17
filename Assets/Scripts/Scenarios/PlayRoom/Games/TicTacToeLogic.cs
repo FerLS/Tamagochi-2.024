@@ -22,19 +22,21 @@ public class TicTacToeLogic : MonoBehaviour
     public GameObject FinishText;
 
 
-    private void Start()
+    private void OnEnable()
     {
         FinishSign.SetActive(false);
         FinishText.SetActive(false);
         ResetBoard();
         boardObject.SetActive(true);
         backButton.SetActive(true);
+
         foreach (GameObject token in tokens)
         {
             token.SetActive(true);
         }
-    }
 
+        isGameOver = false; 
+    }
 
     public void PlayerMove(int tokenIndex)
     {
@@ -150,4 +152,18 @@ public class TicTacToeLogic : MonoBehaviour
         }
     }
 
+
+    public void RestartGame()
+    {
+        FinishSign.SetActive(false);
+        FinishText.SetActive(false);
+        ResetBoard();
+
+        foreach (GameObject token in tokens)
+        {
+            token.SetActive(true);
+        }
+
+        isGameOver = false;
+    }
 }
