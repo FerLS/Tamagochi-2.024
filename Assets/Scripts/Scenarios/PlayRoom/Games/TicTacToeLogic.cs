@@ -24,6 +24,8 @@ public class TicTacToeLogic : MonoBehaviour
 
     private void Start()
     {
+        FinishSign.SetActive(false);
+        FinishText.SetActive(false);
         ResetBoard();
         boardObject.SetActive(true);
         backButton.SetActive(true);
@@ -31,7 +33,6 @@ public class TicTacToeLogic : MonoBehaviour
         {
             token.SetActive(true);
         }
-        FinishSign.SetActive(false);
     }
 
 
@@ -131,7 +132,13 @@ public class TicTacToeLogic : MonoBehaviour
         {
             tmpComponent.text = message;
         }
-        Debug.Log(message); 
+        FinishText.SetActive(true);
+    }
+
+    public void GoBack()
+    {
+        FinishSign.SetActive(false);
+        FinishText.SetActive(false);
     }
 
     private void ResetBoard()
