@@ -1,4 +1,14 @@
 {
-    "emotion": "Normal",
-    "date": "2025-01-03"
+    "emotionDataList": [
+        {
+            "emotion": "Sad",
+            "date": "2025-01-03",
+            "time": "19:39:20"
+        },
+        {
+            "emotion": "Normal",
+            "date": "2025-01-03",
+            "time": "19:39:37"
+        }
+    ]
 }
