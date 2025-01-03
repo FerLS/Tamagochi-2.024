@@ -21,7 +21,6 @@ public class EmotionSelector : MonoBehaviour
             date = currentDate
         };
 
-        Debug.Log($"Emoción and date: {emotionData.emotion} & {emotionData.date}");
 
         string json = JsonUtility.ToJson(emotionData, true);
 
@@ -30,7 +29,7 @@ public class EmotionSelector : MonoBehaviour
 
         File.WriteAllText(filePath, json);
 
-        Debug.Log($"Emoción guardada en el archivo: {filePath}");
+        Debug.Log($"Saved on File: {filePath}");
     }
 }
 
