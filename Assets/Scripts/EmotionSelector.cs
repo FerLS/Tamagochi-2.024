@@ -25,24 +25,21 @@ public class EmotionSelector : MonoBehaviour
         };
 
         string filePath = Application.dataPath + $"/SavedData/{currentDate}.json";
+        //string filePath = Application.persistentDataPath + $"/{currentDate}.json";
 
         List<EmotionData> emotionList = new List<EmotionData>();
 
-        // Si el archivo ya existe, leer los datos existentes
         if (File.Exists(filePath))
         {
             string existingJson = File.ReadAllText(filePath);
             emotionList = JsonUtility.FromJson<EmotionDataList>(existingJson).emotionDataList;
         }
 
-        // Agregar el nuevo EmotionData a la lista
         emotionList.Add(emotionData);
 
-        // Serializar la lista completa de EmotionData
         EmotionDataList emotionDataList = new EmotionDataList { emotionDataList = emotionList };
         string json = JsonUtility.ToJson(emotionDataList, true);
 
-        // Guardar el archivo con los datos actualizados
         File.WriteAllText(filePath, json);
 
         Debug.Log($"Saved on File: {filePath}");
