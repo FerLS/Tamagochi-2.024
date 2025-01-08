@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-public class EmotionSelector : MonoBehaviour
+public class EmotionSaveSystem : MonoBehaviour
 {
     public string selectedEmotion = "";
 
