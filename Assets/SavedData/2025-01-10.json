@@ -1,27 +1,23 @@
 {
     "gameDataList": [
         {
-            "game": "Tic-Tac-Toe",
-            "result": "You won!",
+            "game": "Memory",
+            "result": "",
             "date": "2025-01-10",
-            "time": "09:52:21"
+            "time": "11:23:12"
+        },
+        {
+            "game": "Tic-Tac-Toe",
+            "result": "It's a draw!",
+            "date": "2025-01-10",
+            "time": "11:23:27"
         }
     ],
     "emotionDataList": [
         {
-            "emotion": "Sad",
+            "emotion": "Normal",
             "date": "2025-01-10",
-            "time": "09:51:35"
-        },
-        {
-            "emotion": "Surprised",
-            "date": "2025-01-10",
-            "time": "09:51:56"
-        },
-        {
-            "emotion": "Surprised",
-            "date": "2025-01-10",
-            "time": "09:52:12"
+            "time": "11:22:39"
         }
     ]
 }
