@@ -1,0 +1,27 @@
+{
+    "gameDataList": [
+        {
+            "game": "Tic-Tac-Toe",
+            "result": "You won!",
+            "date": "2025-01-10",
+            "time": "09:52:21"
+        }
+    ],
+    "emotionDataList": [
+        {
+            "emotion": "Sad",
+            "date": "2025-01-10",
+            "time": "09:51:35"
+        },
+        {
+            "emotion": "Surprised",
+            "date": "2025-01-10",
+            "time": "09:51:56"
+        },
+        {
+            "emotion": "Surprised",
+            "date": "2025-01-10",
+            "time": "09:52:12"
+        }
+    ]
+}
