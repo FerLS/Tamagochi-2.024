@@ -8532,7 +8532,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1872419336}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SaveEmotion
-        m_Mode: 5
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19546,7 +19546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef6ef1307b66b945a34af1c64e54fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEmotion: 
 --- !u!1 &1243336940
 GameObject:
   m_ObjectHideFlags: 0
