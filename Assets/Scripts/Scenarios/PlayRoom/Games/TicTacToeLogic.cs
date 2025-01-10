@@ -21,6 +21,8 @@ public class TicTacToeLogic : MonoBehaviour
     public GameObject FinishSign;
     public GameObject FinishText;
 
+    [Header("Save System")]
+    public SaveSystem saveSystem;
 
     private void OnEnable()
     {
@@ -135,6 +137,10 @@ public class TicTacToeLogic : MonoBehaviour
             tmpComponent.text = message;
         }
         FinishText.SetActive(true);
+        if (saveSystem != null)
+        {
+            saveSystem.SaveGameData("Tic-Tac-Toe", message);
+        }
     }
 
     public void GoBack()

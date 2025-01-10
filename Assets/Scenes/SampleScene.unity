@@ -1325,8 +1325,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
@@ -8027,6 +8027,7 @@ MonoBehaviour:
   - {fileID: 311835999}
   FinishSign: {fileID: 1774153295}
   FinishText: {fileID: 30624567}
+  saveSystem: {fileID: 1872419336}
 --- !u!1 &396840466
 GameObject:
   m_ObjectHideFlags: 0
@@ -8528,10 +8529,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SaveEmotion
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9145,8 +9146,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
@@ -18301,8 +18302,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
@@ -23198,8 +23199,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
@@ -23589,8 +23590,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
@@ -23786,6 +23787,7 @@ GameObject:
   - component: {fileID: 1872419332}
   - component: {fileID: 1872419331}
   - component: {fileID: 1872419335}
+  - component: {fileID: 1872419336}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -23897,6 +23899,19 @@ MonoBehaviour:
   ReportsScreen: {fileID: 652008999}
   EmotionsPanel: {fileID: 1607558501}
   speechBubble: {fileID: 1243336940}
+--- !u!114 &1872419336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872419330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8795029f34d19b0408cd253cce8dcb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedEmotion: 
 --- !u!1001 &1874748245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24621,6 +24636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1975482240}
   - component: {fileID: 1975482241}
+  - component: {fileID: 1975482242}
   m_Layer: 5
   m_Name: GameScreen
   m_TagString: Untagged
@@ -24672,6 +24688,18 @@ MonoBehaviour:
   bathroomButton: {fileID: 886677736}
   kitchenScenary: {fileID: 92568737}
   kitchenButton: {fileID: 1968936704}
+--- !u!114 &1975482242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975482239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd5b42aac41ecf44b17998c7ee7e5c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1975858462
 GameObject:
   m_ObjectHideFlags: 0
@@ -25239,8 +25267,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1240484010}
-        m_TargetAssemblyTypeName: EmotionSelector, Assembly-CSharp
+      - m_Target: {fileID: 1872419336}
+        m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
         m_MethodName: SelectEmotion
         m_Mode: 5
         m_Arguments:
