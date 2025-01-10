@@ -4,37 +4,98 @@ using UnityEngine.Events;
 
 public class EmotionSystem : MonoBehaviour
 {
-
+    [Header("Emotions")]
     public List<Emotion> emotions = new List<Emotion>();
     public string currentEmotion;
 
+    [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
-
     public Animator anim;
 
-    // Cambiar la intensidad de una emoción
+
+    private const float TotalPercentage = 100f;
+
+    void Start()
+    {
+        InitializeEmotions();
+    }
+
+    private void InitializeEmotions()
+    {
+        int amount = emotions.Count;
+        float initialPercentage = TotalPercentage / amount; 
+        foreach (var emotion in emotions)
+        {
+            emotion.intensity = initialPercentage;
+        }
+        UpdateCurrentEmotion();
+    }
+
     public void AdjustEmotion(string name, float amount)
     {
+        Emotion targetEmotion = null;
+        float totalAdjustment = 0f;
+
         foreach (var emotion in emotions)
         {
             if (emotion.name == name)
             {
-                emotion.intensity = Mathf.Clamp(emotion.intensity + amount, 0, 100);
+                targetEmotion = emotion;
+                amount = amount / 100;
+                float newIntensity = Mathf.Clamp(emotion.intensity + amount * emotion.intensity, 0, TotalPercentage);
+                totalAdjustment = newIntensity - emotion.intensity;
+                emotion.intensity = newIntensity;
+                Debug.Log($"Emotion: {emotion.name}, New Intensity: {newIntensity}, Adjustment: {totalAdjustment}");
                 break;
             }
+            
         }
-        ChangeAnimation(name);
-
+        if (targetEmotion != null)
+        {
+            DistributeAdjustment(targetEmotion, totalAdjustment);
+            UpdateCurrentEmotion();
+            ChangeAnimation(name);
+        }
         UpdateCurrentEmotion();
-
-
-
-
-
-
     }
 
-    // Determinar la emoción predominante
+    private void DistributeAdjustment(Emotion adjustedEmotion, float adjustment)
+    {
+        //float totalIntensity = TotalPercentage - adjustedEmotion.intensity;
+        //float adjustmentPerEmotion = totalIntensity == 0 ? 0 : adjustment / totalIntensity;
+
+        float adjustmentPerEmotion = adjustment / (emotions.Count - 1);
+        foreach (var emotion in emotions)
+        {
+            if (emotion != adjustedEmotion)
+            {
+                float newIntensity = emotion.intensity - adjustmentPerEmotion;
+                //float newIntensity = Mathf.Clamp(emotion.intensity - adjustmentPerEmotion * emotion.intensity, 0, TotalPercentage);
+                emotion.intensity = newIntensity;
+            }
+        }
+        NormalizePercentages();
+    }
+
+    private void NormalizePercentages()
+    {
+        float total = 0f;
+        foreach (var emotion in emotions)
+        {
+            total += emotion.intensity;
+        }
+
+        float correction = TotalPercentage - total;
+
+        if (emotions.Count > 0)
+        {
+            int randomEmotion = Random.Range(0, emotions.Count);
+            Debug.Log(randomEmotion);
+            emotions[randomEmotion].intensity = Mathf.Clamp(emotions[randomEmotion].intensity + correction, 0, TotalPercentage);
+        }
+    }
+
+
     private void UpdateCurrentEmotion()
     {
         Emotion dominantEmotion = emotions[0];
@@ -50,10 +111,6 @@ public class EmotionSystem : MonoBehaviour
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
         Debug.Log($"La emoción predominante es: {currentEmotion}");
-
-
-
-
     }
 
 

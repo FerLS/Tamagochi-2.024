@@ -7474,6 +7474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227ef99ff8e29ff478226f772dabd141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishSign: {fileID: 166768036}
+  gamePuzzles: []
+  btns: []
   animals:
   - {fileID: 7935234321397735378, guid: 65311a6096d1f4548b8be69bab1085c8, type: 3}
   - {fileID: 1480917699468073914, guid: d1aaf8bd7d31341468dce33d3aab0cf6, type: 3}
@@ -7484,9 +7487,7 @@ MonoBehaviour:
   - {fileID: -3577052445578082173, guid: 073a33c76b25180419b47090d7d5c602, type: 3}
   - {fileID: 5604796196903453309, guid: 7674d6b3e58801d4f8be583736aea903, type: 3}
   backImage: {fileID: -7443756053782179069, guid: 6642b2bf4f776514891773754b963c4e, type: 3}
-  FinishSign: {fileID: 166768036}
-  gamePuzzles: []
-  btns: []
+  saveSystem: {fileID: 1872419336}
 --- !u!1 &360726226
 GameObject:
   m_ObjectHideFlags: 0
@@ -19510,7 +19511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1240484009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24642,7 +24643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1975482240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31322,15 +31323,13 @@ MonoBehaviour:
   emotions:
   - name: Angry
     intensity: 0
-  - name: Sad
-    intensity: 0
   - name: Happy
     intensity: 0
   - name: Sleep
     intensity: 0
   - name: Surprised
     intensity: 0
-  - name: Idle
+  - name: Sad
     intensity: 0
   currentEmotion: Idle
   OnEmotionChange:

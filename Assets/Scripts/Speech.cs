@@ -131,7 +131,7 @@ public class Speech : MonoBehaviour
             string feeling = "Right now you are feeling happy. ";
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
-            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 100).";
+            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
             string prompt = intro + feeling + treatment + restrictions + format;
 
