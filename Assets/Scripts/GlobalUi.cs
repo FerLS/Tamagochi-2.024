@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class GlobalUi : MonoBehaviour
 {
+
+
     [Header("Screens")]
     public GameObject InitialScreen;
     public GameObject GameScreen;
@@ -15,8 +17,11 @@ public class GlobalUi : MonoBehaviour
     private Image[] emotionFaces;
 
 
+<<<<<<< Updated upstream
     [Header("Speech")]
     public GameObject speechBubble;
+=======
+>>>>>>> Stashed changes
 
     private void Start()
     {
@@ -51,12 +56,13 @@ public class GlobalUi : MonoBehaviour
     {
         foreach (var face in emotionFaces)
         {
-            
+
             face.color = new Color(255, 255, 255, 0.5f);
         }
         emotionFace.color = new Color(255, 255, 255, 1);
     }
 
+<<<<<<< Updated upstream
 
     public void SetSpeechBubble(bool isActive)
     {
@@ -70,4 +76,6 @@ public class GlobalUi : MonoBehaviour
         }
     }
 
+=======
+>>>>>>> Stashed changes
 }

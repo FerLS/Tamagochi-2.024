@@ -18,10 +18,8 @@ using System.Collections;
 
 public class Speech : MonoBehaviour
 {
-    public TextMeshProUGUI outputText;
 
-    public Button startRecoButton;
-
+    public static Speech instance;
     public EmotionSystem emotionSystem;
 
     private object threadLocker = new object();
@@ -30,7 +28,6 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
-    private GlobalUi globalUI;
 
     private string recognizedSpeech;
 
@@ -58,8 +55,24 @@ public class Speech : MonoBehaviour
         public string intensity;
     }
 
+<<<<<<< Updated upstream
 
     public async void ButtonClick()
+=======
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public async Task<string> GetRecognizedSpeech()
+>>>>>>> Stashed changes
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
@@ -110,8 +123,71 @@ public class Speech : MonoBehaviour
                 waitingForReco = false;
             }
         }
+<<<<<<< Updated upstream
+=======
+        return recognizedSpeech;
     }
 
+    public async void OnClickMicro()
+    {
+
+        if (!micPermissionGranted)
+        {
+            message = "I can't hear you. Please enable microphone access in your device settings.";
+            return;
+
+
+        }
+        recognizedSpeech = await GetRecognizedSpeech();
+        if (recognizedSpeech != null)
+        {
+            if (recognizedSpeech == string.Empty)
+            {
+                message = "Sorry, can you repeat it?";
+                await SpeakAsync(message, false);
+            }
+            else
+            {
+                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
+                print(tamagotchiReply);
+
+                var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+
+                message = response.response;
+                emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+                await SpeakAsync(message, false);
+            }
+
+        }
+>>>>>>> Stashed changes
+    }
+
+
+    public async void OnTextSumbit(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            message = "Please, write something.";
+            return;
+        }
+
+        //Clean special characters
+
+        text = CleanSpecialCharacters(text);
+
+
+        string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
+        print(tamagotchiReply);
+
+        var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+        message = response.response;
+        emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+        await SpeakAsync(message, false);
+    }
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
     {
         using (HttpClient client = new HttpClient())
@@ -158,11 +234,23 @@ public class Speech : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     public async Task SpeakAsync(string textToSpeak)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
         RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
+=======
+
+
+    public async Task SpeakAsync(string textToSpeak, bool isQuestion = false)
+    {
+        var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+
+        message = textToSpeak;
+        RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak));
+
+>>>>>>> Stashed changes
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -180,7 +268,11 @@ public class Speech : MonoBehaviour
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
                 Debug.Log("Speech synthesized: " + textToSpeak);
+<<<<<<< Updated upstream
                 Debug.Log("Bubble should hide");
+=======
+
+>>>>>>> Stashed changes
             }
             else
             {
@@ -188,7 +280,15 @@ public class Speech : MonoBehaviour
             }
         }
 
+<<<<<<< Updated upstream
         RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
+=======
+        if (!isQuestion)
+        {
+            RunOnMainThread(() => GameUI.instance.Talk(false));
+        }
+
+>>>>>>> Stashed changes
     }
 
     private void RunOnMainThread(System.Action action)
@@ -198,26 +298,9 @@ public class Speech : MonoBehaviour
 
     void Start()
     {
-        globalUI = FindObjectOfType<GlobalUi>();
 
-        if (globalUI == null)
-        {
-            Debug.LogError("GlobalUI component not found in the scene.");
-        }
 
-        if (outputText == null)
-        {
-            UnityEngine.Debug.LogError("outputText property is null! Assign a UI Text element to it.");
-        }
-        else if (startRecoButton == null)
-        {
-            message = "startRecoButton property is null! Assign a UI Button to it.";
-            UnityEngine.Debug.LogError(message);
-        }
-        else
-        {
 #if PLATFORM_ANDROID
-        message = "Waiting for mic permission";
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             Permission.RequestUserPermission(Permission.Microphone);
@@ -228,13 +311,12 @@ public class Speech : MonoBehaviour
             Application.RequestUserAuthorization(UserAuthorization.Microphone);
         }
 #else
-            micPermissionGranted = true;
+        micPermissionGranted = true;
 #endif
-            startRecoButton.onClick.AddListener(ButtonClick);
 
-            StartCoroutine(SpeakGreeting());
-        }
+        StartCoroutine(SpeakGreeting());
     }
+
 
     private IEnumerator SpeakGreeting()
     {
@@ -256,41 +338,68 @@ public class Speech : MonoBehaviour
         }
     }
 
-
-    void Update()
+    string CleanSpecialCharacters(string text)
     {
-#if PLATFORM_ANDROID
-        if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
-        {
-            micPermissionGranted = true;
-            message = "Click button to recognize speech";
-        }
-#elif PLATFORM_IOS
-        if (!micPermissionGranted && Application.HasUserAuthorization(UserAuthorization.Microphone))
-        {
-            micPermissionGranted = true;
-            message = "Click button to recognize speech";
-        }
-#endif
 
-        lock (threadLocker)
-        {
-            if (startRecoButton != null)
-            {
-                startRecoButton.interactable = !waitingForReco && micPermissionGranted;
-            }
-            if (outputText != null)
-            {
-                outputText.text = message;
-            }
-        }
+        string cleanText = text;
+        cleanText = cleanText.Replace("á", "a");
+        cleanText = cleanText.Replace("é", "e");
+        cleanText = cleanText.Replace("í", "i");
+        cleanText = cleanText.Replace("ó", "o");
+        cleanText = cleanText.Replace("ú", "u");
+        cleanText = cleanText.Replace("Á", "A");
+        cleanText = cleanText.Replace("É", "E");
+        cleanText = cleanText.Replace("Í", "I");
+        cleanText = cleanText.Replace("Ó", "O");
+        cleanText = cleanText.Replace("Ú", "U");
+        cleanText = cleanText.Replace("ñ", "n");
+        cleanText = cleanText.Replace("Ñ", "N");
+        cleanText = cleanText.Replace("¿", "");
+        cleanText = cleanText.Replace("?", "");
+        cleanText = cleanText.Replace("\"", "");
+        cleanText = cleanText.Replace("!", "");
+        cleanText = cleanText.Replace("-", "");
+        cleanText = cleanText.Replace("*", "");
+        cleanText = cleanText.Replace("/", "");
+        cleanText = cleanText.Replace("\\", "");
+        cleanText = cleanText.Replace("|", "");
+        cleanText = cleanText.Replace("_", "");
+        cleanText = cleanText.Replace("°", "");
+        cleanText = cleanText.Replace("ª", "");
+        cleanText = cleanText.Replace("·", "");
+        cleanText = cleanText.Replace("¬", "");
+
+        return cleanText;
+
+
     }
+    /* 
+        void Update()
+        {
+    #if PLATFORM_ANDROID
+            if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                micPermissionGranted = true;
+                message = "Click button to recognize speech";
+            }
+    #elif PLATFORM_IOS
+            if (!micPermissionGranted && Application.HasUserAuthorization(UserAuthorization.Microphone))
+            {
+                micPermissionGranted = true;
+                message = "Click button to recognize speech";
+            }
+    #endif
 
+<<<<<<< Updated upstream
     public string GetRecognizedSpeech()
     {
         return recognizedSpeech;
     }
 
+=======
+        }
+    */
+>>>>>>> Stashed changes
     [System.Serializable]
     public class OpenAIResponse
     {
