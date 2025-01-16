@@ -1,8 +1,22 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
+
+    public static GameUI instance;
+
+    [Header("Speech")]
+
+    [SerializeField] private GameObject typeScreen;
+    [SerializeField] private TMP_InputField typeInputField;
+
+    public GameObject speechBubble;
+
+    public TextMeshProUGUI outputText;
+
+
     [Header("Park")]
     [SerializeField] private GameObject parkScenary;
     [SerializeField] private Button parkButton;
@@ -30,26 +44,53 @@ public class GameUI : MonoBehaviour
         HighlightButton(bedroomButton);
     }
 
+<<<<<<< Updated upstream
+=======
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void ChangeScenary(GameObject scenary)
     {
-        parkScenary.SetActive(false);
+>>>>>>> Stashed changes
+    parkScenary.SetActive(false);
         playroomScenary.SetActive(false);
         bedroomScenary.SetActive(false);
         bathroomScenary.SetActive(false);
         kitchenScenary.SetActive(false);
 
-        scenary.SetActive(true);
+        scenary.gameObject.SetActive(true);
     }
 
-    public void HighlightButton(Button chosenScenario)
-    {
-        if (lastClickedButton != null)
-        {
-            lastClickedButton.image.color = new Color(89f / 255f, 89f / 255f, 89f / 255f);
-        }
+public void OpenTypeScreen()
+{
 
-        chosenScenario.image.color = new Color(202f / 255f, 121f / 255f, 34f / 255f); ;
+    typeScreen.SetActive(true);
+    typeInputField.Select();
+    typeInputField.text = "";
+    typeInputField.ActivateInputField();
+}
 
-        lastClickedButton = chosenScenario;
-    }
+public void CloseTypeScreen()
+{
+    typeScreen.SetActive(false);
+    Speech.instance.OnTextSumbit(typeInputField.text);
+
+
+}
+
+public void Talk(bool isTalking, string message = "")
+{
+    speechBubble.SetActive(isTalking);
+    outputText.text = message;
+}
+
 }

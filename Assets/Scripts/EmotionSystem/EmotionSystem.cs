@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,23 +16,39 @@ public class EmotionSystem : MonoBehaviour
     // Cambiar la intensidad de una emoción
     public void AdjustEmotion(string name, float amount)
     {
+
+        float amountToChange = 0;
         foreach (var emotion in emotions)
         {
             if (emotion.name == name)
             {
+                float prevIntensity = emotion.intensity;
                 emotion.intensity = Mathf.Clamp(emotion.intensity + amount, 0, 100);
+                amountToChange = emotion.intensity - prevIntensity;
                 break;
             }
         }
-        ChangeAnimation(name);
+
+        int indexEmotion = 0;
+
+        emotions.Sort((a, b) => a.intensity.CompareTo(b.intensity));
+
+        while (amountToChange > 0)
+        {
+
+            if (emotions[indexEmotion].intensity > 0 && emotions[indexEmotion].name != name)
+
+            {
+                emotions[indexEmotion].intensity -= 1;
+                amountToChange -= 1;
+            }
+
+            indexEmotion++;
+            indexEmotion = indexEmotion % emotions.Count;
+        }
+
 
         UpdateCurrentEmotion();
-
-
-
-
-
-
     }
 
     // Determinar la emoción predominante
@@ -49,6 +66,7 @@ public class EmotionSystem : MonoBehaviour
 
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
+        ChangeAnimation(dominantEmotion.name);
         Debug.Log($"La emoción predominante es: {currentEmotion}");
 
 

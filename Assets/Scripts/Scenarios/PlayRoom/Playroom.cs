@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 
 public class Playroom : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class Playroom : MonoBehaviour
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
 
-    private async void OnEnable() 
+    private async void OnEnable()
     {
         Background.SetActive(true);
         SelectGame.SetActive(false);
@@ -67,12 +67,7 @@ public class Playroom : MonoBehaviour
 
     private void OnDisable()
     {
-        tamagotchiSpeech.HideSpeechBubble();
-    }
-
-    private void Update()
-    {
-
+        GameUI.instance.Talk(false);
     }
 
 
