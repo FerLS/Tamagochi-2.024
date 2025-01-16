@@ -88,33 +88,16 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeech = result.Text;
-
-                    string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
-
-
-                    print(tamagotchiReply);
-
-                    var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
-
-
-
-
-
-                    message = response.response;
-                    emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
-
-                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
                     recognizedSpeech = string.Empty;
-                    message = "Sorry, can you repeat it?";
-                    await SpeakAsync(message);
                 }
                 else if (result.Reason == ResultReason.Canceled)
                 {
                     var cancellation = CancellationDetails.FromResult(result);
                     message = $"CANCELED: Reason={cancellation.Reason}, ErrorDetails={cancellation.ErrorDetails}";
+                    return null;
                 }
             }
             finally
@@ -222,9 +205,6 @@ public class Speech : MonoBehaviour
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
-
-
-
             }
             else
             {

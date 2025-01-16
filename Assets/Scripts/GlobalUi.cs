@@ -28,28 +28,41 @@ public class GlobalUi : MonoBehaviour
         emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
     }
 
-
     public void EnterGameScreen()
     {
         InitialScreen.SetActive(false);
         GameScreen.SetActive(true);
     }
+
     public void EnterReportsScreen()
     {
         ReportsScreen.SetActive(true);
     }
+
     public void ExitReportsScreen()
     {
         ReportsScreen.SetActive(false);
     }
+
     public void EnterSettingsScreen()
     {
         SettingsScreen.SetActive(true);
     }
+
     public void ExitSettingsScreen()
     {
 
         SettingsScreen.SetActive(false);
+    }
+
+    public void SetPreviousScreen(GameObject previousScreen)
+    {
+        previousScreen.SetActive(true);
+    }
+
+    public void HideScreen(GameObject actualScreen)
+    {
+        actualScreen.SetActive(false);
     }
 
     public void SetEmotionFace(Image emotionFace)

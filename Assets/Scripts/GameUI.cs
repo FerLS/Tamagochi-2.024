@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -18,26 +19,30 @@ public class GameUI : MonoBehaviour
 
     [Header("Park")]
     [SerializeField] private GameObject parkScenary;
+    [SerializeField] private Button parkButton;
 
     [Header("Playroom")]
-
     [SerializeField] private GameObject playroomScenary;
+    [SerializeField] private Button playroomButton;
 
     [Header("Bedroom")]
-
     [SerializeField] private GameObject bedroomScenary;
+    [SerializeField] private Button bedroomButton;
 
     [Header("Bathroom")]
-
     [SerializeField] private GameObject bathroomScenary;
+    [SerializeField] private Button bathroomButton;
 
     [Header("Kitchen")]
-
     [SerializeField] private GameObject kitchenScenary;
+    [SerializeField] private Button kitchenButton;
 
+    private Button lastClickedButton;
 
-    public void ChangeScenary(Transform scenary)
+    void Start()
     {
+        HighlightButton(bedroomButton);
+    }
 
 <<<<<<< Updated upstream
 =======
@@ -56,7 +61,7 @@ public class GameUI : MonoBehaviour
     public void ChangeScenary(GameObject scenary)
     {
 >>>>>>> Stashed changes
-        parkScenary.SetActive(false);
+    parkScenary.SetActive(false);
         playroomScenary.SetActive(false);
         bedroomScenary.SetActive(false);
         bathroomScenary.SetActive(false);
@@ -65,27 +70,27 @@ public class GameUI : MonoBehaviour
         scenary.gameObject.SetActive(true);
     }
 
-    public void OpenTypeScreen()
-    {
+public void OpenTypeScreen()
+{
 
-        typeScreen.SetActive(true);
-        typeInputField.Select();
-        typeInputField.text = "";
-        typeInputField.ActivateInputField();
-    }
+    typeScreen.SetActive(true);
+    typeInputField.Select();
+    typeInputField.text = "";
+    typeInputField.ActivateInputField();
+}
 
-    public void CloseTypeScreen()
-    {
-        typeScreen.SetActive(false);
-        Speech.instance.OnTextSumbit(typeInputField.text);
+public void CloseTypeScreen()
+{
+    typeScreen.SetActive(false);
+    Speech.instance.OnTextSumbit(typeInputField.text);
 
 
-    }
+}
 
-    public void Talk(bool isTalking, string message = "")
-    {
-        speechBubble.SetActive(isTalking);
-        outputText.text = message;
-    }
+public void Talk(bool isTalking, string message = "")
+{
+    speechBubble.SetActive(isTalking);
+    outputText.text = message;
+}
 
 }
