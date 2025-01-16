@@ -55,10 +55,6 @@ public class Speech : MonoBehaviour
         public string intensity;
     }
 
-<<<<<<< Updated upstream
-
-    public async void ButtonClick()
-=======
     private void Awake()
     {
         if (instance == null)
@@ -72,7 +68,6 @@ public class Speech : MonoBehaviour
     }
 
     public async Task<string> GetRecognizedSpeech()
->>>>>>> Stashed changes
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
@@ -106,8 +101,6 @@ public class Speech : MonoBehaviour
                 waitingForReco = false;
             }
         }
-<<<<<<< Updated upstream
-=======
         return recognizedSpeech;
     }
 
@@ -144,7 +137,6 @@ public class Speech : MonoBehaviour
             }
 
         }
->>>>>>> Stashed changes
     }
 
 
@@ -214,13 +206,6 @@ public class Speech : MonoBehaviour
         }
     }
 
-<<<<<<< Updated upstream
-    public async Task SpeakAsync(string textToSpeak)
-    {
-        var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
-
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
-=======
 
 
     public async Task SpeakAsync(string textToSpeak, bool isQuestion = false)
@@ -230,7 +215,6 @@ public class Speech : MonoBehaviour
         message = textToSpeak;
         RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak));
 
->>>>>>> Stashed changes
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -248,11 +232,6 @@ public class Speech : MonoBehaviour
             if (result.Reason == ResultReason.SynthesizingAudioCompleted)
             {
                 Debug.Log("Speech synthesized: " + textToSpeak);
-<<<<<<< Updated upstream
-                Debug.Log("Bubble should hide");
-=======
-
->>>>>>> Stashed changes
             }
             else
             {
@@ -260,15 +239,11 @@ public class Speech : MonoBehaviour
             }
         }
 
-<<<<<<< Updated upstream
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
-=======
         if (!isQuestion)
         {
             RunOnMainThread(() => GameUI.instance.Talk(false));
         }
 
->>>>>>> Stashed changes
     }
 
     private void RunOnMainThread(System.Action action)
@@ -370,16 +345,8 @@ public class Speech : MonoBehaviour
             }
     #endif
 
-<<<<<<< Updated upstream
-    public string GetRecognizedSpeech()
-    {
-        return recognizedSpeech;
-    }
-
-=======
         }
     */
->>>>>>> Stashed changes
     [System.Serializable]
     public class OpenAIResponse
     {

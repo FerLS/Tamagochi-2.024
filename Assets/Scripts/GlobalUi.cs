@@ -17,11 +17,6 @@ public class GlobalUi : MonoBehaviour
     private Image[] emotionFaces;
 
 
-<<<<<<< Updated upstream
-    [Header("Speech")]
-    public GameObject speechBubble;
-=======
->>>>>>> Stashed changes
 
     private void Start()
     {
@@ -75,20 +70,4 @@ public class GlobalUi : MonoBehaviour
         emotionFace.color = new Color(255, 255, 255, 1);
     }
 
-<<<<<<< Updated upstream
-
-    public void SetSpeechBubble(bool isActive)
-    {
-        if (speechBubble != null)
-        {
-            speechBubble.SetActive(isActive);
-        }
-        else
-        {
-            Debug.LogError("SpeechBubble is not assigned in GlobalUI.");
-        }
-    }
-
-=======
->>>>>>> Stashed changes
 }
