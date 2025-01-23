@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -110,6 +111,7 @@ public class EmotionSystem : MonoBehaviour
 
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
+        ChangeAnimation(dominantEmotion.name);
         Debug.Log($"La emoción predominante es: {currentEmotion}");
     }
 
