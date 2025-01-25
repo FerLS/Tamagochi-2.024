@@ -18,7 +18,7 @@ using System.Collections;
 
 public class Speech : MonoBehaviour
 {
-
+    [Header("Emotions")]
     public static Speech instance;
     public EmotionSystem emotionSystem;
 
