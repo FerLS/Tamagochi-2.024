@@ -7769,7 +7769,7 @@ MonoBehaviour:
   - {fileID: -3577052445578082173, guid: 073a33c76b25180419b47090d7d5c602, type: 3}
   - {fileID: 5604796196903453309, guid: 7674d6b3e58801d4f8be583736aea903, type: 3}
   backImage: {fileID: -7443756053782179069, guid: 6642b2bf4f776514891773754b963c4e, type: 3}
-  saveSystem: {fileID: 0}
+  saveSystem: {fileID: 1872419336}
 --- !u!1 &360726226
 GameObject:
   m_ObjectHideFlags: 0
@@ -32442,16 +32442,14 @@ MonoBehaviour:
   emotions:
   - name: Angry
     intensity: 0
-  - name: Sad
-    intensity: 0
   - name: Happy
     intensity: 0
   - name: Sleep
     intensity: 0
   - name: Surprised
     intensity: 0
-  - name: Idle
-    intensity: 100
+  - name: Sad
+    intensity: 0
   currentEmotion: Idle
   OnEmotionChange:
     m_PersistentCalls:
