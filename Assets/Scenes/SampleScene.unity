@@ -20138,7 +20138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1240484009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25784,7 +25784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1975482240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32427,6 +32427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotionSystem: {fileID: 3901171192785145037}
+  saveSystem: {fileID: 1872419336}
 --- !u!114 &3901171192785145037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32440,17 +32441,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotions:
-  - name: Angry
+  - name: Neutral
     intensity: 0
   - name: Happy
     intensity: 0
+  - name: Surprised
+    intensity: 0
   - name: Sleep
     intensity: 0
-  - name: Surprised
+  - name: Angry
     intensity: 0
   - name: Sad
     intensity: 0
-  currentEmotion: Idle
+  currentEmotion: Neutral
   OnEmotionChange:
     m_PersistentCalls:
       m_Calls: []

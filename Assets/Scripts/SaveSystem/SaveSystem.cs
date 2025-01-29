@@ -63,6 +63,48 @@ public class SaveSystem : MonoBehaviour
         SaveCombinedData(combinedData);
     }
 
+    public string GetRecentEmotion()
+    {
+        CombinedDataList combinedData = LoadCombinedData();
+        if (combinedData.emotionDataList.Count > 0)
+        {
+            // Recuperar la emoción más reciente
+            return combinedData.emotionDataList[combinedData.emotionDataList.Count - 1].emotion;
+        }
+        return "neutral";
+    }
+
+    public string GetMostFrequentEmotion()
+    {
+        CombinedDataList combinedData = LoadCombinedData();
+        Dictionary<string, int> emotionCount = new Dictionary<string, int>();
+
+        foreach(var emotion in combinedData.emotionDataList)
+        {
+            if (emotionCount.ContainsKey(emotion.emotion))
+            {
+                emotionCount[emotion.emotion]++;
+            }
+            else
+            {
+                emotionCount[emotion.emotion] = 1;
+            }
+        }
+
+        string mostFrequentEmotion = "";
+        int max = 0;
+        foreach(var emotion in emotionCount)
+        {
+            if (emotion.Value > max)
+            {
+                mostFrequentEmotion = emotion.Key;
+                max = emotion.Value;
+            }
+        }
+
+        return mostFrequentEmotion;
+    }
+
     private CombinedDataList LoadCombinedData()
     {
         if (File.Exists(filePath))
@@ -78,6 +120,8 @@ public class SaveSystem : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
     }
+
+   
 
     /* // Guardar datos
     public static void SaveGame(GameData data)

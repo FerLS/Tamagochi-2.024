@@ -112,7 +112,6 @@ public class EmotionSystem : MonoBehaviour
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
         ChangeAnimation(dominantEmotion.name);
-        Debug.Log($"La emoción predominante es: {currentEmotion}");
     }
 
 
