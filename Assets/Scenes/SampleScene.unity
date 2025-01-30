@@ -32447,13 +32447,14 @@ MonoBehaviour:
     intensity: 0
   - name: Surprised
     intensity: 0
-  - name: Sleep
+  - name: Sleepy
     intensity: 0
   - name: Angry
     intensity: 0
   - name: Sad
     intensity: 0
   currentEmotion: Neutral
+  energyBar: {fileID: 908660359}
   OnEmotionChange:
     m_PersistentCalls:
       m_Calls: []
