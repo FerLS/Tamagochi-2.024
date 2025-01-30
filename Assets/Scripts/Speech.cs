@@ -219,7 +219,6 @@ public class Speech : MonoBehaviour
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
 
-                Debug.Log(responseBody);
                 return reply.choices[0].message.content.Trim();
             }
             else

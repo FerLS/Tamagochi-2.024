@@ -9,6 +9,10 @@ public class EmotionSystem : MonoBehaviour
     public List<Emotion> emotions = new List<Emotion>();
     public string currentEmotion;
 
+    [Header("Energy Bar")]
+    public EnergyBar energyBar; 
+
+
     [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
     public Animator anim;
@@ -19,17 +23,6 @@ public class EmotionSystem : MonoBehaviour
     void Start()
     {
         InitializeEmotions();
-    }
-
-    private void InitializeEmotions()
-    {
-        int amount = emotions.Count;
-        float initialPercentage = TotalPercentage / amount; 
-        foreach (var emotion in emotions)
-        {
-            emotion.intensity = initialPercentage;
-        }
-        UpdateCurrentEmotion();
     }
 
     public void AdjustEmotion(string name, float amount)
@@ -46,8 +39,8 @@ public class EmotionSystem : MonoBehaviour
                 float newIntensity = Mathf.Clamp(emotion.intensity + amount * emotion.intensity, 0, TotalPercentage);
                 totalAdjustment = newIntensity - emotion.intensity;
                 emotion.intensity = newIntensity;
-                Debug.Log($"Emotion: {emotion.name}, New Intensity: {newIntensity}, Adjustment: {totalAdjustment}");
                 break;
+
             }
             
         }
@@ -58,6 +51,26 @@ public class EmotionSystem : MonoBehaviour
             ChangeAnimation(name);
         }
         UpdateCurrentEmotion();
+
+        AdjustEnergyBar();
+    }
+
+    public void ChangeAnimation(string emotion)
+    {
+        anim.CrossFade(emotion, 0.1f);
+    }
+
+    private void InitializeEmotions()
+    {
+        int amount = emotions.Count;
+        float initialPercentage = TotalPercentage / amount;
+        foreach (var emotion in emotions)
+        {
+            emotion.intensity = initialPercentage;
+        }
+        UpdateCurrentEmotion();
+
+        AdjustEnergyBar();
     }
 
     private void DistributeAdjustment(Emotion adjustedEmotion, float adjustment)
@@ -114,11 +127,34 @@ public class EmotionSystem : MonoBehaviour
         ChangeAnimation(dominantEmotion.name);
     }
 
-
-    public void ChangeAnimation(string emotion)
+    private void AdjustEnergyBar()
     {
-        anim.CrossFade(emotion, 0.1f);
+        float positiveEmotions = 0;
+        float sleepy = 0;
+        float relation = 0;
+
+        foreach (var emotion in emotions)
+        {
+            if (emotion.name == "Happy" 
+                || emotion.name == "Surprised" 
+                || emotion.name == "Neutral")
+            {
+                positiveEmotions += emotion.intensity;
+            }
+            if (emotion.name == "Sleepy")
+            {
+                sleepy += emotion.intensity;
+            }
+        }
+
+        relation = 1 - (sleepy / positiveEmotions);
+
+
+        Debug.Log($"Positive: {positiveEmotions}, Sleepy: {sleepy}, Relation: {relation}");
+        energyBar.SetEnergy(relation);
+
     }
+    
 
 
 }
