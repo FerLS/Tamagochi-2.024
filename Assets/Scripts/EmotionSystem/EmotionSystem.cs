@@ -55,6 +55,19 @@ public class EmotionSystem : MonoBehaviour
         AdjustEnergyBar();
     }
 
+    public float GetEmotionIntensity(string name)
+    {
+        float intensity = 0;
+        foreach (var emotion in emotions)
+        {
+            if (emotion.name == name)
+            {
+                intensity = emotion.intensity;
+            }
+        }
+        return intensity;
+    }
+
     public void ChangeAnimation(string emotion)
     {
         anim.CrossFade(emotion, 0.1f);
@@ -149,8 +162,6 @@ public class EmotionSystem : MonoBehaviour
 
         relation = 1 - (sleepy / positiveEmotions);
 
-
-        Debug.Log($"Positive: {positiveEmotions}, Sleepy: {sleepy}, Relation: {relation}");
         energyBar.SetEnergy(relation);
 
     }
