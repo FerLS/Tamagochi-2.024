@@ -27,6 +27,11 @@ public class TamagochiUI : MonoBehaviour
         }
     }
 
+    public Color GetEyesColor()
+    {
+        return eyesColor; 
+    }
+
     void SetBodyColor()
     {
 
@@ -35,6 +40,11 @@ public class TamagochiUI : MonoBehaviour
             bodyPart.color = bodyColor;
         }
 
+    }
+
+    public Color GetBodyColor()
+    {
+        return bodyColor;
     }
 
     public void ChangeBodyColor(Color newColor)
