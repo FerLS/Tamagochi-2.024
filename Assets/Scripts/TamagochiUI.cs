@@ -18,7 +18,7 @@ public class TamagochiUI : MonoBehaviour
 
 
 
-    void SetEyesColor()
+    public void SetEyesColor()
     {
 
         foreach (var pupil in Pupils)
@@ -27,7 +27,12 @@ public class TamagochiUI : MonoBehaviour
         }
     }
 
-    void SetBodyColor()
+    public Color GetEyesColor()
+    {
+        return eyesColor; 
+    }
+
+    public void SetBodyColor()
     {
 
         foreach (var bodyPart in Body)
@@ -37,12 +42,26 @@ public class TamagochiUI : MonoBehaviour
 
     }
 
+    public Color GetBodyColor()
+    {
+        return bodyColor;
+    }
+
     public void ChangeBodyColor(Color newColor)
     {
         bodyColor = newColor;
         foreach (var bodyPart in Body)
         {
             bodyPart.color = bodyColor;
+        }
+    }
+
+    public void ChangeEyesColor(Color newColor)
+    {
+        eyesColor = newColor;
+        foreach (var pupil in Pupils)
+        {
+            pupil.color = eyesColor;
         }
     }
 
