@@ -121,11 +121,21 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
 
-    public bool SavedDatainDate(string date)
+    public bool AnySavedDatainDate(string date)
     {
         filePath = folderPath + $"/{date}.json";
         return File.Exists(filePath);
        
+    }
+
+    public string DateDetailedActivity(string date)
+    {
+        filePath = folderPath + $"/{date}.json";
+        if (File.Exists(filePath))
+        {
+            return File.ReadAllText(filePath);
+        }
+        return "";
     }
 
     /*

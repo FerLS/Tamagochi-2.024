@@ -89,13 +89,18 @@ public class CalendarScript : MonoBehaviour
             string dayNumber = MakeToDigit(day);
             string date = $"{selectedYear}-{monthNumber}-{dayNumber}";
 
-            bool isThereAnyActivity = saveSystem.SavedDatainDate(date);
+            bool isThereAnyActivity = saveSystem.AnySavedDatainDate(date);
 
             GameObject _date;
 
             if (isThereAnyActivity)
             {
                 _date = Instantiate(dateWithActivityPrefab, datesField);
+                Button dateButton = _date.GetComponentInChildren<Button>();
+                if (dateButton != null)
+                {
+                    dateButton.onClick.AddListener(() => OpenDetailedActivity(dayNumber, date));  
+                }
             }
             else
             {
@@ -151,5 +156,15 @@ public class CalendarScript : MonoBehaviour
         UpdateMonthAndYear();
         GetSelectedMonthData();
         UpdateDates();
+    }
+
+    private void OpenDetailedActivity(string day, string fileName)
+    {
+        string date = $"{day} of {selectedtMonthName} {selectedYear}";
+        Debug.Log(date);
+
+        string data = saveSystem.DateDetailedActivity(fileName);
+        Debug.Log(data);
+
     }
 }
