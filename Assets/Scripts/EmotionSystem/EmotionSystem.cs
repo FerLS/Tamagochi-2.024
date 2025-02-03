@@ -16,6 +16,7 @@ public class EmotionSystem : MonoBehaviour
     [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
     public Animator anim;
+    public bool isSleeping = false;
 
 
     private const float TotalPercentage = 100f;
@@ -125,6 +126,11 @@ public class EmotionSystem : MonoBehaviour
 
     private void UpdateCurrentEmotion()
     {
+        if (isSleeping)
+        {
+            return;
+        }
+
         Emotion dominantEmotion = emotions[0];
 
         foreach (var emotion in emotions)
@@ -166,7 +172,17 @@ public class EmotionSystem : MonoBehaviour
 
     }
     
+    public void Sleep()
+    {
+        isSleeping = true;
+        anim.SetBool("IsSleeping", true);
+    }
 
+    public void WakeUp()
+    {
+        isSleeping = false;
+        anim.SetBool("IsSleeping", false);
+    }
 
 }
 

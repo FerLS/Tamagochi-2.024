@@ -35,6 +35,8 @@ public class BedroomScript : MonoBehaviour
         SleepButton.SetActive(false);
         WakeUpButton.SetActive(true);
 
+        EmotionSystem.Sleep();
+
         sleepCoroutine = StartCoroutine(IncreaseSleepyEmotion());
     }
 
@@ -44,6 +46,9 @@ public class BedroomScript : MonoBehaviour
         LightOutBackground.SetActive(false);
         SleepButton.SetActive(true);
         WakeUpButton.SetActive(false);
+
+
+        EmotionSystem.WakeUp();
 
         if (sleepCoroutine != null)
         {
