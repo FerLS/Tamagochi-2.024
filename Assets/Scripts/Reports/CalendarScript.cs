@@ -20,15 +20,16 @@ public class CalendarScript : MonoBehaviour
     private int daysInMonth;
     private int startDayOfWeek;
 
-    public TextMeshProUGUI Month;
-    public TextMeshProUGUI Year;
-
+    [Header("Calendar")]
+    [SerializeField] private TextMeshProUGUI Month;
+    [SerializeField] private TextMeshProUGUI Year;
     [SerializeField] private Transform datesField;
     [SerializeField] private GameObject dateWithActivityPrefab;
     [SerializeField] private GameObject dateNoActivityPrefab;
     [SerializeField] private GameObject emptyDatePrefab;
 
 
+    [Header("Save System")]
     [SerializeField] private SaveSystem saveSystem;
 
 
