@@ -121,7 +121,13 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
 
-   
+    public bool SavedDatainDate(string date)
+    {
+        filePath = folderPath + $"/{date}.json";
+        return File.Exists(filePath);
+       
+    }
+
     /*
     public static void SaveGame(GameData data)
     {
