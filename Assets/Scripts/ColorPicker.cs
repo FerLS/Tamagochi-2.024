@@ -8,10 +8,8 @@ public class ColorPicker : MonoBehaviour
     [Header("Original Tamgotchi")]
     public TamagochiUI Tamagotchi;
 
-
     [Header("Settings Tamgotchi")]
     public TamagochiUI TamagotchiSettings;
-
 
     [Header("Color Options")]
     public Button[] bodyColorButtons;
