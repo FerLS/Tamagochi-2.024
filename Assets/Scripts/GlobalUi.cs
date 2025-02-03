@@ -1,25 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GlobalUi : MonoBehaviour
 {
-
-
     [Header("Screens")]
     public GameObject InitialScreen;
     public GameObject GameScreen;
     public GameObject SettingsScreen;
     public GameObject ReportsScreen;
 
+    private GameObject previousScreen;
 
     [Header("Panels")]
     public GameObject EmotionsPanel;
     private Image[] emotionFaces;
 
-
-
     private void Start()
     {
+        previousScreen = GameScreen;
         emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
     }
 
@@ -50,13 +49,14 @@ public class GlobalUi : MonoBehaviour
         SettingsScreen.SetActive(false);
     }
 
-    public void SetPreviousScreen(GameObject previousScreen)
+    public void SetPreviousScreen()
     {
         previousScreen.SetActive(true);
     }
 
     public void HideScreen(GameObject actualScreen)
     {
+        previousScreen = actualScreen;
         actualScreen.SetActive(false);
     }
 
