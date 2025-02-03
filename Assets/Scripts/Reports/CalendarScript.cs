@@ -21,6 +21,7 @@ public class CalendarScript : MonoBehaviour
     private int startDayOfWeek;
 
     [Header("Calendar")]
+    [SerializeField] private GameObject CalendarScreen;
     [SerializeField] private TextMeshProUGUI Month;
     [SerializeField] private TextMeshProUGUI Year;
     [SerializeField] private Transform datesField;
@@ -29,12 +30,20 @@ public class CalendarScript : MonoBehaviour
     [SerializeField] private GameObject emptyDatePrefab;
 
 
+    [Header("Detailed Activity")]
+    [SerializeField] private GameObject ActivityScreen;
+    [SerializeField] private TextMeshProUGUI DateTitle;
+    [SerializeField] private TextMeshProUGUI Activity;
+
     [Header("Save System")]
     [SerializeField] private SaveSystem saveSystem;
 
 
     void Start()
     {
+        CalendarScreen.SetActive(true);
+        ActivityScreen.SetActive(false);
+
         CurrentDateTime = DateTime.Today;
 
         currentDay = CurrentDateTime.Day;
@@ -54,12 +63,12 @@ public class CalendarScript : MonoBehaviour
 
     private void UpdateMonthAndYear()
     {
-        if (Month != null)
+        if (Month)
         {
             Month.text = selectedtMonthName.ToString();
         }
 
-        if (Year != null)
+        if (Year)
         {
             Year.text = selectedYear.ToString();
         }
@@ -160,11 +169,31 @@ public class CalendarScript : MonoBehaviour
 
     private void OpenDetailedActivity(string day, string fileName)
     {
+
+        CalendarScreen.SetActive(false);
+        ActivityScreen.SetActive(true);
+
         string date = $"{day} of {selectedtMonthName} {selectedYear}";
         Debug.Log(date);
+
+        if (DateTitle)
+        {
+            DateTitle.text = date;
+        }
 
         string data = saveSystem.DateDetailedActivity(fileName);
         Debug.Log(data);
 
+        if (Activity)
+        {
+            Activity.text = data;
+        }
+
+    }
+
+    public void GoBack()
+    {
+        CalendarScreen.SetActive(true);
+        ActivityScreen.SetActive(false);
     }
 }
