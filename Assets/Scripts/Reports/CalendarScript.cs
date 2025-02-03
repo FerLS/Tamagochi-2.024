@@ -1,14 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Globalization;
 using System;
 using TMPro;
 
 public class CalendarScript : MonoBehaviour
 {
-    DateTime StartDateTime;
-    DateTime CurrentDateTime;
+    private DateTime CurrentDateTime;
+
+    private int currentDay;
+    private int currentMonth;
+    private string currentMonthName;
     private int currentYear;
-    private string currentMonth;
+
+    private int selectedMonth;
+    private string selectedtMonthName;
+    private int selectedYear;
+
     private int daysInMonth;
     private int startDayOfWeek;
 
@@ -27,25 +35,42 @@ public class CalendarScript : MonoBehaviour
     void Start()
     {
         CurrentDateTime = DateTime.Today;
-        currentMonth = CurrentDateTime.ToString("MMMM");
+
+        currentDay = CurrentDateTime.Day;
+        currentMonth = CurrentDateTime.Month; 
+        CultureInfo ci = new CultureInfo("en-US");
+        currentMonthName = CurrentDateTime.ToString("MMMM", ci);
         currentYear = CurrentDateTime.Year;
-        daysInMonth = DateTime.DaysInMonth(currentYear, CurrentDateTime.Month);
-        startDayOfWeek = ((int)new DateTime(currentYear, CurrentDateTime.Month, 1).DayOfWeek + 6) % 7;
 
-        if (Month != null)
-        {
-            Month.text = currentMonth.ToString();
-        }
-        
-        if (Year != null)
-        {
-            Year.text = currentYear.ToString();
-        }
+        selectedMonth = currentMonth;
+        selectedtMonthName = currentMonthName;
+        selectedYear = currentYear;
 
-        AddDates();
+        UpdateMonthAndYear();
+        GetSelectedMonthData();
+        UpdateDates();
     }
 
-    private void AddDates()
+    private void UpdateMonthAndYear()
+    {
+        if (Month != null)
+        {
+            Month.text = selectedtMonthName.ToString();
+        }
+
+        if (Year != null)
+        {
+            Year.text = selectedYear.ToString();
+        }
+    }
+
+    private void GetSelectedMonthData()
+    {
+        daysInMonth = DateTime.DaysInMonth(selectedYear, selectedMonth);
+        startDayOfWeek = ((int)new DateTime(selectedYear, selectedMonth, 1).DayOfWeek + 6) % 7;
+    }
+
+    private void UpdateDates()
     {
         foreach (Transform date in datesField)
         {
@@ -59,9 +84,9 @@ public class CalendarScript : MonoBehaviour
 
         for (int day = 1; day <= daysInMonth; day++)
         {
-            string monthNumber = MakeToDigit(CurrentDateTime.Month);
+            string monthNumber = MakeToDigit(selectedMonth);
             string dayNumber = MakeToDigit(day);
-            string date = $"{currentYear}-{monthNumber}-{dayNumber}";
+            string date = $"{selectedYear}-{monthNumber}-{dayNumber}";
 
             bool isThereAnyActivity = saveSystem.SavedDatainDate(date);
 
@@ -79,7 +104,7 @@ public class CalendarScript : MonoBehaviour
             TextMeshProUGUI dateText = _date.GetComponentInChildren<TextMeshProUGUI>();
             dateText.text = day.ToString();
 
-            if (day == CurrentDateTime.Day && currentMonth == CurrentDateTime.ToString("MMMM") && currentYear == CurrentDateTime.Year)
+            if (day == currentDay && selectedMonth == currentMonth && currentYear == selectedMonth)
             {
                 Image dateImage = _date.GetComponentInChildren<Image>();
                 if (dateImage)
