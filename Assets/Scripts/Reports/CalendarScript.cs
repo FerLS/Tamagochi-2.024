@@ -47,7 +47,7 @@ public class CalendarScript : MonoBehaviour
 
     private void AddDates()
     {
-        foreach(Transform date in datesField)
+        foreach (Transform date in datesField)
         {
             Destroy(date.gameObject);
         }
@@ -62,14 +62,14 @@ public class CalendarScript : MonoBehaviour
             string monthNumber = MakeToDigit(CurrentDateTime.Month);
             string dayNumber = MakeToDigit(day);
             string date = $"{currentYear}-{monthNumber}-{dayNumber}";
-                
+
             bool isThereAnyActivity = saveSystem.SavedDatainDate(date);
 
             GameObject _date;
 
             if (isThereAnyActivity)
             {
-                _date = Instantiate(dateWithActivityPrefab, datesField);                
+                _date = Instantiate(dateWithActivityPrefab, datesField);
             }
             else
             {
@@ -79,13 +79,12 @@ public class CalendarScript : MonoBehaviour
             TextMeshProUGUI dateText = _date.GetComponentInChildren<TextMeshProUGUI>();
             dateText.text = day.ToString();
 
-            if (day == CurrentDateTime.Day)
+            if (day == CurrentDateTime.Day && currentMonth == CurrentDateTime.ToString("MMMM") && currentYear == CurrentDateTime.Year)
             {
                 Image dateImage = _date.GetComponentInChildren<Image>();
                 if (dateImage)
                 {
                     dateImage.color = new Color(188f / 255f, 63f / 255f, 27f / 255f);
-
                 }
             }
         }
