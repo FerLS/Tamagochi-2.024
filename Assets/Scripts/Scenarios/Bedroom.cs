@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Bedroom : MonoBehaviour
+public class BedroomScript : MonoBehaviour
 {
     [Header("Background")]
     public GameObject LightOutBackground;
@@ -58,7 +58,7 @@ public class Bedroom : MonoBehaviour
             float currentIntensity = EmotionSystem.GetEmotionIntensity("Sleepy");
             EmotionSystem.AdjustEmotion("Sleepy", -(currentIntensity));
 
-            yield return new WaitForSeconds(2f);  
+            yield return new WaitForSeconds(2f);
         }
     }
 }
