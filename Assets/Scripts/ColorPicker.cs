@@ -8,10 +8,8 @@ public class ColorPicker : MonoBehaviour
     [Header("Original Tamgotchi")]
     public TamagochiUI Tamagotchi;
 
-
     [Header("Settings Tamgotchi")]
     public TamagochiUI TamagotchiSettings;
-
 
     [Header("Color Options")]
     public Button[] bodyColorButtons;
@@ -25,12 +23,14 @@ public class ColorPicker : MonoBehaviour
     private Dictionary<Button, Color> originalEyesColors = new Dictionary<Button, Color>();
 
     private Color selectedBodyColor;
-    private Color selectedEyesColor = Color.black;
+    private Color selectedEyesColor;
 
     void Start()
     {
         selectedBodyColor = Tamagotchi.GetBodyColor();
-        UpdateColors();
+        selectedEyesColor = Tamagotchi.GetEyesColor();
+
+        LoadBoxColors();
 
         foreach (var bcolor in bodyColorButtons)
         {
@@ -44,16 +44,21 @@ public class ColorPicker : MonoBehaviour
         }
     }
 
+    private void LoadBoxColors()
+    {
+        bodyColorBox.color = selectedBodyColor;
+        eyesColorBox.color = selectedEyesColor;
+    }
+
     private void UpdateColors()
     {
+       
         Tamagotchi.ChangeBodyColor(selectedBodyColor);
         Tamagotchi.ChangeEyesColor(selectedEyesColor);
 
         TamagotchiSettings.ChangeBodyColor(selectedBodyColor);
         TamagotchiSettings.ChangeEyesColor(selectedEyesColor);
 
-        bodyColorBox.color = selectedBodyColor;
-        eyesColorBox.color = selectedEyesColor;
     }
 
     public void SelectBodyColor(Button newBodyColor)
@@ -73,6 +78,7 @@ public class ColorPicker : MonoBehaviour
             }
         }
         UpdateColors();
+        LoadBoxColors();
     }
 
     public void SelectEyeColor(Button newEyeColor)
@@ -92,11 +98,22 @@ public class ColorPicker : MonoBehaviour
             }
         }
         UpdateColors();
+        LoadBoxColors();
     }
 
     public void SaveChanges()
     {
         gameObject.SetActive(false);
+
+        PlayerPrefs.SetFloat("BodyColor_R", selectedBodyColor.r);
+        PlayerPrefs.SetFloat("BodyColor_G", selectedBodyColor.g);
+        PlayerPrefs.SetFloat("BodyColor_B", selectedBodyColor.b);
+
+        PlayerPrefs.SetFloat("EyesColor_R", selectedEyesColor.r);
+        PlayerPrefs.SetFloat("EyesColor_G", selectedEyesColor.g);
+        PlayerPrefs.SetFloat("EyesColor_B", selectedEyesColor.b);
+
+        PlayerPrefs.Save();
     }
 
     public void ShowBodyColorOptions()
@@ -122,6 +139,7 @@ public class ColorPicker : MonoBehaviour
         {
             ecolor.gameObject.SetActive(true);
         }
+
         gameObject.SetActive(true);
     }
 }
