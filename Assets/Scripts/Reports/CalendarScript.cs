@@ -122,11 +122,33 @@ public class CalendarScript : MonoBehaviour
 
     public void PreviousMonth()
     {
+        selectedMonth--;
+        if (selectedMonth == 0)
+        {
+            selectedMonth = 12;
+            selectedYear--;
+        }
 
+        selectedtMonthName = new DateTime(selectedYear, selectedMonth, 1).ToString("MMMM", new CultureInfo("en-US"));
+
+        UpdateMonthAndYear();
+        GetSelectedMonthData();
+        UpdateDates();
     }
 
     public void NextMonth()
     {
+        selectedMonth++;
+        if (selectedMonth == 13)
+        {
+            selectedMonth = 1;
+            selectedYear++;
+        }
 
+        selectedtMonthName = new DateTime(selectedYear, selectedMonth, 1).ToString("MMMM", new CultureInfo("en-US"));
+
+        UpdateMonthAndYear();
+        GetSelectedMonthData();
+        UpdateDates();
     }
 }
