@@ -121,7 +121,40 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
 
-   
+    public bool AnySavedDatainDate(string date)
+    {
+        filePath = folderPath + $"/{date}.json";
+        return File.Exists(filePath);
+       
+    }
+
+    public Dictionary<string, int> GetEmotionsFromDate(string date)
+    {
+
+        Dictionary<string, int> emotionCount = new Dictionary<string, int>()
+            { { "Sad", 0 },  { "Happy", 0 }, { "Angry", 0 }, { "Surprised", 0 }, { "Sleepy", 0 }, { "Normal", 0 } };
+
+
+        filePath = folderPath + $"/{date}.json";
+        if (File.Exists(filePath))
+        {
+            string fileContent = File.ReadAllText(filePath);
+            CombinedDataList data = JsonUtility.FromJson<CombinedDataList>(fileContent);
+
+            if (data != null && data.emotionDataList.Count > 0)
+            {
+                foreach (var emotion in data.emotionDataList)
+                {
+                    emotionCount[emotion.emotion]++;
+                }
+
+            }
+        }
+        return emotionCount;
+    }
+
+
+
     /*
     public static void SaveGame(GameData data)
     {
