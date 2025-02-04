@@ -12,6 +12,8 @@ public class BarChart : MonoBehaviour
 
     public void CreateBarChart(Dictionary<string, int> data)
     {
+        ClearBars();
+
         float minimunUnitHeight = GetMaxAmount(data);
         foreach (var entry in data)
         {
@@ -55,6 +57,14 @@ public class BarChart : MonoBehaviour
                 
             }
 
+        }
+    }
+
+    private void ClearBars()
+    {
+        foreach (Transform child in barContainer)
+        {
+            Destroy(child.gameObject);
         }
     }
 

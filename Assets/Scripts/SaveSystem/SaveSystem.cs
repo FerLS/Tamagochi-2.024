@@ -153,35 +153,51 @@ public class SaveSystem : MonoBehaviour
         return emotionCount;
     }
 
-
-
-    /*
-    public static void SaveGame(GameData data)
+    public Dictionary<string, object> GetGamesPlayedFromDate(string date)
     {
-
-        string filePath = Application.persistentDataPath + "/" + data.GetType().Name + ".json";
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(filePath, json);
-        Debug.Log($"Datos guardados en {filePath}");
-    }
-
-    // Cargar datos
-    public static GameData LoadGame(string dataType)
-    {
-        string filePath = Application.persistentDataPath + "/" + dataType + ".json";
+        Dictionary<string, object> games = new Dictionary<string, object>
+        {
+            { "Tic Tac Toe", new Dictionary<string, int> { { "Won", 0 }, { "Lost", 0 }, { "Draw", 0 } } },
+            { "Memory", 0 },
+            { "Cups Ball", 0 }
+        };
+           
+        string filePath = folderPath + $"/{date}.json";
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath);
-            GameData data = JsonUtility.FromJson<GameData>(json);
-            Debug.Log("Datos cargados correctamente");
-            return data;
+           string fileContent = File.ReadAllText(filePath);
+           CombinedDataList data = JsonUtility.FromJson<CombinedDataList>(fileContent);
+
+            if (data != null && data.gameDataList.Count > 0)
+            {
+                foreach (var gameData in data.gameDataList)
+                {
+                    string name = gameData.game;
+                    string result = gameData.result;
+
+                    if (name == "Tic Tac Toe")
+                    {
+                        var ticTacToeStats = games[name] as Dictionary<string, int>;
+                        if (ticTacToeStats != null)
+                        {
+                            if (result.Contains("won")) ticTacToeStats["Won"]++;
+                            else if (result.Contains("lost")) ticTacToeStats["Lost"]++;
+                            else if (result.Contains("draw")) ticTacToeStats["Draw"]++;
+                        }
+                    }
+                    else
+                    {
+                        if (games.ContainsKey(name))
+                        {
+                            games[name] = (int)games[name] + 1;
+                        }
+                    }
+                }
+            }
         }
-        else
-        {
-            Debug.LogWarning("No se encontró un archivo de guardado.");
-            return null; // O puedes retornar datos predeterminados
-        }
-    }*/
+        return games;
+    }
+
 }
 
 [Serializable]

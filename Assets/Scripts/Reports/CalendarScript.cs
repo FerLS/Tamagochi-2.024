@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Globalization;
 using System;
+using System.Text;
 using System.Collections.Generic;
 using TMPro;
 
@@ -34,8 +35,8 @@ public class CalendarScript : MonoBehaviour
     [Header("Detailed Activity")]
     [SerializeField] private GameObject ActivityScreen;
     [SerializeField] private TextMeshProUGUI DateTitle;
-    [SerializeField] private TextMeshProUGUI Activity;
     [SerializeField] private BarChart emotionsBarChart;
+    [SerializeField] private TextMeshProUGUI GamesDetails;
 
     [Header("Save System")]
     [SerializeField] private SaveSystem saveSystem;
@@ -182,11 +183,45 @@ public class CalendarScript : MonoBehaviour
             DateTitle.text = date;
         }
 
-        Dictionary<string, int> data = saveSystem.GetEmotionsFromDate(fileName);
+        Dictionary<string, int> emotionData = saveSystem.GetEmotionsFromDate(fileName);
+        emotionsBarChart.CreateBarChart(emotionData);
 
+        Dictionary<string, object> gameData = saveSystem.GetGamesPlayedFromDate(fileName);
+        string formattedGamesData = FormatGameData(gameData);
 
-        emotionsBarChart.CreateBarChart(data);
+        if (GamesDetails)
+        {
+            GamesDetails.text = formattedGamesData;
+        }
     }
+
+    private string FormatGameData(Dictionary<string, object> gameData)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        foreach (var game in gameData)
+        {
+            if (game.Key == "Tic Tac Toe")
+            {
+                sb.AppendLine($"* {game.Key}:");
+                var ticTacToeStats = game.Value as Dictionary<string, int>;
+                if (ticTacToeStats != null)
+                {
+                    foreach (var stat in ticTacToeStats)
+                    {
+                        sb.AppendLine($"        * {stat.Key}: {stat.Value}");
+                    }
+                }
+            }
+            else
+            {
+                sb.AppendLine($"* {game.Key}: {game.Value}");
+            }
+        }
+
+        return sb.ToString();
+    }
+
 
     public void GoBack()
     {
