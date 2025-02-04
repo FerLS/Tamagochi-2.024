@@ -132,7 +132,7 @@ public class SaveSystem : MonoBehaviour
     {
 
         Dictionary<string, int> emotionCount = new Dictionary<string, int>()
-            { { "Sad", 0 },  { "Happy", 0 }, { "Angry", 0 }, { "Surprised", 0 }, { "Sleepy", 0 }, { "Neutral", 0 } };
+            { { "Sad", 0 },  { "Happy", 0 }, { "Angry", 0 }, { "Surprised", 0 }, { "Sleepy", 0 }, { "Normal", 0 } };
 
 
         filePath = folderPath + $"/{date}.json";
