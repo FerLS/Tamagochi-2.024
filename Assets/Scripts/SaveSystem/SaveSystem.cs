@@ -128,15 +128,32 @@ public class SaveSystem : MonoBehaviour
        
     }
 
-    public string DateDetailedActivity(string date)
+    public Dictionary<string, int> GetEmotionsFromDate(string date)
     {
+
+        Dictionary<string, int> emotionCount = new Dictionary<string, int>()
+            { { "Sad", 0 },  { "Happy", 0 }, { "Angry", 0 }, { "Surprised", 0 }, { "Sleepy", 0 }, { "Neutral", 0 } };
+
+
         filePath = folderPath + $"/{date}.json";
         if (File.Exists(filePath))
         {
-            return File.ReadAllText(filePath);
+            string fileContent = File.ReadAllText(filePath);
+            CombinedDataList data = JsonUtility.FromJson<CombinedDataList>(fileContent);
+
+            if (data != null && data.emotionDataList.Count > 0)
+            {
+                foreach (var emotion in data.emotionDataList)
+                {
+                    emotionCount[emotion.emotion]++;
+                }
+
+            }
         }
-        return "";
+        return emotionCount;
     }
+
+
 
     /*
     public static void SaveGame(GameData data)

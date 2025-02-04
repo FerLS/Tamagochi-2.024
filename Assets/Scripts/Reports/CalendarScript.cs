@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Globalization;
 using System;
+using System.Collections.Generic;
 using TMPro;
 
 public class CalendarScript : MonoBehaviour
@@ -34,6 +35,7 @@ public class CalendarScript : MonoBehaviour
     [SerializeField] private GameObject ActivityScreen;
     [SerializeField] private TextMeshProUGUI DateTitle;
     [SerializeField] private TextMeshProUGUI Activity;
+    [SerializeField] private BarChart emotionsBarChart;
 
     [Header("Save System")]
     [SerializeField] private SaveSystem saveSystem;
@@ -181,19 +183,36 @@ public class CalendarScript : MonoBehaviour
             DateTitle.text = date;
         }
 
-        string data = saveSystem.DateDetailedActivity(fileName);
-        Debug.Log(data);
+        Dictionary<string, int> data = saveSystem.GetEmotionsFromDate(fileName);
+
+
+        emotionsBarChart.CreateBarChart(data);
+        /*List<string> formattedEmotions = new List<string>();
+        foreach (var entry in data)
+        {
+            formattedEmotions.Add($"{entry.Key}: {entry.Value}");
+        }
+
+        string res = string.Join("\n", formattedEmotions);
+
+
+
+        Debug.Log(res);
 
         if (Activity)
         {
-            Activity.text = data;
-        }
-
+            Activity.text = res;
+        }*/
     }
 
     public void GoBack()
     {
         CalendarScreen.SetActive(true);
         ActivityScreen.SetActive(false);
+    }
+
+    private void AnalyzeEmotion(string json)
+    {
+
     }
 }
