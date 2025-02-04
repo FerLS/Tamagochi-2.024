@@ -121,7 +121,7 @@ public class CalendarScript : MonoBehaviour
             TextMeshProUGUI dateText = _date.GetComponentInChildren<TextMeshProUGUI>();
             dateText.text = day.ToString();
 
-            if (day == currentDay && selectedMonth == currentMonth && currentYear == selectedMonth)
+            if (day == currentDay && selectedMonth == currentMonth && currentYear == selectedYear)
             {
                 Image dateImage = _date.GetComponentInChildren<Image>();
                 if (dateImage)
@@ -176,8 +176,7 @@ public class CalendarScript : MonoBehaviour
         ActivityScreen.SetActive(true);
 
         string date = $"{day} of {selectedtMonthName} {selectedYear}";
-        Debug.Log(date);
-
+        
         if (DateTitle)
         {
             DateTitle.text = date;
@@ -187,22 +186,6 @@ public class CalendarScript : MonoBehaviour
 
 
         emotionsBarChart.CreateBarChart(data);
-        /*List<string> formattedEmotions = new List<string>();
-        foreach (var entry in data)
-        {
-            formattedEmotions.Add($"{entry.Key}: {entry.Value}");
-        }
-
-        string res = string.Join("\n", formattedEmotions);
-
-
-
-        Debug.Log(res);
-
-        if (Activity)
-        {
-            Activity.text = res;
-        }*/
     }
 
     public void GoBack()
