@@ -5,14 +5,17 @@ using System.Collections.Generic;
 
 public class MemoryGameLogic : MonoBehaviour
 {
+    [Header("Signs")]
+    public GameObject FinishSign;
+
+    [Header("Items")]
+    public List<Sprite> gamePuzzles = new List<Sprite>();
+    public List<Button> btns = new List<Button>();
     public Sprite[] animals;
     [SerializeField] private Sprite backImage;
 
-    public GameObject FinishSign;
-
-    public List<Sprite> gamePuzzles = new List<Sprite>();
-
-    public List<Button> btns = new List<Button>();
+    [Header("Save System")]
+    public SaveSystem saveSystem;
 
     private bool firstGuess, secondGuess;
     private int firstGuessIndex, secondGuessIndex;
@@ -20,6 +23,7 @@ public class MemoryGameLogic : MonoBehaviour
 
     private int countCorrectGuesses = 0;
     private int gameGuesses ;
+
 
     void Start()
     {
@@ -128,7 +132,13 @@ public class MemoryGameLogic : MonoBehaviour
         if (countCorrectGuesses == gameGuesses)
         {
             FinishSign.SetActive(true);
+            if (saveSystem != null)
+            {
+                saveSystem.SaveGameData("Memory", "");
+            }
         }
+
+       
     }
 
     void ShuffleCards(List<Sprite> cards)
@@ -147,6 +157,7 @@ public class MemoryGameLogic : MonoBehaviour
     public void RestartGame()
     {
         FinishSign.SetActive(false);
+
         countCorrectGuesses = 0;
         ShuffleCards(gamePuzzles);
         ShowCards();

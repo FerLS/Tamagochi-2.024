@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GlobalUi : MonoBehaviour
 {
@@ -9,16 +10,15 @@ public class GlobalUi : MonoBehaviour
     public GameObject SettingsScreen;
     public GameObject ReportsScreen;
 
+    private GameObject previousScreen;
 
     [Header("Panels")]
     public GameObject EmotionsPanel;
     private Image[] emotionFaces;
 
-    [Header("Speech")]
-    public GameObject speechBubble;
-
     private void Start()
     {
+        previousScreen = GameScreen;
         emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
     }
 
@@ -49,13 +49,14 @@ public class GlobalUi : MonoBehaviour
         SettingsScreen.SetActive(false);
     }
 
-    public void SetPreviousScreen(GameObject previousScreen)
+    public void SetPreviousScreen()
     {
         previousScreen.SetActive(true);
     }
 
     public void HideScreen(GameObject actualScreen)
     {
+        previousScreen = actualScreen;
         actualScreen.SetActive(false);
     }
 
@@ -63,21 +64,10 @@ public class GlobalUi : MonoBehaviour
     {
         foreach (var face in emotionFaces)
         {
-            
+
             face.color = new Color(255, 255, 255, 0.5f);
         }
         emotionFace.color = new Color(255, 255, 255, 1);
     }
 
-    public void SetSpeechBubble(bool isActive)
-    {
-        if (speechBubble != null)
-        {
-            speechBubble.SetActive(isActive);
-        }
-        else
-        {
-            Debug.LogError("SpeechBubble is not assigned in GlobalUI.");
-        }
-    }
 }

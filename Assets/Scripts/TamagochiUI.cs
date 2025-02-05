@@ -16,25 +16,35 @@ public class TamagochiUI : MonoBehaviour
 
     [SerializeField] private Color eyesColor;
 
+    
 
-
-    void SetEyesColor()
+    public void SetEyesColor()
     {
-
+        LoadEyesColors();
         foreach (var pupil in Pupils)
         {
             pupil.color = eyesColor;
         }
     }
 
-    void SetBodyColor()
+    public Color GetEyesColor()
     {
+        return eyesColor; 
+    }
 
+    public void SetBodyColor()
+    {
+        LoadBodyColors();
         foreach (var bodyPart in Body)
         {
             bodyPart.color = bodyColor;
         }
 
+    }
+
+    public Color GetBodyColor()
+    {
+        return bodyColor;
     }
 
     public void ChangeBodyColor(Color newColor)
@@ -46,11 +56,42 @@ public class TamagochiUI : MonoBehaviour
         }
     }
 
+    public void ChangeEyesColor(Color newColor)
+    {
+        eyesColor = newColor;
+        foreach (var pupil in Pupils)
+        {
+            pupil.color = eyesColor;
+        }
+    }
+
     private void OnValidate()
     {
 
         SetEyesColor();
         SetBodyColor();
 
+    }
+
+    private void LoadBodyColors()
+    {
+        if (PlayerPrefs.HasKey("BodyColor_R"))
+        {
+            float r = PlayerPrefs.GetFloat("BodyColor_R");
+            float g = PlayerPrefs.GetFloat("BodyColor_G");
+            float b = PlayerPrefs.GetFloat("BodyColor_B");
+            bodyColor = new Color(r, g, b);
+        }
+    }
+
+    private void LoadEyesColors()
+    {
+        if (PlayerPrefs.HasKey("EyesColor_R"))
+        {
+            float r = PlayerPrefs.GetFloat("EyesColor_R");
+            float g = PlayerPrefs.GetFloat("EyesColor_G");
+            float b = PlayerPrefs.GetFloat("EyesColor_B");
+            eyesColor = new Color(r, g, b);
+        }
     }
 }

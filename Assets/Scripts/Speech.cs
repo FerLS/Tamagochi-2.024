@@ -18,11 +18,13 @@ using System.Collections;
 
 public class Speech : MonoBehaviour
 {
-    public TextMeshProUGUI outputText;
 
-    public Button startRecoButton;
-
+    public static Speech instance;
+    [Header("Emotions")]
     public EmotionSystem emotionSystem;
+
+    [Header("Save System")]
+    public SaveSystem saveSystem;
 
     private object threadLocker = new object();
     private bool waitingForReco;
@@ -30,7 +32,6 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
-    private GlobalUi globalUI;
 
     private string recognizedSpeech;
 
@@ -56,6 +57,18 @@ public class Speech : MonoBehaviour
         public string response;
         public string feeling;
         public string intensity;
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public async Task<string> GetRecognizedSpeech()
@@ -95,8 +108,16 @@ public class Speech : MonoBehaviour
         return recognizedSpeech;
     }
 
-    public async void ButtonClick()
+    public async void OnClickMicro()
     {
+
+        if (!micPermissionGranted)
+        {
+            message = "I can't hear you. Please enable microphone access in your device settings.";
+            return;
+
+
+        }
         recognizedSpeech = await GetRecognizedSpeech();
         if (recognizedSpeech != null)
         {
@@ -112,6 +133,7 @@ public class Speech : MonoBehaviour
 
                 var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
 
+
                 message = response.response;
                 emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
@@ -121,6 +143,44 @@ public class Speech : MonoBehaviour
         }
     }
 
+
+    public async void OnTextSumbit(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            message = "Please, write something.";
+            return;
+        }
+
+        //Clean special characters
+
+        text = CleanSpecialCharacters(text);
+
+
+        string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
+        print(tamagotchiReply);
+
+        var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
+
+        message = response.response;
+        emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
+
+        await SpeakAsync(message, false);
+    }
+
+    private string GetMostRecentEmotionMemory()
+    {
+        string recentEmotion = saveSystem.GetRecentEmotion();
+        return recentEmotion;
+    }
+
+    private string GetMostFrequentEmotionMemory()
+    {
+        string mostFrequentEmotion = saveSystem.GetMostFrequentEmotion();
+        return mostFrequentEmotion;
+    }
+
+
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
     {
         using (HttpClient client = new HttpClient())
@@ -128,10 +188,15 @@ public class Speech : MonoBehaviour
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
             string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
-            string feeling = "Right now you are feeling happy. ";
+
+            string emotion = GetMostRecentEmotionMemory();
+            string mostFrequentEmotion = GetMostFrequentEmotionMemory();
+
+            string feeling = $"Recently the user felt {emotion} and over time, the user's most common emotion is {mostFrequentEmotion}";
+
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
-            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 100).";
+            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
             string prompt = intro + feeling + treatment + restrictions + format;
 
@@ -164,23 +229,15 @@ public class Speech : MonoBehaviour
         }
     }
 
-    public async void HideSpeechBubble()
-    {
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(false));
-    }
 
-    public async void ShowSpeechBubble()
-    {
-        RunOnMainThread(() => globalUI?.SetSpeechBubble(true));
-    }
 
-    public async Task SpeakAsync(string textToSpeak, bool isQuestion=false)
+    public async Task SpeakAsync(string textToSpeak, bool isQuestion = false)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
         message = textToSpeak;
+        RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak));
 
-        ShowSpeechBubble();
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -207,9 +264,9 @@ public class Speech : MonoBehaviour
 
         if (!isQuestion)
         {
-            HideSpeechBubble();
+            RunOnMainThread(() => GameUI.instance.Talk(false));
         }
-        
+
     }
 
     private void RunOnMainThread(System.Action action)
@@ -219,26 +276,9 @@ public class Speech : MonoBehaviour
 
     void Start()
     {
-        globalUI = FindObjectOfType<GlobalUi>();
 
-        if (globalUI == null)
-        {
-            Debug.LogError("GlobalUI component not found in the scene.");
-        }
 
-        if (outputText == null)
-        {
-            UnityEngine.Debug.LogError("outputText property is null! Assign a UI Text element to it.");
-        }
-        else if (startRecoButton == null)
-        {
-            message = "startRecoButton property is null! Assign a UI Button to it.";
-            UnityEngine.Debug.LogError(message);
-        }
-        else
-        {
 #if PLATFORM_ANDROID
-        message = "Waiting for mic permission";
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             Permission.RequestUserPermission(Permission.Microphone);
@@ -249,13 +289,12 @@ public class Speech : MonoBehaviour
             Application.RequestUserAuthorization(UserAuthorization.Microphone);
         }
 #else
-            micPermissionGranted = true;
+        micPermissionGranted = true;
 #endif
-            startRecoButton.onClick.AddListener(ButtonClick);
 
-            StartCoroutine(SpeakGreeting());
-        }
+        StartCoroutine(SpeakGreeting());
     }
+
 
     private IEnumerator SpeakGreeting()
     {
@@ -277,36 +316,64 @@ public class Speech : MonoBehaviour
         }
     }
 
-
-    void Update()
+    string CleanSpecialCharacters(string text)
     {
-#if PLATFORM_ANDROID
-        if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
-        {
-            micPermissionGranted = true;
-            message = "Click button to recognize speech";
-        }
-#elif PLATFORM_IOS
-        if (!micPermissionGranted && Application.HasUserAuthorization(UserAuthorization.Microphone))
-        {
-            micPermissionGranted = true;
-            message = "Click button to recognize speech";
-        }
-#endif
 
-        lock (threadLocker)
-        {
-            if (startRecoButton != null)
-            {
-                startRecoButton.interactable = !waitingForReco && micPermissionGranted;
-            }
-            if (outputText != null)
-            {
-                outputText.text = message;
-            }
-        }
+        string cleanText = text;
+        cleanText = cleanText.Replace("á", "a");
+        cleanText = cleanText.Replace("é", "e");
+        cleanText = cleanText.Replace("í", "i");
+        cleanText = cleanText.Replace("ó", "o");
+        cleanText = cleanText.Replace("ú", "u");
+        cleanText = cleanText.Replace("Á", "A");
+        cleanText = cleanText.Replace("É", "E");
+        cleanText = cleanText.Replace("Í", "I");
+        cleanText = cleanText.Replace("Ó", "O");
+        cleanText = cleanText.Replace("Ú", "U");
+        cleanText = cleanText.Replace("ñ", "n");
+        cleanText = cleanText.Replace("Ñ", "N");
+        cleanText = cleanText.Replace("¿", "");
+        cleanText = cleanText.Replace("?", "");
+        cleanText = cleanText.Replace("\"", "");
+        cleanText = cleanText.Replace("!", "");
+        cleanText = cleanText.Replace("-", "");
+        cleanText = cleanText.Replace("*", "");
+        cleanText = cleanText.Replace("/", "");
+        cleanText = cleanText.Replace("\\", "");
+        cleanText = cleanText.Replace("|", "");
+        cleanText = cleanText.Replace("_", "");
+        cleanText = cleanText.Replace("°", "");
+        cleanText = cleanText.Replace("ª", "");
+        cleanText = cleanText.Replace("·", "");
+        cleanText = cleanText.Replace("¬", "");
+
+        return cleanText;
+
+
     }
 
+
+    
+
+    /* 
+        void Update()
+        {
+    #if PLATFORM_ANDROID
+            if (!micPermissionGranted && Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            {
+                micPermissionGranted = true;
+                message = "Click button to recognize speech";
+            }
+    #elif PLATFORM_IOS
+            if (!micPermissionGranted && Application.HasUserAuthorization(UserAuthorization.Microphone))
+            {
+                micPermissionGranted = true;
+                message = "Click button to recognize speech";
+            }
+    #endif
+
+        }
+    */
     [System.Serializable]
     public class OpenAIResponse
     {
