@@ -4,10 +4,6 @@ using System.Threading.Tasks;
 
 public class Playroom : MonoBehaviour
 {
-
-    [Header("Global")]
-    [SerializeField] private GlobalUi globalUI;
-
     [Header("Tamagotchi")]
     [SerializeField] private Speech tamagotchiSpeech;
 
@@ -55,7 +51,6 @@ public class Playroom : MonoBehaviour
 
     public void SetSelectedGame(GameObject selectedGame)
     {
-        Debug.Log(selectedGame);
         Background.SetActive(false);
         SelectGame.SetActive(false);
         TicTacToe.SetActive(false);

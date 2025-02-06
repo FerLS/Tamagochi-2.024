@@ -49,15 +49,23 @@ public class GlobalUi : MonoBehaviour
         SettingsScreen.SetActive(false);
     }
 
-    public void SetPreviousScreen()
+    public void ShowPreviousScreen()
     {
+        Debug.Log(previousScreen);
         previousScreen.SetActive(true);
     }
 
-    public void HideScreen(GameObject actualScreen)
+    public void SetPreviousScreen(GameObject screen)
     {
-        previousScreen = actualScreen;
-        actualScreen.SetActive(false);
+        Debug.Log(screen);
+        previousScreen = screen;
+        previousScreen.SetActive(false);
+    }
+
+    public void HideScreen(GameObject screen)
+    {
+        Debug.Log(screen);
+        screen.SetActive(false);
     }
 
     public void SetEmotionFace(Image emotionFace)
