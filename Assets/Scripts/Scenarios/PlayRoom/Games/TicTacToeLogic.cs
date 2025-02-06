@@ -77,7 +77,7 @@ public class TicTacToeLogic : MonoBehaviour
                 UpdateTokenSprite(randomIndex, 1);
                 if (CheckWinCondition(2))
                 {
-                    EndGame("You lose :(");
+                    EndGame("You lost :(");
                 }
                 played = true;
             }
@@ -139,7 +139,7 @@ public class TicTacToeLogic : MonoBehaviour
         FinishText.SetActive(true);
         if (saveSystem != null)
         {
-            saveSystem.SaveGameData("Tic-Tac-Toe", message);
+            saveSystem.SaveGameData("Tic Tac Toe", message);
         }
     }
 

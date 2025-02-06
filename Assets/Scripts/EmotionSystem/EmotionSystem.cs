@@ -16,6 +16,7 @@ public class EmotionSystem : MonoBehaviour
     [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
     public Animator anim;
+    public bool isSleeping = false;
 
 
     private const float TotalPercentage = 100f;
@@ -53,6 +54,19 @@ public class EmotionSystem : MonoBehaviour
         UpdateCurrentEmotion();
 
         AdjustEnergyBar();
+    }
+
+    public float GetEmotionIntensity(string name)
+    {
+        float intensity = 0;
+        foreach (var emotion in emotions)
+        {
+            if (emotion.name == name)
+            {
+                intensity = emotion.intensity;
+            }
+        }
+        return intensity;
     }
 
     public void ChangeAnimation(string emotion)
@@ -112,6 +126,11 @@ public class EmotionSystem : MonoBehaviour
 
     private void UpdateCurrentEmotion()
     {
+        if (isSleeping)
+        {
+            return;
+        }
+
         Emotion dominantEmotion = emotions[0];
 
         foreach (var emotion in emotions)
@@ -149,13 +168,21 @@ public class EmotionSystem : MonoBehaviour
 
         relation = 1 - (sleepy / positiveEmotions);
 
-
-        Debug.Log($"Positive: {positiveEmotions}, Sleepy: {sleepy}, Relation: {relation}");
         energyBar.SetEnergy(relation);
 
     }
     
+    public void Sleep()
+    {
+        isSleeping = true;
+        anim.SetBool("IsSleeping", true);
+    }
 
+    public void WakeUp()
+    {
+        isSleeping = false;
+        anim.SetBool("IsSleeping", false);
+    }
 
 }
 
