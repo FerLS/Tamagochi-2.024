@@ -35,18 +35,20 @@ public class GlobalUi : MonoBehaviour
 
     public void ExitReportsScreen()
     {
+        InitialScreen.SetActive(true) ;
         ReportsScreen.SetActive(false);
     }
 
     public void EnterSettingsScreen()
     {
+        GameScreen.SetActive(false);
         SettingsScreen.SetActive(true);
     }
 
     public void ExitSettingsScreen()
     {
-
         SettingsScreen.SetActive(false);
+        GameScreen.SetActive(true);
     }
 
     public void ShowPreviousScreen()

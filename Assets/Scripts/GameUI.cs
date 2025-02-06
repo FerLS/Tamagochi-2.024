@@ -42,6 +42,12 @@ public class GameUI : MonoBehaviour
     private Button lastClickedButton;
     private Color colorTheme;
 
+    void Start()
+    {
+        ChangeScenary(bedroomScenario);
+        HighlightScenarioButton(bedroomButton);
+    }
+
     void Update()
     {
         if (elmo)
