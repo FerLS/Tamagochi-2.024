@@ -10547,6 +10547,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1872419335}
+        m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
+        m_MethodName: SetPreviousScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1367411915}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &414261967
 GameObject:
   m_ObjectHideFlags: 0
@@ -27543,9 +27555,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1379332509}
-        m_TargetAssemblyTypeName: Playroom, Assembly-CSharp
-        m_MethodName: EnterGameSelectionScreen
+      - m_Target: {fileID: 3901171192785145036}
+        m_TargetAssemblyTypeName: Speech, Assembly-CSharp
+        m_MethodName: HideSpeechBubble
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27555,9 +27567,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3901171192785145036}
-        m_TargetAssemblyTypeName: Speech, Assembly-CSharp
-        m_MethodName: HideSpeechBubble
+      - m_Target: {fileID: 1379332509}
+        m_TargetAssemblyTypeName: Playroom, Assembly-CSharp
+        m_MethodName: EnterGameSelectionScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28368,7 +28380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ef4266bbc734d44bfc8daa78c7c66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalUI: {fileID: 1872419335}
   tamagotchiSpeech: {fileID: 3901171192785145036}
   Background: {fileID: 994005107}
   SelectGame: {fileID: 1367411915}
@@ -31303,11 +31314,11 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1872419335}
         m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
-        m_MethodName: SetPreviousScreen
-        m_Mode: 2
+        m_MethodName: ShowPreviousScreen
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 994005107}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -36145,11 +36156,23 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1872419335}
         m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
-        m_MethodName: SetPreviousScreen
+        m_MethodName: HideScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 994005107}
+          m_ObjectArgument: {fileID: 393270334}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1872419335}
+        m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
+        m_MethodName: ShowPreviousScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -36161,6 +36184,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 393270334}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1872419335}
+        m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
+        m_MethodName: SetPreviousScreen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 994005107}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
