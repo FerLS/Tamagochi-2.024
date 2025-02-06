@@ -16,29 +16,39 @@ public class GameUI : MonoBehaviour
 
     public TextMeshProUGUI outputText;
 
+    [Header("Color Theme")]
+    [SerializeField] private TamagochiUI elmo;
 
     [Header("Park")]
-    [SerializeField] private GameObject parkScenary;
+    [SerializeField] private GameObject parkScenario;
     [SerializeField] private Button parkButton;
 
     [Header("Playroom")]
-    [SerializeField] private GameObject playroomScenary;
+    [SerializeField] private GameObject playroomScenario;
     [SerializeField] private Button playroomButton;
 
     [Header("Bedroom")]
-    [SerializeField] private GameObject bedroomScenary;
+    [SerializeField] private GameObject bedroomScenario;
     [SerializeField] private Button bedroomButton;
 
     [Header("Bathroom")]
-    [SerializeField] private GameObject bathroomScenary;
+    [SerializeField] private GameObject bathroomScenario;
     [SerializeField] private Button bathroomButton;
 
     [Header("Kitchen")]
-    [SerializeField] private GameObject kitchenScenary;
+    [SerializeField] private GameObject kitchenScenario;
     [SerializeField] private Button kitchenButton;
 
     private Button lastClickedButton;
+    private Color colorTheme;
 
+    void Update()
+    {
+        if (elmo)
+        {
+            colorTheme = elmo.GetBodyColor();
+        }
+    }
 
     private void Awake()
     {
@@ -52,15 +62,15 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void ChangeScenary(GameObject scenary)
+    public void ChangeScenary(GameObject scenario)
     {
-        parkScenary.SetActive(false);
-        playroomScenary.SetActive(false);
-        bedroomScenary.SetActive(false);
-        bathroomScenary.SetActive(false);
-        kitchenScenary.SetActive(false);
+        parkScenario.SetActive(false);
+        playroomScenario.SetActive(false);
+        bedroomScenario.SetActive(false);
+        bathroomScenario.SetActive(false);
+        kitchenScenario.SetActive(false);
 
-        scenary.gameObject.SetActive(true);
+        scenario.gameObject.SetActive(true);
     }
 
     public void OpenTypeScreen()
@@ -84,6 +94,33 @@ public class GameUI : MonoBehaviour
     {
         speechBubble.SetActive(isTalking);
         outputText.text = message;
+    }
+
+    public void HighlightScenarioButton(Button button)
+    {
+        UnhighlightButton(parkButton);
+        UnhighlightButton(playroomButton);
+        UnhighlightButton(bedroomButton);
+        UnhighlightButton(bathroomButton);
+        UnhighlightButton(kitchenButton);
+
+        Image icon = button.GetComponentInChildren<Image>();
+        if (icon)
+        {            
+            //icon.color = colorTheme;
+            icon.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
+        }
+
+    }
+
+    private void UnhighlightButton(Button button)
+    {
+        Image icon = button.GetComponentInChildren<Image>();
+        if (icon)
+        {
+            icon.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
+        }
+
     }
 
 

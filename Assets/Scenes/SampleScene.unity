@@ -8726,7 +8726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9335,7 +9335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11102,7 +11102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11590,7 +11590,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1975482241}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: HighlightButton
+        m_MethodName: HighlightScenarioButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 448142783}
@@ -12994,7 +12994,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1975482241}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: HighlightButton
+        m_MethodName: HighlightScenarioButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 519097414}
@@ -15356,7 +15356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15953,7 +15953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17658,7 +17658,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1975482241}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: HighlightButton
+        m_MethodName: HighlightScenarioButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 886677736}
@@ -24639,7 +24639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26512,7 +26512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -27727,7 +27727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -28460,7 +28460,7 @@ MonoBehaviour:
   - {fileID: 724783723}
   - {fileID: 781710459}
   - {fileID: 307919148}
-  bodyColor: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  bodyColor: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   eyesColor: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
 --- !u!95 &1383686507
 Animator:
@@ -28667,7 +28667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -29533,7 +29533,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1975482241}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: HighlightButton
+        m_MethodName: HighlightScenarioButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1468353373}
@@ -31192,7 +31192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -33750,7 +33750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -35689,7 +35689,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1975482241}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: HighlightButton
+        m_MethodName: HighlightScenarioButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1968936704}
@@ -35731,7 +35731,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1975482240}
   - component: {fileID: 1975482241}
-  - component: {fileID: 1975482242}
   m_Layer: 5
   m_Name: GameScreen
   m_TagString: Untagged
@@ -35777,28 +35776,17 @@ MonoBehaviour:
   typeInputField: {fileID: 1789874184}
   speechBubble: {fileID: 1243336940}
   outputText: {fileID: 85766946}
-  parkScenary: {fileID: 1047747197}
+  elmo: {fileID: 3901171192785145035}
+  parkScenario: {fileID: 1047747197}
   parkButton: {fileID: 1468353373}
-  playroomScenary: {fileID: 1379332506}
+  playroomScenario: {fileID: 1379332506}
   playroomButton: {fileID: 519097414}
-  bedroomScenary: {fileID: 2074548146}
+  bedroomScenario: {fileID: 2074548146}
   bedroomButton: {fileID: 448142783}
-  bathroomScenary: {fileID: 246169769}
+  bathroomScenario: {fileID: 246169769}
   bathroomButton: {fileID: 886677736}
-  kitchenScenary: {fileID: 92568737}
+  kitchenScenario: {fileID: 92568737}
   kitchenButton: {fileID: 1968936704}
---- !u!114 &1975482242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975482239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd5b42aac41ecf44b17998c7ee7e5c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1975858462
 GameObject:
   m_ObjectHideFlags: 0
@@ -36809,7 +36797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -36900,7 +36888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -42679,7 +42667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -42891,7 +42879,7 @@ MonoBehaviour:
   - {fileID: 2055270095}
   - {fileID: 353997703}
   - {fileID: 1613828252}
-  bodyColor: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  bodyColor: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   eyesColor: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
 --- !u!114 &3901171192785145036
 MonoBehaviour:
@@ -43049,7 +43037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -43231,7 +43219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -43333,7 +43321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -43405,7 +43393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87169814, g: 0.4062442, b: 0.6294934, a: 1}
+  m_Color: {r: 0.4343823, g: 0.7568927, b: 0.93207544, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
