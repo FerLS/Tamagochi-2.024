@@ -9,14 +9,16 @@ public class AdaptativeFont : MonoBehaviour
 
     public FontTypes.types fontType;
 
-
-
+    private void OnValidate()
+    {
+        textMesh = GetComponent<TextMeshProUGUI>();
+    }
 
     public static void SetFont(FontTypes font)
     {
         currentFontType = font;
-
     }
+
     public void UpdateFont()
     {
         switch (fontType)
@@ -34,9 +36,6 @@ public class AdaptativeFont : MonoBehaviour
                 textMesh.font = currentFontType.boldItalic;
                 break;
         }
-
-
-
     }
 
     private void OnEnable()
@@ -48,7 +47,6 @@ public class AdaptativeFont : MonoBehaviour
 [System.Serializable]
 public class FontTypes
 {
-
     public TMP_FontAsset regular;
     public TMP_FontAsset bold;
     public TMP_FontAsset italic;
@@ -56,10 +54,9 @@ public class FontTypes
 
     public enum types
     {
-
         regular,
         bold,
         italic,
-        boldItalic
+        boldItalic,
     }
 }

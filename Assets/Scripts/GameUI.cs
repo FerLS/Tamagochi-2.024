@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,14 +8,17 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
-
     public static GameUI instance;
 
     [Header("Speech")]
+    [SerializeField]
+    private GameObject typeScreen;
 
-    [SerializeField] private GameObject typeScreen;
-    [SerializeField] private TMP_InputField typeInputField;
-    [SerializeField] private Button yesButton;
+    [SerializeField]
+    private TMP_InputField typeInputField;
+
+    [SerializeField]
+    private Button yesButton;
 
     private Action questionEvent;
 
@@ -23,43 +27,43 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI outputText;
 
     [Header("Color Theme")]
-    [SerializeField] private TamagochiUI elmo;
-
-
-
-
+    [SerializeField]
+    private TamagochiUI elmo;
 
     [Header("Park")]
-    [SerializeField] private GameObject parkScenario;
+    [SerializeField]
+    private GameObject parkScenario;
+    [SerializeField] private Vector3[] parkPositions;
+
     [Header("Playroom")]
-    [SerializeField] private GameObject playroomScenario;
+    [SerializeField]
+    private GameObject playroomScenario;
+    [SerializeField] private Vector3[] playRoomPositions;
 
 
     [Header("Bedroom")]
-    [SerializeField] private GameObject bedroomScenario;
-
+    [SerializeField]
+    private GameObject bedroomScenario;
+    [SerializeField] private Vector3[] bedroomPositions;
 
     [Header("Bathroom")]
-    [SerializeField] private GameObject bathroomScenario;
-
+    [SerializeField]
+    private GameObject bathroomScenario;
 
     [Header("Kitchen")]
-    [SerializeField] private GameObject kitchenScenario;
+    [SerializeField]
+    private GameObject kitchenScenario;
 
-    private Color colorTheme;
+
+    [SerializeField]
+    private Image[] scnearioButtons;
+
+    public float delayBetWalk = 3f;
 
     void Start()
     {
-        ChangeScenary(bedroomScenario);
-        HighlightScenarioButton(bedroomButton);
-    }
-
-    void Update()
-    {
-        if (elmo)
-        {
-            colorTheme = elmo.GetBodyColor();
-        }
+        ChangeScenary(bedroomScenario, true);
+        HighlightScenarioButton(scnearioButtons[0]);
     }
 
     private void Awake()
@@ -76,19 +80,41 @@ public class GameUI : MonoBehaviour
 
     public void ChangeScenary(GameObject scenario)
     {
-        parkScenario.SetActive(false);
-        playroomScenario.SetActive(false);
-        bedroomScenario.SetActive(false);
-        bathroomScenario.SetActive(false);
-        kitchenScenario.SetActive(false);
+        ChangeScenary(scenario, false);
+    }
 
-        scenario.gameObject.SetActive(true);
+    public void ChangeScenary(GameObject scenario, bool noTrans)
+    {
+        Action actionInMiddle = () =>
+        {
+            parkScenario.SetActive(false);
+            playroomScenario.SetActive(false);
+            bedroomScenario.SetActive(false);
+            bathroomScenario.SetActive(false);
+            kitchenScenario.SetActive(false);
+            scenario.gameObject.SetActive(true);
+        };
+        if (noTrans)
+        {
+            actionInMiddle();
+        }
+        else
+        {
+            TransitionsManager.Instance.DoTransition(
+                new TransitionsManager.Transition(
+                    TransitionsManager.TransitioType.SideBy,
+                    actionInMiddle
+                )
+            );
+        }
+        WalkAroundScenario(scenario);
+
+
 
     }
 
     public void OpenTypeScreen()
     {
-
         typeScreen.SetActive(true);
         typeInputField.Select();
         typeInputField.text = "";
@@ -99,24 +125,34 @@ public class GameUI : MonoBehaviour
     {
         typeScreen.SetActive(false);
         Speech.instance.OnTextSumbit(typeInputField.text);
-
-
     }
 
-    public void Talk(bool isTalking, string message = "", bool isQuestion = false, Action questionEvent = null)
+    public void HighlightScenarioButton(Image button)
+    {
+        foreach (Image image in scnearioButtons)
+        {
+            image.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
+        }
+        button.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
+    }
+    public void Talk(
+        bool isTalking,
+        string message = "",
+        bool isQuestion = false,
+        Action questionEvent = null
+    )
     {
         speechBubble.SetActive(isTalking);
         StartCoroutine(TypeText(message));
 
-
         if (isQuestion)
         {
-            speechBubble.transform.GetChild(1).gameObject.SetActive(true);
+            speechBubble.transform.GetChild(0).gameObject.SetActive(true);
             this.questionEvent = questionEvent;
-
         }
     }
-    public IEnumerator TypeText(string message, float delay = 0.05f)
+
+    public IEnumerator TypeText(string message, float delay = 0.02f)
     {
         outputText.text = "";
         foreach (char letter in message.ToCharArray())
@@ -128,69 +164,93 @@ public class GameUI : MonoBehaviour
 
     public void OnNoButton()
     {
-
-
         Talk(false);
     }
+
     public void OnYesButton()
     {
         questionEvent?.Invoke();
         Talk(false);
     }
 
-    public void HighlightScenarioButton(Button button)
-    {
-        UnhighlightButton(parkButton);
-        UnhighlightButton(playroomButton);
-        UnhighlightButton(bedroomButton);
-        UnhighlightButton(bathroomButton);
-        UnhighlightButton(kitchenButton);
 
-        Image icon = button.GetComponentInChildren<Image>();
-        if (icon)
+    public async void WalkAroundScenario(GameObject scenario)
+    {
+
+        await Task.Delay(TimeSpan.FromSeconds(4));
+
+        if (scenario == parkScenario)
         {
-            //icon.color = colorTheme;
-            icon.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
+            WalkAround(parkPositions, scenario);
         }
+        else if (scenario == playroomScenario)
+        {
+            WalkAround(parkPositions, scenario);
+        }
+        else if (scenario == bedroomScenario)
+        {
+            WalkAround(bedroomPositions, scenario);
+
+        }
+
 
     }
 
-    private void UnhighlightButton(Button button)
+    private async void WalkAround(Vector3[] positions, GameObject scenario)
     {
-        Image icon = button.GetComponentInChildren<Image>();
-        if (icon)
+
+        foreach (Vector3 position in positions)
         {
-            icon.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
+            if (!scenario.activeSelf)
+            {
+                return;
+            }
+            await elmo.MoveTo(position);
+            await Task.Delay(TimeSpan.FromSeconds(delayBetWalk));
         }
+
+        WalkAround(positions, scenario);
+
+
 
     }
 
-    public void HighlightScenarioButton(Button button)
+    private void OnDrawGizmos()
     {
-        UnhighlightButton(parkButton);
-        UnhighlightButton(playroomButton);
-        UnhighlightButton(bedroomButton);
-        UnhighlightButton(bathroomButton);
-        UnhighlightButton(kitchenButton);
+        Gizmos.color = Color.green;
 
-        Image icon = button.GetComponentInChildren<Image>();
-        if (icon)
+        if (playroomScenario.activeSelf)
         {
-            //icon.color = colorTheme;
-            icon.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
+            for (int i = 0; i < playRoomPositions.Length; i++)
+            {
+                Gizmos.DrawWireSphere(playRoomPositions[i], 0.5f);
+                if (i < playRoomPositions.Length - 1)
+                {
+                    Gizmos.DrawLine(playRoomPositions[i], playRoomPositions[i + 1]);
+                }
+            }
         }
-
-    }
-
-    private void UnhighlightButton(Button button)
-    {
-        Image icon = button.GetComponentInChildren<Image>();
-        if (icon)
+        else if (parkScenario.activeSelf)
         {
-            icon.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
+            for (int i = 0; i < parkPositions.Length; i++)
+            {
+                Gizmos.DrawWireSphere(parkPositions[i], 0.5f);
+                if (i < parkPositions.Length - 1)
+                {
+                    Gizmos.DrawLine(parkPositions[i], parkPositions[i + 1]);
+                }
+            }
         }
-
+        else if (bedroomScenario.activeSelf)
+        {
+            for (int i = 0; i < bedroomPositions.Length; i++)
+            {
+                Gizmos.DrawWireSphere(bedroomPositions[i], 0.5f);
+                if (i < bedroomPositions.Length - 1)
+                {
+                    Gizmos.DrawLine(bedroomPositions[i], bedroomPositions[i + 1]);
+                }
+            }
+        }
     }
-
-
 }

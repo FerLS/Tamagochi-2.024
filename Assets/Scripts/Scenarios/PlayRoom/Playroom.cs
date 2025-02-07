@@ -1,19 +1,11 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using System;
 
 public class Playroom : MonoBehaviour
 {
-
-    [Header("Global")]
-    [SerializeField] private GlobalUi globalUI;
-
-    [Header("Games")]
-
-    [SerializeField] private GameObject gamesScreen;
-
-
+    [SerializeField] private RectTransform minigamesScreen;
 
     private async void OnEnable()
     {
@@ -25,23 +17,34 @@ public class Playroom : MonoBehaviour
 
     public void EnterGameSelectionScreen()
     {
-
         Debug.Log("EnterGameSelectionScreen");
-        gamesScreen.SetActive(true);
+        TransitionsManager.Transition transition = new TransitionsManager.Transition(
+            TransitionsManager.TransitioType.SlideUpDown,
+            null,
+            screen: minigamesScreen);
 
+
+        TransitionsManager.Instance.DoTransition(transition);
 
     }
+
     public void ExitGameSelectionScreen()
     {
-        gamesScreen.SetActive(false);
+        Debug.Log("EnterGameSelectionScreen");
+        TransitionsManager.Transition transition = new TransitionsManager.Transition(
+            TransitionsManager.TransitioType.SlideUpDown,
+            null,
+            inverse: true,
+            screen: minigamesScreen);
+
+
+        TransitionsManager.Instance.DoTransition(transition);
+
+
     }
-
-
 
     private void OnDisable()
     {
         GameUI.instance.Talk(false);
     }
-
-
 }
