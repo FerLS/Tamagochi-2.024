@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
@@ -11,33 +14,36 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private GameObject typeScreen;
     [SerializeField] private TMP_InputField typeInputField;
+    [SerializeField] private Button yesButton;
+
+    private Action questionEvent;
 
     public GameObject speechBubble;
 
     public TextMeshProUGUI outputText;
 
 
+
+
+
+
     [Header("Park")]
     [SerializeField] private GameObject parkScenary;
-    [SerializeField] private Button parkButton;
-
     [Header("Playroom")]
     [SerializeField] private GameObject playroomScenary;
-    [SerializeField] private Button playroomButton;
+
 
     [Header("Bedroom")]
     [SerializeField] private GameObject bedroomScenary;
-    [SerializeField] private Button bedroomButton;
+
 
     [Header("Bathroom")]
     [SerializeField] private GameObject bathroomScenary;
-    [SerializeField] private Button bathroomButton;
+
 
     [Header("Kitchen")]
     [SerializeField] private GameObject kitchenScenary;
-    [SerializeField] private Button kitchenButton;
 
-    private Button lastClickedButton;
 
 
     private void Awake()
@@ -61,6 +67,7 @@ public class GameUI : MonoBehaviour
         kitchenScenary.SetActive(false);
 
         scenary.gameObject.SetActive(true);
+
     }
 
     public void OpenTypeScreen()
@@ -80,10 +87,39 @@ public class GameUI : MonoBehaviour
 
     }
 
-    public void Talk(bool isTalking, string message = "")
+    public void Talk(bool isTalking, string message = "", bool isQuestion = false, Action questionEvent = null)
     {
         speechBubble.SetActive(isTalking);
-        outputText.text = message;
+        StartCoroutine(TypeText(message));
+
+
+        if (isQuestion)
+        {
+            speechBubble.transform.GetChild(1).gameObject.SetActive(true);
+            this.questionEvent = questionEvent;
+
+        }
+    }
+    public IEnumerator TypeText(string message, float delay = 0.05f)
+    {
+        outputText.text = "";
+        foreach (char letter in message.ToCharArray())
+        {
+            outputText.text += letter;
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+    public void OnNoButton()
+    {
+
+
+        Talk(false);
+    }
+    public void OnYesButton()
+    {
+        questionEvent?.Invoke();
+        Talk(false);
     }
 
 

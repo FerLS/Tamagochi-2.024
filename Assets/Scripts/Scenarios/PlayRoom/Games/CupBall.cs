@@ -26,6 +26,8 @@ public class CupBall : MonoBehaviour
     [Header("References")]
 
     Vector2[] avalPos = new Vector2[3];
+
+    float middlePos;
     int correctCupIndex;
 
     bool completed = false;
@@ -46,6 +48,8 @@ public class CupBall : MonoBehaviour
         {
             avalPos[i] = cups[i].transform.localPosition;
         }
+
+        middlePos = avalPos[1].y;
 
 
         playButton.gameObject.SetActive(false);
@@ -114,11 +118,15 @@ public class CupBall : MonoBehaviour
             for (int j = 0; j < cups.Length; j++)
             {
                 cups[j].DOLocalMove(mixedPos[j], mixCupsSpeed).SetEase(Ease.OutCubic).SetDelay(j * 0.1f);
+                if (mixedPos[j].y != middlePos) cups[j].SetAsFirstSibling();
             }
+
 
             await Task.Delay((int)(mixCupsSpeed * 1000));
         }
 
+
+        ball.SetAsFirstSibling();
 
 
 

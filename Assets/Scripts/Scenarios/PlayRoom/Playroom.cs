@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using System;
 
 public class Playroom : MonoBehaviour
 {
@@ -8,62 +9,34 @@ public class Playroom : MonoBehaviour
     [Header("Global")]
     [SerializeField] private GlobalUi globalUI;
 
-    [Header("Tamagotchi")]
-    [SerializeField] private Speech tamagotchiSpeech;
+    [Header("Games")]
 
-    [Header("Screens")]
-    [SerializeField] private GameObject Background;
-    [SerializeField] private GameObject SelectGame;
-    [SerializeField] private GameObject TicTacToe;
-    [SerializeField] private GameObject Memory;
-    [SerializeField] private GameObject Cups;
+    [SerializeField] private GameObject gamesScreen;
 
-    [Header("Buttons")]
-    [SerializeField] private Button yesButton;
-    [SerializeField] private Button noButton;
+
 
     private async void OnEnable()
     {
-        Background.SetActive(true);
-        SelectGame.SetActive(false);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
+        Action speechEvent = EnterGameSelectionScreen;
 
-        if (tamagotchiSpeech != null)
-        {
-            await tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
-            SetButtons(true);
-        }
+        await Task.Delay(10);
+        await Speech.instance.SpeakAsync("Do you want to play a game with me?", true, speechEvent);
     }
 
     public void EnterGameSelectionScreen()
     {
-        Background.SetActive(false);
-        SelectGame.SetActive(true);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
-        SetButtons(false);
-    }
 
-    public void SetButtons(bool isActive)
+        Debug.Log("EnterGameSelectionScreen");
+        gamesScreen.SetActive(true);
+
+
+    }
+    public void ExitGameSelectionScreen()
     {
-        yesButton.gameObject.SetActive(isActive);
-        noButton.gameObject.SetActive(isActive);
+        gamesScreen.SetActive(false);
     }
 
-    public void SetSelectedGame(GameObject selectedGame)
-    {
-        Debug.Log(selectedGame);
-        Background.SetActive(false);
-        SelectGame.SetActive(false);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
 
-        selectedGame.SetActive(true);
-    }
 
     private void OnDisable()
     {
