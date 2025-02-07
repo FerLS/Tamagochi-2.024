@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class TamagochiUI : MonoBehaviour
 {
+
+
+
+
     [Header("Components")]
 
     [SerializeField] private Animator anim;
@@ -98,7 +102,7 @@ public class TamagochiUI : MonoBehaviour
         }
     }
 
-    public async Task MoveTo(Vector3 position, float speed = 0.8f)
+    public async Task MoveTo(Vector3 position)
     {
         anim.CrossFade("Walk", 0.3f);
         if (position.x < transform.position.x)
@@ -109,7 +113,9 @@ public class TamagochiUI : MonoBehaviour
         {
             transform.DORotate(new Vector3(0, 0, 0), 0.3f);
         }
-        await transform.DOMove(position, speed).AsyncWaitForCompletion();
+
+        float speed = Vector2.Distance(transform.position, position) / 2;
+        await transform.DOMove(position, speed).SetEase(Ease.InOutQuad).AsyncWaitForCompletion();
         anim.CrossFade("Idle", 0.3f);
 
     }

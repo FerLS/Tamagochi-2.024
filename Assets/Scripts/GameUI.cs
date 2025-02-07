@@ -185,7 +185,7 @@ public class GameUI : MonoBehaviour
         }
         else if (scenario == playroomScenario)
         {
-            WalkAround(parkPositions, scenario);
+            WalkAround(playRoomPositions, scenario);
         }
         else if (scenario == bedroomScenario)
         {
