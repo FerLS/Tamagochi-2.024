@@ -128,6 +128,11 @@ public class Speech : MonoBehaviour
             }
             else
             {
+                bool hasEmotion = CheckEmotionKeywords(recognizedSpeech);
+                if (hasEmotion)
+                {
+                    saveSystem.SaveRecordedFeeling(recognizedSpeech);
+                }
                 string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
                 print(tamagotchiReply);
 
@@ -166,6 +171,21 @@ public class Speech : MonoBehaviour
         emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
         await SpeakAsync(message, false);
+    }
+
+    private bool CheckEmotionKeywords(string text)
+    {
+        string lowerText = text.ToLower();
+        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed"};
+
+        foreach (string keyword in keywords)
+        {
+            if (lowerText.Contains(keyword))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private string GetMostRecentEmotionMemory()
