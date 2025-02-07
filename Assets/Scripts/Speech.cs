@@ -24,9 +24,13 @@ public class Speech : MonoBehaviour
 {
 
     public static Speech instance;
+    [Header("Emotions")]
     public EmotionSystem emotionSystem;
 
     private Action questionEvent;
+
+    [Header("Save System")]
+    public SaveSystem saveSystem;
 
     private object threadLocker = new object();
     private bool waitingForReco;
@@ -171,6 +175,20 @@ public class Speech : MonoBehaviour
 
         await SpeakAsync(message, false);
     }
+
+    private string GetMostRecentEmotionMemory()
+    {
+        string recentEmotion = saveSystem.GetRecentEmotion();
+        return recentEmotion;
+    }
+
+    private string GetMostFrequentEmotionMemory()
+    {
+        string mostFrequentEmotion = saveSystem.GetMostFrequentEmotion();
+        return mostFrequentEmotion;
+    }
+
+
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
     {
         using (HttpClient client = new HttpClient())
@@ -178,10 +196,15 @@ public class Speech : MonoBehaviour
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
             string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
-            string feeling = "Right now you are feeling happy. ";
+
+            string emotion = GetMostRecentEmotionMemory();
+            string mostFrequentEmotion = GetMostFrequentEmotionMemory();
+
+            string feeling = $"Recently the user felt {emotion} and over time, the user's most common emotion is {mostFrequentEmotion}";
+
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
-            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 100).";
+            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
             string prompt = intro + feeling + treatment + restrictions + format;
 
@@ -336,6 +359,10 @@ public class Speech : MonoBehaviour
 
 
     }
+
+
+
+
     /* 
         void Update()
         {
