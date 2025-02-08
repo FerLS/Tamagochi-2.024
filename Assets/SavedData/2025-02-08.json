@@ -1,0 +1,57 @@
+{
+    "gameDataList": [],
+    "emotionDataList": [
+        {
+            "emotion": "Sleepy",
+            "date": "2025-02-08",
+            "time": "12:24:40"
+        },
+        {
+            "emotion": "Sleepy",
+            "date": "2025-02-08",
+            "time": "12:27:41"
+        },
+        {
+            "emotion": "Sad",
+            "date": "2025-02-08",
+            "time": "18:26:54"
+        },
+        {
+            "emotion": "Surprised",
+            "date": "2025-02-08",
+            "time": "19:37:13"
+        },
+        {
+            "emotion": "Angry",
+            "date": "2025-02-08",
+            "time": "19:38:37"
+        },
+        {
+            "emotion": "Happy",
+            "date": "2025-02-08",
+            "time": "19:43:26"
+        },
+        {
+            "emotion": "Sleepy",
+            "date": "2025-02-08",
+            "time": "19:47:27"
+        }
+    ],
+    "feelingsList": [
+        {
+            "feeling": "Sad why you don't even.",
+            "date": "2025-02-08",
+            "time": "12:27:49"
+        },
+        {
+            "feeling": "Right now I feel angry.",
+            "date": "2025-02-08",
+            "time": "19:38:42"
+        },
+        {
+            "feeling": "I am feelign tired",
+            "date": "2025-02-08",
+            "time": "19:46:55"
+        }
+    ]
+}
