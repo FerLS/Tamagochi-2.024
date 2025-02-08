@@ -38,9 +38,6 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
-
-
-
     private string recognizedSpeech;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";

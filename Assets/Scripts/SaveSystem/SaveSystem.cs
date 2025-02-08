@@ -81,7 +81,7 @@ public class SaveSystem : MonoBehaviour
         combinedData.feelingsList.Add(data);
 
         SaveCombinedData(combinedData);
-        Debug.Log($"Game data saved: {filePath}");
+        Debug.Log($"Feeling data saved: {filePath}");
     }
     public string GetRecentEmotion()
     {
@@ -171,6 +171,31 @@ public class SaveSystem : MonoBehaviour
             }
         }
         return emotionCount;
+    }
+
+    public List<string> GetCommentsFromDate(string date)
+    {
+        List<string> allComments = new List<string>();
+
+        string filePath = folderPath + $"/{date}.json";
+        if (File.Exists(filePath))
+        {
+            string fileContent = File.ReadAllText(filePath);
+            CombinedDataList data = JsonUtility.FromJson<CombinedDataList>(fileContent);
+
+            if (data!= null && data.feelingsList.Count > 0)
+            {
+                List<DescribedFeelingData> comments = data.feelingsList;
+
+                foreach(var comment in comments)
+                {
+                    allComments.Add(comment.feeling);
+                }
+            }
+
+        }
+        return allComments;
+
     }
 
     public Dictionary<string, object> GetGamesPlayedFromDate(string date)
