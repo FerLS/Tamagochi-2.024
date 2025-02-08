@@ -21,6 +21,7 @@ public class ReportsManager : MonoBehaviour
 
     [Header("Comments")]
     [SerializeField] private TextMeshProUGUI CommentsDetails;
+    [SerializeField] private Transform commentsContainer;
 
     [Header("Games")]
     [SerializeField] private TextMeshProUGUI GamesDetails;
@@ -71,6 +72,8 @@ public class ReportsManager : MonoBehaviour
         Dictionary<string, int> emotionData = saveSystem.GetEmotionsFromDate(fileName);
         emotionsBarChart.CreateBarChart(emotionData);
 
+        
+
         ShowPanel(emotionsPanel);
     }
 
@@ -90,8 +93,34 @@ public class ReportsManager : MonoBehaviour
             CommentsDetails.text = text;
         }
 
+        AdaptPanelSize(comments.Count);
+
         ShowPanel(commentsPanel);
     }
+
+    private void AdaptPanelSize(int amountOfComments)
+    {
+        float commentContainerSize = amountOfComments * 32f; 
+
+        if (commentsContainer) 
+        {
+            RectTransform rectTransform = commentsContainer.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, commentContainerSize);
+            }
+        }
+
+        if (commentsPanel)
+        {
+            RectTransform rectTransform = commentsPanel.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, commentContainerSize+64f);
+            }
+        }
+    }
+
 
     private void UpdateGames(string fileName)
     {

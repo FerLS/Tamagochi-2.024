@@ -133,6 +133,7 @@ public class Speech : MonoBehaviour
             }
             else
             {
+
                 bool hasEmotion = CheckEmotionKeywords(recognizedSpeech);
                 if (hasEmotion)
                 {
@@ -181,7 +182,7 @@ public class Speech : MonoBehaviour
     private bool CheckEmotionKeywords(string text)
     {
         string lowerText = text.ToLower();
-        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed"};
+        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed", "feel", "feels"};
 
         foreach (string keyword in keywords)
         {
