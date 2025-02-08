@@ -25,6 +25,16 @@
             "emotion": "Angry",
             "date": "2025-02-08",
             "time": "19:38:37"
+        },
+        {
+            "emotion": "Happy",
+            "date": "2025-02-08",
+            "time": "19:43:26"
+        },
+        {
+            "emotion": "Sleepy",
+            "date": "2025-02-08",
+            "time": "19:47:27"
         }
     ],
     "feelingsList": [
@@ -37,6 +47,11 @@
             "feeling": "Right now I feel angry.",
             "date": "2025-02-08",
             "time": "19:38:42"
+        },
+        {
+            "feeling": "I am feelign tired",
+            "date": "2025-02-08",
+            "time": "19:46:55"
         }
     ]
 }

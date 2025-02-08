@@ -167,6 +167,11 @@ public class Speech : MonoBehaviour
 
         text = CleanSpecialCharacters(text);
 
+        bool hasEmotion = CheckEmotionKeywords(text);
+        if (hasEmotion)
+        {
+            saveSystem.SaveRecordedFeeling(text);
+        }
 
         string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
         print(tamagotchiReply);
