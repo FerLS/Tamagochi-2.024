@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TamagochiUI : MonoBehaviour
 {
-    [Header("Body Parts")]
 
-    [SerializeField] private Image[] Pupils;
-    [SerializeField] private Image[] Body;
+
+
+
+    [Header("Components")]
+
+    [SerializeField] private Animator anim;
+    [Header("Body Parts")]
+    [SerializeField]
+    private Image[] Pupils;
+
+    [SerializeField]
+    private Image[] Body;
 
     [Header("Customize")]
+    [SerializeField]
+    private Color bodyColor;
 
-    [SerializeField] private Color bodyColor;
-
-    [SerializeField] private Color eyesColor;
-
-    
+    [SerializeField]
+    private Color eyesColor;
 
     public void SetEyesColor()
     {
@@ -29,7 +39,7 @@ public class TamagochiUI : MonoBehaviour
 
     public Color GetEyesColor()
     {
-        return eyesColor; 
+        return eyesColor;
     }
 
     public void SetBodyColor()
@@ -39,7 +49,6 @@ public class TamagochiUI : MonoBehaviour
         {
             bodyPart.color = bodyColor;
         }
-
     }
 
     public Color GetBodyColor()
@@ -67,10 +76,8 @@ public class TamagochiUI : MonoBehaviour
 
     private void OnValidate()
     {
-
         SetEyesColor();
         SetBodyColor();
-
     }
 
     private void LoadBodyColors()
@@ -93,5 +100,23 @@ public class TamagochiUI : MonoBehaviour
             float b = PlayerPrefs.GetFloat("EyesColor_B");
             eyesColor = new Color(r, g, b);
         }
+    }
+
+    public async Task MoveTo(Vector3 position)
+    {
+        anim.CrossFade("Walk", 0.3f);
+        if (position.x < transform.position.x)
+        {
+            transform.DORotate(new Vector3(0, 180, 0), 0.3f);
+        }
+        else
+        {
+            transform.DORotate(new Vector3(0, 0, 0), 0.3f);
+        }
+
+        float speed = Vector2.Distance(transform.position, position) / 2;
+        await transform.DOMove(position, speed).SetEase(Ease.InOutQuad).AsyncWaitForCompletion();
+        anim.CrossFade("Idle", 0.3f);
+
     }
 }

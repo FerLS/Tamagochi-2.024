@@ -1,15 +1,12 @@
+using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class GlobalUi : MonoBehaviour
 {
     [Header("Screens")]
-    public GameObject InitialScreen;
-    public GameObject GameScreen;
-    public GameObject SettingsScreen;
-    public GameObject ReportsScreen;
-
     private GameObject previousScreen;
 
     [Header("Panels")]
@@ -18,50 +15,26 @@ public class GlobalUi : MonoBehaviour
 
     private void Start()
     {
-        previousScreen = GameScreen;
         emotionFaces = EmotionsPanel.GetComponentsInChildren<Image>(true);
     }
 
-    public void EnterGameScreen()
+    public void EnterScreen(RectTransform screen)
     {
-        InitialScreen.SetActive(false);
-        GameScreen.SetActive(true);
-    }
+        Action actionInTheEnd = () =>
+        {
+            previousScreen?.SetActive(false);
+            previousScreen = screen.gameObject;
+        };
 
-    public void EnterReportsScreen()
-    {
-        ReportsScreen.SetActive(true);
-    }
-
-    public void ExitReportsScreen()
-    {
-        InitialScreen.SetActive(true) ;
-        ReportsScreen.SetActive(false);
-    }
-
-    public void EnterSettingsScreen()
-    {
-        GameScreen.SetActive(false);
-        SettingsScreen.SetActive(true);
-    }
-
-    public void ExitSettingsScreen()
-    {
-        SettingsScreen.SetActive(false);
-        GameScreen.SetActive(true);
-    }
-
-    public void ShowPreviousScreen()
-    {
-        Debug.Log(previousScreen);
-        previousScreen.SetActive(true);
-    }
-
-    public void SetPreviousScreen(GameObject screen)
-    {
-        Debug.Log(screen);
-        previousScreen = screen;
-        previousScreen.SetActive(false);
+        TransitionsManager.Instance.DoTransition(
+            new TransitionsManager.Transition(
+                TransitionsManager.TransitioType.SlideUpDown,
+                actionInTheEnd,
+                screen: screen.GetComponent<RectTransform>(),
+                ease: Ease.OutBounce,
+                duration: 1f
+            )
+        );
     }
 
     public void HideScreen(GameObject screen)
@@ -74,10 +47,8 @@ public class GlobalUi : MonoBehaviour
     {
         foreach (var face in emotionFaces)
         {
-
             face.color = new Color(255, 255, 255, 0.5f);
         }
         emotionFace.color = new Color(255, 255, 255, 1);
     }
-
 }
