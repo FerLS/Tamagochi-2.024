@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class LookTama : MonoBehaviour
 {
-    public TamagochiUI tama;
+
+    public static float xTama;
     void Update()
     {
-        transform.position = new Vector3(-tama.transform.position.x, transform.position.y, transform.position.z);
+        transform.position = new Vector3(-xTama, transform.position.y, transform.position.z);
 
     }
 }

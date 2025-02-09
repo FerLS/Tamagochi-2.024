@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,39 +10,40 @@ public class Playroom : MonoBehaviour
 
     private async void OnEnable()
     {
-        Action speechEvent = EnterGameSelectionScreen;
+        Action speechEvent = () => EnterScreen(minigamesScreen);
 
         await Task.Delay(10);
         await Speech.instance.SpeakAsync("Do you want to play a game with me?", true, speechEvent);
     }
 
-    public void EnterGameSelectionScreen()
+    public void EnterScreen(RectTransform screen)
     {
         Debug.Log("EnterGameSelectionScreen");
         TransitionsManager.Transition transition = new TransitionsManager.Transition(
             TransitionsManager.TransitioType.SlideUpDown,
             null,
-            screen: minigamesScreen);
+            screen: screen);
 
 
         TransitionsManager.Instance.DoTransition(transition);
 
     }
 
-    public void ExitGameSelectionScreen()
+    public void ExitScreen(RectTransform screen)
     {
         Debug.Log("EnterGameSelectionScreen");
         TransitionsManager.Transition transition = new TransitionsManager.Transition(
             TransitionsManager.TransitioType.SlideUpDown,
             null,
             inverse: true,
-            screen: minigamesScreen);
+            screen: screen);
 
 
         TransitionsManager.Instance.DoTransition(transition);
 
 
     }
+
 
     private void OnDisable()
     {

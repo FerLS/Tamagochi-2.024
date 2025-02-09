@@ -93,6 +93,7 @@ public class GameUI : MonoBehaviour
             bathroomScenario.SetActive(false);
             kitchenScenario.SetActive(false);
             scenario.gameObject.SetActive(true);
+            elmo.OnChangeScenario();
         };
         if (noTrans)
         {
@@ -206,7 +207,7 @@ public class GameUI : MonoBehaviour
                 return;
             }
             await elmo.MoveTo(position);
-            await Task.Delay(TimeSpan.FromSeconds(delayBetWalk));
+            await Task.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(-1, 1) + delayBetWalk));
         }
 
         WalkAround(positions, scenario);

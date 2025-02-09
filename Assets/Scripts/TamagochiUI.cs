@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,8 +8,6 @@ using UnityEngine.UI;
 
 public class TamagochiUI : MonoBehaviour
 {
-
-
 
 
     [Header("Components")]
@@ -27,6 +26,18 @@ public class TamagochiUI : MonoBehaviour
 
     [SerializeField]
     private Color eyesColor;
+
+
+
+
+    [Header("Movement")]
+    private Vector3 targetPosition = Vector3.zero;
+
+
+    public void OnChangeScenario()
+    {
+        targetPosition = transform.position;
+    }
 
     public void SetEyesColor()
     {
@@ -104,8 +115,9 @@ public class TamagochiUI : MonoBehaviour
 
     public async Task MoveTo(Vector3 position)
     {
+
         anim.CrossFade("Walk", 0.3f);
-        if (position.x < transform.position.x)
+        if (position.x < targetPosition.x)
         {
             transform.DORotate(new Vector3(0, 180, 0), 0.3f);
         }
@@ -114,8 +126,13 @@ public class TamagochiUI : MonoBehaviour
             transform.DORotate(new Vector3(0, 0, 0), 0.3f);
         }
 
-        float speed = Vector2.Distance(transform.position, position) / 2;
-        await transform.DOMove(position, speed).SetEase(Ease.InOutQuad).AsyncWaitForCompletion();
+        float speed = Vector2.Distance(targetPosition, position) / 2;
+
+        await DOTween.To(() => targetPosition, x => targetPosition = x, position, speed).SetEase(Ease.InOutQuad).OnUpdate(() =>
+        {
+            transform.position = new Vector3(transform.position.x, targetPosition.y, transform.position.z);
+            LookTama.xTama = targetPosition.x;
+        }).AsyncWaitForCompletion();
         anim.CrossFade("Idle", 0.3f);
 
     }
