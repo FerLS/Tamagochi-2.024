@@ -16,10 +16,13 @@ public class BallController : MonoBehaviour
 
     private BoxCollider2D[] wallPositions;
 
+    private Vector2 targetPosition;
+    private bool isMoving = false;
+
     void Start()
     {
-
         ball = GetComponent<Rigidbody2D>();
+        targetPosition = ball.position;
 
         Vector2 randomDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
         ball.linearVelocity = randomDirection * speed;
@@ -39,23 +42,43 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        CheckForClick();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isMoving)
         {
-            Debug.Log("Entro el click");
-            BounceOnClick();
+            MoveToTarget();
         }
     }
 
-    private void BounceOnClick()
+    private void CheckForClick()
     {
-        Vector2 newDirection = -ball.linearVelocity.normalized; // Invierte la direcci�n
-        newDirection += new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)); // Peque�a variaci�n
-        newDirection.Normalize(); // Normalizar para que la velocidad se mantenga constante
-
-        ball.linearVelocity = newDirection * speed;
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log(mousePosition);
+            targetPosition = mousePosition;
+            isMoving = true;
+        }
     }
 
+    private void MoveToTarget()
+    {
+        Vector2 direction = (targetPosition - ball.position).normalized;
+        float distance = Vector2.Distance(ball.position, targetPosition);
 
+        if (distance > 0.1f)
+        {
+            ball.MovePosition(ball.position + direction * speed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            ball.position = targetPosition;
+            isMoving = false;
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
