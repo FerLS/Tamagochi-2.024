@@ -8,6 +8,14 @@ public class BallController : MonoBehaviour
     [SerializeField] private GameObject wallPrefab;
     public float wallThickness = 1f;
 
+    [Header("Walls")]
+    [SerializeField] private BoxCollider2D Top;
+    [SerializeField] private BoxCollider2D Bottom;
+    [SerializeField] private BoxCollider2D Left;
+    [SerializeField] private BoxCollider2D Right;
+
+    private BoxCollider2D[] wallPositions;
+
     void Start()
     {
 
@@ -21,13 +29,12 @@ public class BallController : MonoBehaviour
 
     private void CreateWalls()
     {
-        float width = 4.8f;
-        float height = 9.6f;
-                
-        Instantiate(wallPrefab, new Vector3(0, height + wallThickness / 2, 0), Quaternion.identity);  
-        Instantiate(wallPrefab, new Vector3(0, -height - wallThickness / 2, 0), Quaternion.identity);
-        Instantiate(wallPrefab, new Vector3(-width - wallThickness / 2, 0, 0), Quaternion.identity);    
-        Instantiate(wallPrefab, new Vector3(width + wallThickness / 2, 0, 0), Quaternion.identity);     
+        wallPositions = new BoxCollider2D[]
+        {
+            Top, Bottom, Left, Right
+        };
+
+        
     }
 
     void Update()
@@ -60,4 +67,5 @@ public class BallController : MonoBehaviour
             ball.linearVelocity = randomDirection * speed;
         }
     }
+
 }
