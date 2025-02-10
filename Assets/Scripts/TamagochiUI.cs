@@ -32,11 +32,15 @@ public class TamagochiUI : MonoBehaviour
 
     [Header("Movement")]
     private Vector3 targetPosition = Vector3.zero;
+    private Vector3 startPos = new Vector3(-2.06f, -7.57f, 0);
+
 
 
     public void OnChangeScenario()
     {
-        targetPosition = transform.position;
+
+        targetPosition = startPos;
+
     }
 
     public void SetEyesColor()
@@ -87,6 +91,7 @@ public class TamagochiUI : MonoBehaviour
 
     private void OnValidate()
     {
+
         SetEyesColor();
         SetBodyColor();
     }

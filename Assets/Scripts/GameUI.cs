@@ -92,12 +92,13 @@ public class GameUI : MonoBehaviour
             bedroomScenario.SetActive(false);
             bathroomScenario.SetActive(false);
             kitchenScenario.SetActive(false);
-            scenario.gameObject.SetActive(true);
             elmo.OnChangeScenario();
+            scenario.gameObject.SetActive(true);
         };
         if (noTrans)
         {
             actionInMiddle();
+
         }
         else
         {
