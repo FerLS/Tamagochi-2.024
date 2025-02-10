@@ -38,9 +38,6 @@ public class Speech : MonoBehaviour
 
     private bool micPermissionGranted = false;
 
-
-
-
     private string recognizedSpeech;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
@@ -136,6 +133,12 @@ public class Speech : MonoBehaviour
             }
             else
             {
+
+                bool hasEmotion = CheckEmotionKeywords(recognizedSpeech);
+                if (hasEmotion)
+                {
+                    saveSystem.SaveRecordedFeeling(recognizedSpeech);
+                }
                 string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
                 print(tamagotchiReply);
 
@@ -164,6 +167,11 @@ public class Speech : MonoBehaviour
 
         text = CleanSpecialCharacters(text);
 
+        bool hasEmotion = CheckEmotionKeywords(text);
+        if (hasEmotion)
+        {
+            saveSystem.SaveRecordedFeeling(text);
+        }
 
         string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
         print(tamagotchiReply);
@@ -174,6 +182,21 @@ public class Speech : MonoBehaviour
         emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
         await SpeakAsync(message, false);
+    }
+
+    private bool CheckEmotionKeywords(string text)
+    {
+        string lowerText = text.ToLower();
+        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed", "feel", "feels"};
+
+        foreach (string keyword in keywords)
+        {
+            if (lowerText.Contains(keyword))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private string GetMostRecentEmotionMemory()
