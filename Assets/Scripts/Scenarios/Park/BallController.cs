@@ -58,7 +58,6 @@ public class BallController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(mousePosition);
             targetPosition = mousePosition;
             isMoving = true;
         }
