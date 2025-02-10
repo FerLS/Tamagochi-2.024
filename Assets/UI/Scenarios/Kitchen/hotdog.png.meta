@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b7d070a3e5f4b1c458899f8c56acc1e9
+guid: a819e5933a5a81b4dbc1e45ab2bd5b9b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7293598183456022363
-    second: Apple_0
+      213: 5843657036778545147
+    second: hotdog_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Apple_0
+      name: hotdog_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 920
-        height: 441
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b5f945b97e0183560800000000000000
-      internalID: 7293598183456022363
+      spriteID: bff956a2d17d81150800000000000000
+      internalID: 5843657036778545147
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Apple_0: 7293598183456022363
+      hotdog_0: 5843657036778545147
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

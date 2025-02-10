@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b6116485965955b4f9f71e5dc10dd6f0
+guid: a2eaacbd53bff004f9cb35d2a2e8b089
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1775669009216684005
-    second: Strawberry_0
+      213: -5453079427517612880
+    second: Salad_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Strawberry_0
+      name: Salad_0
       rect:
         serializedVersion: 2
-        x: 75
-        y: 7
-        width: 362
-        height: 498
+        x: 28
+        y: 0
+        width: 456
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5efb7055e8174a810800000000000000
-      internalID: 1775669009216684005
+      spriteID: 0bc72def625c254b0800000000000000
+      internalID: -5453079427517612880
       vertices: []
       indices: 
       edges: []
@@ -134,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Salad_0: -5453079427517612880
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

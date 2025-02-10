@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a2eaacbd53bff004f9cb35d2a2e8b089
+guid: 4a542260b41c6d44998dbdc747297061
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5453079427517612880
-    second: Salad_0
+      213: 8028362493962905751
+    second: Avocado_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Salad_0
+      name: Avocado_0
       rect:
         serializedVersion: 2
-        x: 28
-        y: 0
-        width: 456
-        height: 512
+        x: 15
+        y: 7
+        width: 482
+        height: 498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0bc72def625c254b0800000000000000
-      internalID: -5453079427517612880
+      spriteID: 7986ab4f6297a6f60800000000000000
+      internalID: 8028362493962905751
       vertices: []
       indices: 
       edges: []
@@ -134,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Avocado_0: 8028362493962905751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

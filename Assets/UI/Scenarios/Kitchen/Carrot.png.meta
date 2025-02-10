@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b5a43eb981bfee14d962ac94b5a69b49
+guid: 2aa7e179ffbb2894c952457f97a648a3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8678448789981272047
-    second: chicken_0
+      213: -5859083586626064994
+    second: Carrot_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,16 +96,29 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chicken_0
+      name: Carrot_0
       rect:
         serializedVersion: 2
-        x: 27
+        x: 47
         y: 0
-        width: 458
+        width: 418
         height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe79040b13b007870800000000000000
-      internalID: 8678448789981272047
+      spriteID: e9de4dd458a50bea0800000000000000
+      internalID: -5859083586626064994
       vertices: []
       indices: 
       edges: []
@@ -134,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Carrot_0: -5859083586626064994
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

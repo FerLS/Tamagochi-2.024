@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 106653567}
   - component: {fileID: 106653566}
   - component: {fileID: 106653565}
-  - component: {fileID: 106653564}
   m_Layer: 5
   m_Name: Avocado
   m_TagString: Untagged
@@ -559,18 +558,6 @@ RectTransform:
   m_AnchoredPosition: {x: 171, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &106653564
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106653562}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &106653565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8561,7 +8548,6 @@ GameObject:
   - component: {fileID: 687844103}
   - component: {fileID: 687844102}
   - component: {fileID: 687844101}
-  - component: {fileID: 687844100}
   m_Layer: 5
   m_Name: Hamburger
   m_TagString: Untagged
@@ -8588,18 +8574,6 @@ RectTransform:
   m_AnchoredPosition: {x: -105, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &687844100
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687844098}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &687844101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8959,102 +8933,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713006668}
   m_CullTransparentMesh: 1
---- !u!1 &737711082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 737711083}
-  - component: {fileID: 737711085}
-  - component: {fileID: 737711084}
-  m_Layer: 5
-  m_Name: FoodDropZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &737711083
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737711082}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1019008171}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.6, y: -158.03}
-  m_SizeDelta: {x: 136.28, y: 119.27}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &737711084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737711082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccfa18407c781d1488950f5743b830e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tamagotchi: {fileID: 3901171192785145035}
---- !u!61 &737711085
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737711082}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &757625996
 GameObject:
   m_ObjectHideFlags: 0
@@ -9362,7 +9240,6 @@ GameObject:
   - component: {fileID: 846998914}
   - component: {fileID: 846998913}
   - component: {fileID: 846998912}
-  - component: {fileID: 846998911}
   m_Layer: 5
   m_Name: Banana
   m_TagString: Untagged
@@ -9389,18 +9266,6 @@ RectTransform:
   m_AnchoredPosition: {x: -49, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &846998911
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846998909}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &846998912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10031,7 +9896,6 @@ GameObject:
   - component: {fileID: 899345523}
   - component: {fileID: 899345522}
   - component: {fileID: 899345521}
-  - component: {fileID: 899345520}
   m_Layer: 5
   m_Name: Hotdog
   m_TagString: Untagged
@@ -10058,18 +9922,6 @@ RectTransform:
   m_AnchoredPosition: {x: 62, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &899345520
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899345518}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &899345521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15120,7 +14972,6 @@ GameObject:
   - component: {fileID: 1016385966}
   - component: {fileID: 1016385965}
   - component: {fileID: 1016385964}
-  - component: {fileID: 1016385963}
   m_Layer: 5
   m_Name: Meat
   m_TagString: Untagged
@@ -15147,18 +14998,6 @@ RectTransform:
   m_AnchoredPosition: {x: 117, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1016385963
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1016385961}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &1016385964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15316,7 +15155,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2042317244}
-  - {fileID: 737711083}
   m_Father: {fileID: 92568738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -15792,7 +15630,7 @@ GameObject:
   - component: {fileID: 1137412778}
   m_Layer: 0
   m_Name: Addons
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16420,7 +16258,6 @@ GameObject:
   - component: {fileID: 1248123892}
   - component: {fileID: 1248123891}
   - component: {fileID: 1248123890}
-  - component: {fileID: 1248123889}
   m_Layer: 5
   m_Name: Pizza
   m_TagString: Untagged
@@ -16447,18 +16284,6 @@ RectTransform:
   m_AnchoredPosition: {x: -164, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1248123889
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1248123887}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &1248123890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18965,7 +18790,6 @@ GameObject:
   - component: {fileID: 1874978637}
   - component: {fileID: 1874978636}
   - component: {fileID: 1874978635}
-  - component: {fileID: 1874978634}
   m_Layer: 5
   m_Name: Chicken
   m_TagString: Untagged
@@ -18992,18 +18816,6 @@ RectTransform:
   m_AnchoredPosition: {x: 7, y: 2.5}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1874978634
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874978632}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &1874978635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25332,7 +25144,7 @@ GameObject:
   - component: {fileID: 378797314295881909}
   m_Layer: 0
   m_Name: EyeL
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25351,7 +25163,7 @@ GameObject:
   - component: {fileID: 5037018187502328157}
   m_Layer: 0
   m_Name: LegL
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25388,7 +25200,7 @@ GameObject:
   - component: {fileID: 2412491625614816267}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25460,7 +25272,7 @@ GameObject:
   - component: {fileID: 4332050973555077085}
   m_Layer: 0
   m_Name: ArmL
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25508,7 +25320,7 @@ GameObject:
   - component: {fileID: 3725449051286923593}
   m_Layer: 0
   m_Name: Shadow
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25564,7 +25376,7 @@ GameObject:
   - component: {fileID: 3901171192785145035}
   m_Layer: 0
   m_Name: Elmo
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25801,7 +25613,7 @@ GameObject:
   - component: {fileID: 4991180762178242730}
   m_Layer: 0
   m_Name: EyeBrowR
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25962,7 +25774,7 @@ GameObject:
   - component: {fileID: 5396577802412956666}
   m_Layer: 0
   m_Name: EyeR
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25994,7 +25806,7 @@ GameObject:
   - component: {fileID: 5677641422960601569}
   m_Layer: 0
   m_Name: LegR
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26066,7 +25878,7 @@ GameObject:
   - component: {fileID: 6251729016134305599}
   m_Layer: 0
   m_Name: ArmR
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26157,7 +25969,7 @@ GameObject:
   - component: {fileID: 7964942991367988147}
   m_Layer: 0
   m_Name: EyeBrowL
-  m_TagString: Untagged
+  m_TagString: Tamagochi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
