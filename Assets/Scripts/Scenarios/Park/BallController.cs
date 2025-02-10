@@ -41,23 +41,21 @@ public class BallController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D collider = GetComponent<Collider2D>();
-
-            if (collider.OverlapPoint(mousePosition))
-            {
-                BounceOnClick();
-            }
+            Debug.Log("Entro el click");
+            BounceOnClick();
         }
     }
 
     private void BounceOnClick()
     {
-        Vector2 randomDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-        ball.linearVelocity = randomDirection * speed;
+        Vector2 newDirection = -ball.linearVelocity.normalized; // Invierte la direcci�n
+        newDirection += new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)); // Peque�a variaci�n
+        newDirection.Normalize(); // Normalizar para que la velocidad se mantenga constante
+
+        ball.linearVelocity = newDirection * speed;
     }
 
-    
+
 
     void OnCollisionEnter2D(Collision2D collision)
     {
