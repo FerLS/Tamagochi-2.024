@@ -25,4 +25,9 @@ public class EnergyBar : MonoBehaviour
         SetEnergy(energy);
 
     }
+
+    public float GetEnergy() 
+    {  
+        return energy; 
+    }
 }

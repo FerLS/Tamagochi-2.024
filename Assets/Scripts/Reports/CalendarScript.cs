@@ -33,10 +33,7 @@ public class CalendarScript : MonoBehaviour
 
 
     [Header("Detailed Activity")]
-    [SerializeField] private GameObject ActivityScreen;
-    [SerializeField] private TextMeshProUGUI DateTitle;
-    [SerializeField] private BarChart emotionsBarChart;
-    [SerializeField] private TextMeshProUGUI GamesDetails;
+    [SerializeField] private ReportsManager reportsManager;
 
     [Header("Save System")]
     [SerializeField] private SaveSystem saveSystem;
@@ -45,7 +42,6 @@ public class CalendarScript : MonoBehaviour
     void Start()
     {
         CalendarScreen.SetActive(true);
-        ActivityScreen.SetActive(false);
 
         CurrentDateTime = DateTime.Today;
 
@@ -172,27 +168,12 @@ public class CalendarScript : MonoBehaviour
 
     private void OpenDetailedActivity(string day, string fileName)
     {
-
         CalendarScreen.SetActive(false);
-        ActivityScreen.SetActive(true);
 
         string date = $"{day} of {selectedtMonthName} {selectedYear}";
         
-        if (DateTitle)
-        {
-            DateTitle.text = date;
-        }
-
-        Dictionary<string, int> emotionData = saveSystem.GetEmotionsFromDate(fileName);
-        emotionsBarChart.CreateBarChart(emotionData);
-
-        Dictionary<string, object> gameData = saveSystem.GetGamesPlayedFromDate(fileName);
-        string formattedGamesData = FormatGameData(gameData);
-
-        if (GamesDetails)
-        {
-            GamesDetails.text = formattedGamesData;
-        }
+        
+        reportsManager.UpdateReports(date, fileName);
     }
 
     private string FormatGameData(Dictionary<string, object> gameData)
@@ -226,11 +207,5 @@ public class CalendarScript : MonoBehaviour
     public void GoBack()
     {
         CalendarScreen.SetActive(true);
-        ActivityScreen.SetActive(false);
-    }
-
-    private void AnalyzeEmotion(string json)
-    {
-
     }
 }

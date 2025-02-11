@@ -8,6 +8,10 @@ using TMPro;
 using System.Net.Http;
 using System.Text;
 using System.Linq;
+using System;
+using UnityEngine.Events;
+
+
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
 #endif
@@ -23,6 +27,8 @@ public class Speech : MonoBehaviour
     [Header("Emotions")]
     public EmotionSystem emotionSystem;
 
+    private Action questionEvent;
+
     [Header("Save System")]
     public SaveSystem saveSystem;
 
@@ -31,7 +37,6 @@ public class Speech : MonoBehaviour
     private string message;
 
     private bool micPermissionGranted = false;
-
 
     private string recognizedSpeech;
 
@@ -128,6 +133,12 @@ public class Speech : MonoBehaviour
             }
             else
             {
+
+                bool hasEmotion = CheckEmotionKeywords(recognizedSpeech);
+                if (hasEmotion)
+                {
+                    saveSystem.SaveRecordedFeeling(recognizedSpeech);
+                }
                 string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
                 print(tamagotchiReply);
 
@@ -156,6 +167,11 @@ public class Speech : MonoBehaviour
 
         text = CleanSpecialCharacters(text);
 
+        bool hasEmotion = CheckEmotionKeywords(text);
+        if (hasEmotion)
+        {
+            saveSystem.SaveRecordedFeeling(text);
+        }
 
         string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
         print(tamagotchiReply);
@@ -166,6 +182,21 @@ public class Speech : MonoBehaviour
         emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
         await SpeakAsync(message, false);
+    }
+
+    private bool CheckEmotionKeywords(string text)
+    {
+        string lowerText = text.ToLower();
+        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed", "feel", "feels"};
+
+        foreach (string keyword in keywords)
+        {
+            if (lowerText.Contains(keyword))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private string GetMostRecentEmotionMemory()
@@ -223,7 +254,7 @@ public class Speech : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+                //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
                 return "I'm sorry, I couldn't process that.";
             }
         }
@@ -231,12 +262,12 @@ public class Speech : MonoBehaviour
 
 
 
-    public async Task SpeakAsync(string textToSpeak, bool isQuestion = false)
+    public async Task SpeakAsync(string textToSpeak, bool isQuestion = false, Action speechEvent = null)
     {
         var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
 
         message = textToSpeak;
-        RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak));
+        RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak, isQuestion, speechEvent));
 
 
         using (var synthesizer = new SpeechSynthesizer(config))
@@ -292,7 +323,7 @@ public class Speech : MonoBehaviour
         micPermissionGranted = true;
 #endif
 
-        StartCoroutine(SpeakGreeting());
+        //StartCoroutine(SpeakGreeting());
     }
 
 
@@ -332,17 +363,17 @@ public class Speech : MonoBehaviour
         cleanText = cleanText.Replace("Ú", "U");
         cleanText = cleanText.Replace("ñ", "n");
         cleanText = cleanText.Replace("Ñ", "N");
-        cleanText = cleanText.Replace("¿", "");
-        cleanText = cleanText.Replace("?", "");
-        cleanText = cleanText.Replace("\"", "");
-        cleanText = cleanText.Replace("!", "");
-        cleanText = cleanText.Replace("-", "");
-        cleanText = cleanText.Replace("*", "");
-        cleanText = cleanText.Replace("/", "");
-        cleanText = cleanText.Replace("\\", "");
-        cleanText = cleanText.Replace("|", "");
-        cleanText = cleanText.Replace("_", "");
-        cleanText = cleanText.Replace("°", "");
+        cleanText = cleanText.Replace("¿", " ");
+        cleanText = cleanText.Replace("?", " ");
+        cleanText = cleanText.Replace("\"", " ");
+        cleanText = cleanText.Replace("!", " ");
+        cleanText = cleanText.Replace("-", " ");
+        cleanText = cleanText.Replace("*", " ");
+        cleanText = cleanText.Replace("/", " ");
+        cleanText = cleanText.Replace("\\", " ");
+        cleanText = cleanText.Replace("|", " ");
+        cleanText = cleanText.Replace("_", " ");
+        cleanText = cleanText.Replace("°", " ");
         cleanText = cleanText.Replace("ª", "");
         cleanText = cleanText.Replace("·", "");
         cleanText = cleanText.Replace("¬", "");
@@ -353,7 +384,7 @@ public class Speech : MonoBehaviour
     }
 
 
-    
+
 
     /* 
         void Update()

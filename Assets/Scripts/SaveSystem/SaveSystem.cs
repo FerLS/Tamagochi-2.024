@@ -15,6 +15,7 @@ public class SaveSystem : MonoBehaviour
         //folderPath = Application.persistentDataPath;
         folderPath = Application.dataPath + $"/SavedData";
     }
+
     public void SaveGameData(string gameName, string result)
     {
         string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
@@ -36,7 +37,6 @@ public class SaveSystem : MonoBehaviour
         SaveCombinedData(combinedData);
         Debug.Log($"Game data saved: {filePath}");
     }
-
 
     public void SelectEmotion(string emotion)
     {
@@ -63,6 +63,26 @@ public class SaveSystem : MonoBehaviour
         SaveCombinedData(combinedData);
     }
 
+    public void SaveRecordedFeeling(string feeling)
+    {
+        string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+        string currentTime = DateTime.Now.ToString("HH:mm:ss");
+
+        filePath = folderPath + $"/{currentDate}.json";
+
+        DescribedFeelingData data = new DescribedFeelingData
+        {
+            feeling = feeling,
+            date = currentDate,
+            time = currentTime
+        };
+
+        CombinedDataList combinedData = LoadCombinedData();
+        combinedData.feelingsList.Add(data);
+
+        SaveCombinedData(combinedData);
+        Debug.Log($"Feeling data saved: {filePath}");
+    }
     public string GetRecentEmotion()
     {
         CombinedDataList combinedData = LoadCombinedData();
@@ -153,13 +173,38 @@ public class SaveSystem : MonoBehaviour
         return emotionCount;
     }
 
+    public List<string> GetCommentsFromDate(string date)
+    {
+        List<string> allComments = new List<string>();
+
+        string filePath = folderPath + $"/{date}.json";
+        if (File.Exists(filePath))
+        {
+            string fileContent = File.ReadAllText(filePath);
+            CombinedDataList data = JsonUtility.FromJson<CombinedDataList>(fileContent);
+
+            if (data!= null && data.feelingsList.Count > 0)
+            {
+                List<DescribedFeelingData> comments = data.feelingsList;
+
+                foreach(var comment in comments)
+                {
+                    allComments.Add(comment.feeling);
+                }
+            }
+
+        }
+        return allComments;
+
+    }
+
     public Dictionary<string, object> GetGamesPlayedFromDate(string date)
     {
         Dictionary<string, object> games = new Dictionary<string, object>
         {
             { "Tic Tac Toe", new Dictionary<string, int> { { "Won", 0 }, { "Lost", 0 }, { "Draw", 0 } } },
             { "Memory", 0 },
-            { "Cups Ball", 0 }
+            { "Cups Ball", new Dictionary<string, int> { { "Won", 0 }, { "Lost", 0 } } }
         };
            
         string filePath = folderPath + $"/{date}.json";
@@ -183,6 +228,15 @@ public class SaveSystem : MonoBehaviour
                             if (result.Contains("won")) ticTacToeStats["Won"]++;
                             else if (result.Contains("lost")) ticTacToeStats["Lost"]++;
                             else if (result.Contains("draw")) ticTacToeStats["Draw"]++;
+                        }
+                    }
+                    else if (name == "Cups Ball")
+                    {
+                        var stats = games[name] as Dictionary<string, int>;
+                        if (stats != null)
+                        {
+                            if (result.Contains("won")) stats["Won"]++;
+                            else if (result.Contains("lost")) stats["Lost"]++;
                         }
                     }
                     else
@@ -218,8 +272,17 @@ public class EmotionData
 }
 
 [Serializable]
+public class DescribedFeelingData
+{
+    public string feeling;
+    public string date;
+    public string time;
+}
+
+[Serializable]
 public class CombinedDataList
 {
     public List<GameData> gameDataList = new List<GameData>();
     public List<EmotionData> emotionDataList = new List<EmotionData>();
+    public List<DescribedFeelingData> feelingsList = new List<DescribedFeelingData>();
 }

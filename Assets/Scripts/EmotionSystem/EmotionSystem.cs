@@ -26,6 +26,11 @@ public class EmotionSystem : MonoBehaviour
         InitializeEmotions();
     }
 
+    void Update()
+    {
+        ChangeAnimation(currentEmotion); ;
+    }
+
     public void AdjustEmotion(string name, float amount)
     {
         Emotion targetEmotion = null;
@@ -48,8 +53,6 @@ public class EmotionSystem : MonoBehaviour
         if (targetEmotion != null)
         {
             DistributeAdjustment(targetEmotion, totalAdjustment);
-            UpdateCurrentEmotion();
-            ChangeAnimation(name);
         }
         UpdateCurrentEmotion();
 
@@ -71,7 +74,15 @@ public class EmotionSystem : MonoBehaviour
 
     public void ChangeAnimation(string emotion)
     {
-        anim.CrossFade(emotion, 0.1f);
+        if (emotion=="Sleepy" && GetEnergy()>0.35)
+        {
+            return;
+        }
+        else
+        {
+            anim.CrossFade(emotion, 0.1f);
+        }
+        
     }
 
     private void InitializeEmotions()
@@ -115,10 +126,9 @@ public class EmotionSystem : MonoBehaviour
 
         float correction = TotalPercentage - total;
 
-        if (emotions.Count > 0)
+        if (correction > 0)
         {
             int randomEmotion = Random.Range(0, emotions.Count);
-            Debug.Log(randomEmotion);
             emotions[randomEmotion].intensity = Mathf.Clamp(emotions[randomEmotion].intensity + correction, 0, TotalPercentage);
         }
     }
@@ -143,7 +153,6 @@ public class EmotionSystem : MonoBehaviour
 
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
-        ChangeAnimation(dominantEmotion.name);
     }
 
     private void AdjustEnergyBar()
@@ -182,6 +191,11 @@ public class EmotionSystem : MonoBehaviour
     {
         isSleeping = false;
         anim.SetBool("IsSleeping", false);
+    }
+
+    public float GetEnergy()
+    {
+        return energyBar.GetEnergy();
     }
 
 }

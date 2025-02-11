@@ -1,22 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TamagochiUI : MonoBehaviour
 {
-    [Header("Body Parts")]
 
-    [SerializeField] private Image[] Pupils;
-    [SerializeField] private Image[] Body;
+
+    [Header("Components")]
+
+    [SerializeField] private Animator anim;
+    [Header("Body Parts")]
+    [SerializeField]
+    private Image[] Pupils;
+
+    [SerializeField]
+    private Image[] Body;
 
     [Header("Customize")]
+    [SerializeField]
+    private Color bodyColor;
 
-    [SerializeField] private Color bodyColor;
+    [SerializeField]
+    private Color eyesColor;
 
-    [SerializeField] private Color eyesColor;
 
-    
+
+
+    [Header("Movement")]
+    private Vector3 targetPosition = Vector3.zero;
+    private Vector3 startPos = new Vector3(-2.06f, -7.57f, 0);
+
+
+
+    public void OnChangeScenario()
+    {
+
+        targetPosition = startPos;
+
+    }
 
     public void SetEyesColor()
     {
@@ -29,7 +54,7 @@ public class TamagochiUI : MonoBehaviour
 
     public Color GetEyesColor()
     {
-        return eyesColor; 
+        return eyesColor;
     }
 
     public void SetBodyColor()
@@ -39,7 +64,6 @@ public class TamagochiUI : MonoBehaviour
         {
             bodyPart.color = bodyColor;
         }
-
     }
 
     public Color GetBodyColor()
@@ -70,7 +94,6 @@ public class TamagochiUI : MonoBehaviour
 
         SetEyesColor();
         SetBodyColor();
-
     }
 
     private void LoadBodyColors()
@@ -93,5 +116,29 @@ public class TamagochiUI : MonoBehaviour
             float b = PlayerPrefs.GetFloat("EyesColor_B");
             eyesColor = new Color(r, g, b);
         }
+    }
+
+    public async Task MoveTo(Vector3 position)
+    {
+
+        anim.CrossFade("Walk", 0.3f);
+        if (position.x < targetPosition.x)
+        {
+            transform.DORotate(new Vector3(0, 180, 0), 0.3f);
+        }
+        else
+        {
+            transform.DORotate(new Vector3(0, 0, 0), 0.3f);
+        }
+
+        float speed = Vector2.Distance(targetPosition, position) / 2;
+
+        await DOTween.To(() => targetPosition, x => targetPosition = x, position, speed).SetEase(Ease.InOutQuad).OnUpdate(() =>
+        {
+            transform.position = new Vector3(transform.position.x, targetPosition.y, transform.position.z);
+            LookTama.xTama = targetPosition.x;
+        }).AsyncWaitForCompletion();
+        anim.CrossFade("Idle", 0.3f);
+
     }
 }

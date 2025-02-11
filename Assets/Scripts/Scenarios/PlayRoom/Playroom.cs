@@ -1,69 +1,52 @@
+using System;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 
 public class Playroom : MonoBehaviour
 {
-    [Header("Tamagotchi")]
-    [SerializeField] private Speech tamagotchiSpeech;
-
-    [Header("Screens")]
-    [SerializeField] private GameObject Background;
-    [SerializeField] private GameObject SelectGame;
-    [SerializeField] private GameObject TicTacToe;
-    [SerializeField] private GameObject Memory;
-    [SerializeField] private GameObject Cups;
-
-    [Header("Buttons")]
-    [SerializeField] private Button yesButton;
-    [SerializeField] private Button noButton;
+    [SerializeField] private RectTransform minigamesScreen;
 
     private async void OnEnable()
     {
-        Background.SetActive(true);
-        SelectGame.SetActive(false);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
+        Action speechEvent = () => EnterScreen(minigamesScreen);
 
-        if (tamagotchiSpeech != null)
-        {
-            await tamagotchiSpeech.SpeakAsync("Do you want to play a game with me?", true);
-            SetButtons(true);
-        }
+        await Task.Delay(10);
+        await Speech.instance.SpeakAsync("Do you want to play a game with me?", true, speechEvent);
     }
 
-    public void EnterGameSelectionScreen()
+    public void EnterScreen(RectTransform screen)
     {
-        Background.SetActive(false);
-        SelectGame.SetActive(true);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
-        SetButtons(false);
+        Debug.Log("EnterGameSelectionScreen");
+        TransitionsManager.Transition transition = new TransitionsManager.Transition(
+            TransitionsManager.TransitioType.SlideUpDown,
+            null,
+            screen: screen);
+
+
+        TransitionsManager.Instance.DoTransition(transition);
+
     }
 
-    public void SetButtons(bool isActive)
+    public void ExitScreen(RectTransform screen)
     {
-        yesButton.gameObject.SetActive(isActive);
-        noButton.gameObject.SetActive(isActive);
+        Debug.Log("EnterGameSelectionScreen");
+        TransitionsManager.Transition transition = new TransitionsManager.Transition(
+            TransitionsManager.TransitioType.SlideUpDown,
+            null,
+            inverse: true,
+            screen: screen);
+
+
+        TransitionsManager.Instance.DoTransition(transition);
+
+
     }
 
-    public void SetSelectedGame(GameObject selectedGame)
-    {
-        Background.SetActive(false);
-        SelectGame.SetActive(false);
-        TicTacToe.SetActive(false);
-        Memory.SetActive(false);
-        Cups.SetActive(false);
-
-        selectedGame.SetActive(true);
-    }
 
     private void OnDisable()
     {
         GameUI.instance.Talk(false);
     }
-
-
 }
