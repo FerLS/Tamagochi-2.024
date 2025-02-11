@@ -29945,6 +29945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigamesScreen: {fileID: 1049754716}
+  selectMinigamesScreen: {fileID: 0}
 --- !u!1 &1383686504
 GameObject:
   m_ObjectHideFlags: 0
