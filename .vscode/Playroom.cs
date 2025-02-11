@@ -10,7 +10,6 @@ public class Playroom : MonoBehaviour
 
     private async void OnEnable()
     {
-        
         Action speechEvent = () => EnterScreen(minigamesScreen);
 
         await Task.Delay(10);
