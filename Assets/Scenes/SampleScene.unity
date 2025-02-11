@@ -24726,6 +24726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1047747198}
   - component: {fileID: 1047747199}
+  - component: {fileID: 1047747200}
   m_Layer: 5
   m_Name: Park
   m_TagString: Untagged
@@ -24763,6 +24764,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047747197}
   m_CullTransparentMesh: 1
+--- !u!114 &1047747200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047747197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff57af1d457149f4d914a12afe240ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emotionSystem: {fileID: 3901171192785145037}
 --- !u!1 &1049663950
 GameObject:
   m_ObjectHideFlags: 0
