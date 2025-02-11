@@ -155,6 +155,18 @@ public class ReportsManager : MonoBehaviour
                     }
                 }
             }
+            else if (game.Key == "Cups Ball")
+            {
+                sb.AppendLine($"* {game.Key}:");
+                var stats = game.Value as Dictionary<string, int>;
+                if (stats != null)
+                {
+                    foreach (var stat in stats)
+                    {
+                        sb.AppendLine($"        * {stat.Key}: {stat.Value}");
+                    }
+                }
+            }
             else
             {
                 sb.AppendLine($"* {game.Key}: {game.Value}");

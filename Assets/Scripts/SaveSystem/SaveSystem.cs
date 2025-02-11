@@ -204,7 +204,7 @@ public class SaveSystem : MonoBehaviour
         {
             { "Tic Tac Toe", new Dictionary<string, int> { { "Won", 0 }, { "Lost", 0 }, { "Draw", 0 } } },
             { "Memory", 0 },
-            { "Cups Ball", 0 }
+            { "Cups Ball", new Dictionary<string, int> { { "Won", 0 }, { "Lost", 0 } } }
         };
            
         string filePath = folderPath + $"/{date}.json";
@@ -228,6 +228,15 @@ public class SaveSystem : MonoBehaviour
                             if (result.Contains("won")) ticTacToeStats["Won"]++;
                             else if (result.Contains("lost")) ticTacToeStats["Lost"]++;
                             else if (result.Contains("draw")) ticTacToeStats["Draw"]++;
+                        }
+                    }
+                    else if (name == "Cups Ball")
+                    {
+                        var stats = games[name] as Dictionary<string, int>;
+                        if (stats != null)
+                        {
+                            if (result.Contains("won")) stats["Won"]++;
+                            else if (result.Contains("lost")) stats["Lost"]++;
                         }
                     }
                     else

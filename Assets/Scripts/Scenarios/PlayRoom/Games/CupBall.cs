@@ -22,10 +22,11 @@ public class CupBall : MonoBehaviour
     [SerializeField] private Button playButton;
 
 
-
     [Header("References")]
-
     Vector2[] avalPos = new Vector2[3];
+
+    [Header("Save System")]
+    public SaveSystem saveSystem;
 
     float middlePos;
     int correctCupIndex;
@@ -39,6 +40,7 @@ public class CupBall : MonoBehaviour
     [ContextMenu("Start Game")]
     public async void StartGame()
     {
+
         if (completed)
         {
             await RestartGame();
@@ -81,7 +83,6 @@ public class CupBall : MonoBehaviour
         ball.localPosition -= new Vector3(0, 30f, 0);
         ball.transform.SetParent(ball.parent.parent);
         ball.SetSiblingIndex(0);
-
 
 
         foreach (Transform cup in cups)
@@ -127,9 +128,6 @@ public class CupBall : MonoBehaviour
 
 
         ball.SetAsFirstSibling();
-
-
-
     }
 
     public void AskForBall()
@@ -152,15 +150,17 @@ public class CupBall : MonoBehaviour
         messageText.DOFade(1, 0.5f).SetDelay(0.5f).SetEase(Ease.OutCubic);
         messageText.transform.GetChild(0).gameObject.SetActive(false);
 
+        
         if (index == correctCupIndex)
         {
-
-            messageText.text = "Congrats!";
+            messageText.text = "Congrats!\nYou won!!!";
         }
         else
         {
-            messageText.text = "Better luck next time!";
+            messageText.text = "You lost :(\nBetter luck next time!";
         }
+
+        saveSystem.SaveGameData("Cups Ball", messageText.text);
 
         _ = ShowBall();
         playButton.gameObject.SetActive(true);
@@ -181,8 +181,6 @@ public class CupBall : MonoBehaviour
 
 
         await HideBall();
-
-
     }
 
 
