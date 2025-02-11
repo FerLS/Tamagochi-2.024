@@ -74,7 +74,15 @@ public class EmotionSystem : MonoBehaviour
 
     public void ChangeAnimation(string emotion)
     {
-        anim.CrossFade(emotion, 0.1f);
+        if (emotion=="Sleepy" && GetEnergy()>0.35)
+        {
+            return;
+        }
+        else
+        {
+            anim.CrossFade(emotion, 0.1f);
+        }
+        
     }
 
     private void InitializeEmotions()
