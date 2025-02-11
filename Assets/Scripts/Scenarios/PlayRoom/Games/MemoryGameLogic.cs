@@ -5,13 +5,16 @@ using System.Collections.Generic;
 
 public class MemoryGameLogic : MonoBehaviour
 {
+    [Header("Game Board")]
+    [SerializeField] private Transform puzzleField;
+    [SerializeField] private GameObject puzzleBtnPrefab;
+
     [Header("Signs")]
     public GameObject FinishSign;
 
     [Header("Items")]
-    public List<Sprite> gamePuzzles = new List<Sprite>();
-    public Sprite[] animals;
-    [SerializeField] private GameObject puzzleBtnPrefab;
+    [SerializeField] private List<Sprite> gamePuzzles = new List<Sprite>();
+    [SerializeField] private Sprite[] animals;
     [SerializeField] private Sprite backImage;
 
     [Header("Save System")]
@@ -19,6 +22,7 @@ public class MemoryGameLogic : MonoBehaviour
 
 
     private List<Button> btns = new List<Button>();
+
     private bool firstGuess, secondGuess;
     private int firstGuessIndex, secondGuessIndex;
     private string firstGuessAnimal, secondGuessAnimal;
@@ -26,6 +30,11 @@ public class MemoryGameLogic : MonoBehaviour
     private int countCorrectGuesses = 0;
     private int gameGuesses ;
 
+
+    void Awake()
+    {
+        InitializeButtons();
+    }
 
     void Start()
     {
@@ -36,23 +45,34 @@ public class MemoryGameLogic : MonoBehaviour
         gameGuesses = gamePuzzles.Count/2;
     }
 
+    private void InitializeButtons()
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            GameObject _button = Instantiate(puzzleBtnPrefab, puzzleField, false);
+            _button.name = "" + i;
+        }
+    }
+
     void GetButtons()
     {
-        GameObject btnPrefab = puzzleBtnPrefab;
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzle");
-
-        for (int i = 0; i < objects.Length; i++)
+        btns.Clear();
+        foreach(Transform child in puzzleField)
         {
-            Button buttonComponent = objects[i].GetComponent<Button>();
-            if (buttonComponent != null)
+            Button btn = child.GetComponent<Button> (); 
+            if (btn)
             {
-                btns.Add(buttonComponent);
-                btns[i].image.sprite = backImage;
+                btns.Add(btn);
+                btn.image.sprite = backImage;
             }
-            else
-            {
-                Debug.LogWarning($"El objeto {objects[i].name} no tiene un componente Button.");
-            }
+        }
+    }
+
+    void AddListeners()
+    {
+        foreach (Button btn in btns)
+        {
+            btn.onClick.AddListener(() => PickPuzzle());
         }
     }
 
@@ -72,17 +92,6 @@ public class MemoryGameLogic : MonoBehaviour
         }
 
     }
-
-    void AddListeners()
-    {
-        foreach(Button btn in btns)
-        {
-            btn.onClick.AddListener( () =>  PickPuzzle() );
-        }
-    }
-
-
-
 
     public void PickPuzzle()
     {

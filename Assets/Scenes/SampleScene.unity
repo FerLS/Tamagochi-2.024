@@ -9859,7 +9859,6 @@ GameObject:
   m_Component:
   - component: {fileID: 358681917}
   - component: {fileID: 358681919}
-  - component: {fileID: 358681918}
   m_Layer: 5
   m_Name: MemoryGame
   m_TagString: Untagged
@@ -9889,20 +9888,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &358681918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358681916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a135d0cd02f6944db5725105ecb9a2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puzzleField: {fileID: 589910913}
-  button: {fileID: 4815967871699832615, guid: ffd6552cfeeb7dd448fbf279f39b03c0, type: 3}
 --- !u!114 &358681919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9915,6 +9900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227ef99ff8e29ff478226f772dabd141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzleField: {fileID: 589910913}
+  puzzleBtnPrefab: {fileID: 4815967871699832615, guid: ffd6552cfeeb7dd448fbf279f39b03c0, type: 3}
   FinishSign: {fileID: 1774153295}
   gamePuzzles: []
   animals:
@@ -9926,7 +9913,6 @@ MonoBehaviour:
   - {fileID: 1075993247170539406, guid: 6138d675c217f1046bf5a46ee8395817, type: 3}
   - {fileID: -3577052445578082173, guid: 073a33c76b25180419b47090d7d5c602, type: 3}
   - {fileID: 5604796196903453309, guid: 7674d6b3e58801d4f8be583736aea903, type: 3}
-  puzzleBtnPrefab: {fileID: 4815967871699832615, guid: ffd6552cfeeb7dd448fbf279f39b03c0, type: 3}
   backImage: {fileID: -7443756053782179069, guid: 6642b2bf4f776514891773754b963c4e, type: 3}
   saveSystem: {fileID: 1872419336}
 --- !u!1 &360726226
@@ -38446,7 +38432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1975482240
 RectTransform:
   m_ObjectHideFlags: 0
