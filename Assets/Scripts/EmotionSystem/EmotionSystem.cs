@@ -185,6 +185,11 @@ public class EmotionSystem : MonoBehaviour
         anim.SetBool("IsSleeping", false);
     }
 
+    public float GetEnergy()
+    {
+        return energyBar.GetEnergy();
+    }
+
 }
 
 

@@ -1,23 +1,31 @@
 using UnityEngine;
 
-public class ParkScript : MonoBehaviour
+public class PlayingScript : MonoBehaviour
 {
     [Header("Emotion System")]
     [SerializeField] private EmotionSystem emotionSystem;
 
-    private float increaseRate = 8f; 
+
+    [Header("Values")]
+    [SerializeField] private float increaseRate = 8f;
+    [SerializeField] private bool canPlay = true;
+
     private float timeElapsed = 0f;
     private int index = 0;
 
+    void Start()
+    {
+        validatePlayingRule();
+    }
+
     void Update()
     {
-        if (emotionSystem)
+        if (emotionSystem && canPlay)
         {
             timeElapsed += Time.deltaTime;
 
             if (timeElapsed >= 5f)
             {
-                Debug.Log(index);
                 if (index%3 == 0)
                 {
                     IncreaseHappy();
@@ -29,6 +37,8 @@ public class ParkScript : MonoBehaviour
                 index++;
                 timeElapsed = 0f; 
             }
+
+            validatePlayingRule();
         }
     }
     private void IncreaseSleepy()
@@ -49,5 +59,10 @@ public class ParkScript : MonoBehaviour
             emotionSystem.AdjustEmotion("Happy", increaseRate);
         }
 
+    }
+
+    private void validatePlayingRule()
+    {
+        canPlay = (emotionSystem.GetEnergy() >= 0.1);
     }
 }
