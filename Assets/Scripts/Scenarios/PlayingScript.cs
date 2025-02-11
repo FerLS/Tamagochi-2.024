@@ -10,9 +10,7 @@ public class PlayingScript : MonoBehaviour
     [SerializeField] private bool canPlay = true;
 
     [Header("Game Objects to Enable/Disable")]
-    [SerializeField] private GameObject ticTacToe;
-    [SerializeField] private GameObject memory;
-    [SerializeField] private GameObject cupsBall;
+    [SerializeField] private GameObject playroomGames;
     [SerializeField] private GameObject park;
 
     private float timeElapsed = 0f;
@@ -45,7 +43,6 @@ public class PlayingScript : MonoBehaviour
             }
 
             validatePlayingRule();
-
             UpdateGameObjects();
         }
     }
@@ -76,7 +73,11 @@ public class PlayingScript : MonoBehaviour
 
     private void UpdateGameObjects()
     {
-       
+        if (playroomGames.activeSelf)
+        {
+
+        }
+
         if (park)
         {
             GameObject ball = park.transform.Find("Ball").gameObject;
