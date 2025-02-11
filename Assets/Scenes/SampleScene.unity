@@ -38822,10 +38822,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotionSystem: {fileID: 3901171192785145037}
-  increaseRate: 8
+  increaseRate: 30
   canPlay: 1
-  playroomGames: {fileID: 1049754715}
+  isTryingToPlay: 0
   park: {fileID: 1047747197}
+  tictactoe: {fileID: 393270334}
+  memory: {fileID: 358681916}
+  cupsBall: {fileID: 1008945473}
 --- !u!1 &1975858462
 GameObject:
   m_ObjectHideFlags: 0
