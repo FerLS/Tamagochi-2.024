@@ -9917,7 +9917,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FinishSign: {fileID: 1774153295}
   gamePuzzles: []
-  btns: []
   animals:
   - {fileID: 7935234321397735378, guid: 65311a6096d1f4548b8be69bab1085c8, type: 3}
   - {fileID: 1480917699468073914, guid: d1aaf8bd7d31341468dce33d3aab0cf6, type: 3}
@@ -9927,6 +9926,7 @@ MonoBehaviour:
   - {fileID: 1075993247170539406, guid: 6138d675c217f1046bf5a46ee8395817, type: 3}
   - {fileID: -3577052445578082173, guid: 073a33c76b25180419b47090d7d5c602, type: 3}
   - {fileID: 5604796196903453309, guid: 7674d6b3e58801d4f8be583736aea903, type: 3}
+  puzzleBtnPrefab: {fileID: 4815967871699832615, guid: ffd6552cfeeb7dd448fbf279f39b03c0, type: 3}
   backImage: {fileID: -7443756053782179069, guid: 6642b2bf4f776514891773754b963c4e, type: 3}
   saveSystem: {fileID: 1872419336}
 --- !u!1 &360726226
@@ -24901,7 +24901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  m_Color: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26924,7 +26924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  m_Color: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -30108,7 +30108,7 @@ MonoBehaviour:
   - {fileID: 781710459}
   - {fileID: 307919148}
   bodyColor: {r: 0.8117648, g: 0.54901963, b: 0.21568629, a: 1}
-  eyesColor: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  eyesColor: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
 --- !u!95 &1383686507
 Animator:
   serializedVersion: 7
@@ -32252,7 +32252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  m_Color: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -46264,7 +46264,7 @@ MonoBehaviour:
   - {fileID: 353997703}
   - {fileID: 1613828252}
   bodyColor: {r: 0.8117648, g: 0.54901963, b: 0.21568629, a: 1}
-  eyesColor: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  eyesColor: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
 --- !u!114 &3901171192785145036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46343,7 +46343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.01132071, g: 0.011016798, b: 0, a: 1}
+  m_Color: {r: 0.2981131, g: 0.084934115, b: 0.084934115, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

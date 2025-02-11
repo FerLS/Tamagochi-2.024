@@ -10,13 +10,15 @@ public class MemoryGameLogic : MonoBehaviour
 
     [Header("Items")]
     public List<Sprite> gamePuzzles = new List<Sprite>();
-    public List<Button> btns = new List<Button>();
     public Sprite[] animals;
+    [SerializeField] private GameObject puzzleBtnPrefab;
     [SerializeField] private Sprite backImage;
 
     [Header("Save System")]
     public SaveSystem saveSystem;
 
+
+    private List<Button> btns = new List<Button>();
     private bool firstGuess, secondGuess;
     private int firstGuessIndex, secondGuessIndex;
     private string firstGuessAnimal, secondGuessAnimal;
@@ -36,6 +38,7 @@ public class MemoryGameLogic : MonoBehaviour
 
     void GetButtons()
     {
+        GameObject btnPrefab = puzzleBtnPrefab;
         GameObject[] objects = GameObject.FindGameObjectsWithTag("puzzle");
 
         for (int i = 0; i < objects.Length; i++)
