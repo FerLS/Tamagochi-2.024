@@ -76,9 +76,7 @@ public class PlayingScript : MonoBehaviour
 
     private void UpdateGameObjects()
     {
-        if (ticTacToe) ticTacToe.SetActive(canPlay);
-        if (memory) memory.SetActive(canPlay);
-        if (cupsBall) cupsBall.SetActive(canPlay);
+       
         if (park)
         {
             GameObject ball = park.transform.Find("Ball").gameObject;
