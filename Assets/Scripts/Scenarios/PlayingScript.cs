@@ -88,12 +88,12 @@ public class PlayingScript : MonoBehaviour
                 ball.gameObject.SetActive(canPlay); 
             }
         }
-        DisableGameButtons(tictactoe);
-        DisableGameButtons(memory);
-        DisableGameButtons(cupsBall);
+        DisableandEnableObject(tictactoe);
+        DisableandEnableObject(memory);
+        DisableandEnableObject(cupsBall);
     }
 
-    private void DisableGameButtons(GameObject game)
+    private void DisableandEnableObject(GameObject game)
     {
         if (game == null || !game.activeInHierarchy) return;
         Button[] buttons = game.GetComponentsInChildren<Button>(true);
@@ -107,6 +107,13 @@ public class PlayingScript : MonoBehaviour
             {
                 button.interactable = canPlay;
             }
+        }
+
+        Transform warningTransform = game.transform.Find("WarningSign");
+        if (warningTransform != null)
+        {
+            GameObject warningSign = warningTransform.gameObject;
+            warningSign.SetActive(!canPlay); 
         }
     }
 
