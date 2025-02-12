@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI; 
+using TMPro;
 
 public class PlayingScript : MonoBehaviour
 {
@@ -8,47 +10,47 @@ public class PlayingScript : MonoBehaviour
     [Header("Values")]
     [SerializeField] private float increaseRate = 8f;
     [SerializeField] private bool canPlay = true;
+    [SerializeField] private bool isTryingToPlay = false;
 
-    [Header("Game Objects to Enable/Disable")]
-    [SerializeField] private GameObject ticTacToe;
+    [Header("Game Objects from Games")]
+    [SerializeField] private GameObject park;
+    [SerializeField] private GameObject tictactoe;
     [SerializeField] private GameObject memory;
     [SerializeField] private GameObject cupsBall;
-    [SerializeField] private GameObject park;
 
     private float timeElapsed = 0f;
     private int index = 0;
 
-    void Start()
-    {
-        validatePlayingRule();
-        UpdateGameObjects();
-    }
 
     void Update()
     {
-        if (emotionSystem && canPlay)
+        if (emotionSystem)
         {
-            timeElapsed += Time.deltaTime;
-
-            if (timeElapsed >= 5f)
-            {
-                if (index%3 == 0)
-                {
-                    IncreaseHappy();
-                }
-                else
-                {
-                    IncreaseSleepy();
-                }
-                index++;
-                timeElapsed = 0f; 
-            }
-
             validatePlayingRule();
-
             UpdateGameObjects();
+
+            if (isTryingToPlay && canPlay)
+            {
+                timeElapsed += Time.deltaTime;
+
+                if (timeElapsed >= 5f)
+                {
+                    if (index % 3 == 0)
+                    {
+                        IncreaseHappy();
+                    }
+                    else
+                    {
+                        IncreaseSleepy();
+                    }
+                    index++;
+                    timeElapsed = 0f;
+                }
+            }
         }
     }
+
+
     private void IncreaseSleepy()
     {
         float currentIntensity = emotionSystem.GetEmotionIntensity("Sleepy");
@@ -71,16 +73,48 @@ public class PlayingScript : MonoBehaviour
 
     private void validatePlayingRule()
     {
-        canPlay = (emotionSystem.GetEnergy() >= 0.1);
+        isTryingToPlay = (park.activeInHierarchy || tictactoe.activeInHierarchy || memory.activeInHierarchy || cupsBall.activeInHierarchy);
+        canPlay = (emotionSystem.GetEnergy() >= 0.13);
     }
 
+ 
     private void UpdateGameObjects()
     {
-       
-        if (park)
+        if(park.activeInHierarchy)
         {
-            GameObject ball = park.transform.Find("Ball").gameObject;
-            if (ball) ball.SetActive(canPlay);
+            Transform ball = park.transform.Find("Ball"); 
+            if (ball != null)
+            {
+                ball.gameObject.SetActive(canPlay); 
+            }
+        }
+        DisableandEnableObject(tictactoe);
+        DisableandEnableObject(memory);
+        DisableandEnableObject(cupsBall);
+    }
+
+    private void DisableandEnableObject(GameObject game)
+    {
+        if (game == null || !game.activeInHierarchy) return;
+        Button[] buttons = game.GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+        {
+            if (button.name == "Exit")
+            {
+                button.interactable = true;
+            }
+            else
+            {
+                button.interactable = canPlay;
+            }
+        }
+
+        Transform warningTransform = game.transform.Find("WarningSign");
+        if (warningTransform != null)
+        {
+            GameObject warningSign = warningTransform.gameObject;
+            warningSign.SetActive(!canPlay); 
         }
     }
+
 }
