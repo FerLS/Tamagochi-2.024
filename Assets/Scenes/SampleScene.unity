@@ -207,7 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &28522776
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &82011674
 GameObject:
   m_ObjectHideFlags: 0
@@ -11432,7 +11434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &414261967
 GameObject:
   m_ObjectHideFlags: 0
@@ -18918,7 +18921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &877872407
 GameObject:
   m_ObjectHideFlags: 0
@@ -27686,7 +27690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1167718896
 GameObject:
   m_ObjectHideFlags: 0
@@ -34402,7 +34407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1613828250
 GameObject:
   m_ObjectHideFlags: 0
@@ -35266,18 +35272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce1bf5149be17d4b86e4edbb0bc1bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food:
-  - {fileID: 1885203200}
-  - {fileID: 1687882950}
-  - {fileID: 1767098205}
-  - {fileID: 71491016}
-  - {fileID: 2057165292}
-  - {fileID: 1767670562}
-  - {fileID: 7822104}
-  - {fileID: 873152251}
-  - {fileID: 1152860893}
-  - {fileID: 1610188128}
-  - {fileID: 405578364}
+  foodItems: []
 --- !u!114 &1659094116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35881,7 +35876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1688981910
 GameObject:
   m_ObjectHideFlags: 0
@@ -35966,18 +35962,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce1bf5149be17d4b86e4edbb0bc1bd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food:
-  - {fileID: 1885203200}
-  - {fileID: 1687882950}
-  - {fileID: 1767098205}
-  - {fileID: 71491016}
-  - {fileID: 2057165292}
-  - {fileID: 1767670562}
-  - {fileID: 7822104}
-  - {fileID: 873152251}
-  - {fileID: 1152860893}
-  - {fileID: 1610188128}
-  - {fileID: 405578364}
+  foodItems:
+  - foodObject: {fileID: 1885203200}
+    isLiked: 1
+  - foodObject: {fileID: 1687882950}
+    isLiked: 1
+  - foodObject: {fileID: 1767098205}
+    isLiked: 0
+  - foodObject: {fileID: 71491016}
+    isLiked: 1
+  - foodObject: {fileID: 2057165292}
+    isLiked: 1
+  - foodObject: {fileID: 1767670562}
+    isLiked: 1
+  - foodObject: {fileID: 7822104}
+    isLiked: 0
+  - foodObject: {fileID: 873152251}
+    isLiked: 1
+  - foodObject: {fileID: 1152860893}
+    isLiked: 0
+  - foodObject: {fileID: 1610188128}
+    isLiked: 1
+  - foodObject: {fileID: 405578364}
+    isLiked: 1
 --- !u!1 &1694279062
 GameObject:
   m_ObjectHideFlags: 0
@@ -36993,7 +37000,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1767670562
 GameObject:
   m_ObjectHideFlags: 0
@@ -37082,7 +37090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1769477322
 GameObject:
   m_ObjectHideFlags: 0
@@ -39120,7 +39129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &1888872849
 GameObject:
   m_ObjectHideFlags: 0
@@ -42095,7 +42105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabf1e590ec28242a87391f9eac4ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyBar: {fileID: 0}
+  emotionSystem: {fileID: 3901171192785145037}
+  foodManager: {fileID: 1688981913}
 --- !u!1 &2067464839
 GameObject:
   m_ObjectHideFlags: 0

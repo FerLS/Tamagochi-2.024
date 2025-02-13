@@ -4,9 +4,11 @@ using UnityEngine.EventSystems;
 
 public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
+    [SerializeField] private EmotionSystem emotionSystem; 
+    [SerializeField] private FoodManager foodManager;
+
     private RectTransform rectTransform;
-    private Vector3 startPosition; // Guarda la posición inicial
-    public EnergyBar energyBar; // Referencia a la barra de energía
+    private Vector3 startPosition; 
 
     private void Start()
     {
@@ -32,21 +34,26 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
             if (result.gameObject.CompareTag("Tamagochi"))
             {
 
-                // Aumenta la energía del Tamagotchi
-                /*if (energyBar != null)
-                {
-                    float currentEnergy = energyBar.GetEnergy(); // Obtener energía actual
-                    float newEnergy = Mathf.Clamp(currentEnergy + 0.2f, 0f, 1f); // Aumenta 20% sin pasar de 100%
-                    energyBar.SetEnergy(newEnergy);
-                }*/
+                bool isLiked = foodManager.GetFoodLiking(gameObject.name);
 
-                gameObject.SetActive(false); // Borra la comida después de que el Tamagotchi la come
+                if (emotionSystem != null)
+                {
+                    if (isLiked)
+                    {
+                        emotionSystem.AdjustEmotion("Happy", 5f);
+                    }
+                    else
+                    {
+                        emotionSystem.AdjustEmotion("Angry", 5f);
+                    }
+                }
+
+                gameObject.SetActive(false); 
                 foodEaten = true;
                 break;
             }
         }
 
-        // Si la comida no fue comida, vuelve a su posición original
         if (!foodEaten)
         {
             rectTransform.position = startPosition;

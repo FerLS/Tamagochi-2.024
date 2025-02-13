@@ -3,27 +3,22 @@ using System.Collections.Generic;
 
 public class FoodManager : MonoBehaviour
 {
-
-    [SerializeField] private GameObject[] food;
+    [SerializeField] private List<FoodItem> foodItems; // Lista de comidas con valores asociados
 
     private int totalActiveFood = 0;
-    private List<GameObject> activeFood = new List<GameObject>();
-    private List<GameObject> deactiveFood = new List<GameObject>();
+    private List<FoodItem> activeFood = new List<FoodItem>();
+    private List<FoodItem> deactiveFood = new List<FoodItem>();
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         UpdateValues();
+
         if (totalActiveFood < 7 && deactiveFood.Count > 0)
         {
-            int randomIndex = Random.Range(1, deactiveFood.Count);
-            GameObject selectedFood = deactiveFood[randomIndex]; 
-            selectedFood.SetActive(true);
+            int randomIndex = Random.Range(0, deactiveFood.Count); 
+            FoodItem selectedFood = deactiveFood[randomIndex]; 
+
+            selectedFood.foodObject.SetActive(true); 
         }
     }
 
@@ -32,17 +27,35 @@ public class FoodManager : MonoBehaviour
         totalActiveFood = 0;
         activeFood.Clear();
         deactiveFood.Clear();
-        foreach (var food in food)
+
+        foreach (var foodItem in foodItems)
         {
-            if (food.activeInHierarchy)
+            if (foodItem.foodObject.activeInHierarchy)
             {
                 totalActiveFood++;
-                activeFood.Add(food);
+                activeFood.Add(foodItem);
             }
             else
             {
-                deactiveFood.Add(food);
+                deactiveFood.Add(foodItem);
             }
         }
     }
+
+    public bool GetFoodLiking(string foodObjectName)
+    {
+        FoodItem food =  foodItems.Find(item => item.foodObject.name == foodObjectName);
+        if (food != null)
+        {
+            return food.isLiked;
+        }
+        return false;
+    }
+}
+
+[System.Serializable]
+public class FoodItem
+{
+    public GameObject foodObject; 
+    public bool isLiked; 
 }
