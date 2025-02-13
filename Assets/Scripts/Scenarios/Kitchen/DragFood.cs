@@ -4,14 +4,16 @@ using UnityEngine.EventSystems;
 
 public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
+    [SerializeField] private EmotionSystem emotionSystem; 
+    [SerializeField] private FoodManager foodManager;
+
     private RectTransform rectTransform;
-    private Vector3 startPosition; // Guarda la posición inicial
-    //public EnergyBar energyBar; // Referencia a la barra de energía
+    private Vector3 startPosition; 
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        startPosition = rectTransform.position; // Guarda la posición inicial de la comida
+        startPosition = rectTransform.position; 
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -22,35 +24,36 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp");
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
-        Debug.Log(results.Count);
 
         bool foodEaten = false;
 
         foreach (RaycastResult result in results)
         {
-            Debug.Log(result.gameObject.name);
             if (result.gameObject.CompareTag("Tamagochi"))
             {
-                Debug.Log("El Tamagotchi ha comido: " + gameObject.name);
-                
-                // Aumenta la energía del Tamagotchi
-                /*if (energyBar != null)
-                {
-                    float currentEnergy = energyBar.GetEnergy(); // Obtener energía actual
-                    float newEnergy = Mathf.Clamp(currentEnergy + 0.2f, 0f, 1f); // Aumenta 20% sin pasar de 100%
-                    energyBar.SetEnergy(newEnergy);
-                }*/
 
-                Destroy(gameObject); // Borra la comida después de que el Tamagotchi la come
+                bool isLiked = foodManager.GetFoodLiking(gameObject.name);
+
+                if (emotionSystem != null)
+                {
+                    if (isLiked)
+                    {
+                        emotionSystem.AdjustEmotion("Happy", 5f);
+                    }
+                    else
+                    {
+                        emotionSystem.AdjustEmotion("Angry", 5f);
+                    }
+                }
+
+                gameObject.SetActive(false); 
                 foodEaten = true;
                 break;
             }
         }
 
-        // Si la comida no fue comida, vuelve a su posición original
         if (!foodEaten)
         {
             rectTransform.position = startPosition;
