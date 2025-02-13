@@ -130,7 +130,6 @@ public class TamagochiUI : MonoBehaviour
 
     public async Task MoveTo(Vector3 position)
     {
-
         anim.CrossFade("Walk", 0.3f);
         if (position.x < targetPosition.x)
         {

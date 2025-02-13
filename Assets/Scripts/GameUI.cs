@@ -45,16 +45,15 @@ public class GameUI : MonoBehaviour
     [Header("Kitchen")]
     [SerializeField] private GameObject kitchenScenario;
 
-
-    [SerializeField]
-    private Image[] scnearioButtons;
+    [Header("Scenario Buttons")]
+    [SerializeField] private Image[] scenarioButtons;
 
     public float delayBetWalk = 3f;
 
     void Start()
     {
         ChangeScenary(bedroomScenario, true);
-        HighlightScenarioButton(scnearioButtons[0]);
+        HighlightScenarioButton(scenarioButtons[2]);
     }
 
     private void Awake()
@@ -123,7 +122,7 @@ public class GameUI : MonoBehaviour
 
     public void HighlightScenarioButton(Image button)
     {
-        foreach (Image image in scnearioButtons)
+        foreach (Image image in scenarioButtons)
         {
             image.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
         }

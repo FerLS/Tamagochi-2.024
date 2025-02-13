@@ -1,16 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Networking;
 using Microsoft.CognitiveServices.Speech;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections;
-using TMPro;
 using System.Net.Http;
 using System.Text;
-using System.Linq;
 using System;
-using UnityEngine.Events;
-
+using UnityEditor.ShaderGraph.Serialization;
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -24,28 +21,30 @@ public class Speech : MonoBehaviour
 {
 
     public static Speech instance;
-    [Header("Emotions")]
-    public EmotionSystem emotionSystem;
+    private EmotionSystem emotionSystem;
 
     private Action questionEvent;
 
-    [Header("Save System")]
-    public SaveSystem saveSystem;
+    [Header("Save System")] 
+    [SerializeField] private SaveSystem saveSystem;
 
-    private object threadLocker = new object();
     private bool waitingForReco;
     private string message;
 
     private bool micPermissionGranted = false;
 
-    private string recognizedSpeech;
+    private string recognizedSpeechText;
+    
+    private string connotation;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
     private const string speechAIRegion = "eastus";
 
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
-    private const string openAIModel = "gpt-4";
+    
+    private string textAnalyticsEndpoint = "https://eastus.api.cognitive.microsoft.com/";
+    private string textAnalyticsKey = "FNqXtWq1OVGooB6VqMIp9nEsjJ622bTi7VWaWUi630LuQPlhY8MbJQQJ99BBACYeBjFXJ3w3AAAaACOGxROM";
 
 
     private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
@@ -78,9 +77,10 @@ public class Speech : MonoBehaviour
 
     public async Task<string> GetRecognizedSpeech()
     {
-        var config = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
-
-        using (var recognizer = new SpeechRecognizer(config))
+        var speechConfig = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
+        speechConfig.OutputFormat = OutputFormat.Detailed;
+        
+        using (var recognizer = new SpeechRecognizer(speechConfig))
         {
             waitingForReco = true;
 
@@ -91,11 +91,13 @@ public class Speech : MonoBehaviour
 
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
-                    recognizedSpeech = result.Text;
+                    recognizedSpeechText = result.Text;
+                    Debug.Log(recognizedSpeechText);
+                    StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => {}));                   
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
-                    recognizedSpeech = string.Empty;
+                    recognizedSpeechText = string.Empty;
                 }
                 else if (result.Reason == ResultReason.Canceled)
                 {
@@ -110,47 +112,89 @@ public class Speech : MonoBehaviour
                 waitingForReco = false;
             }
         }
-        return recognizedSpeech;
+        return recognizedSpeechText;
     }
+
+    public IEnumerator AnalyzeEmotions(string text, Action<string> callback)
+    {
+        string url = textAnalyticsEndpoint + "text/analytics/v3.0/sentiment";
+        string requestBody = "{\"documents\":[{\"id\":\"1\",\"text\":\"" + text + "\"}]}";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(requestBody);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Ocp-Apim-Subscription-Key", textAnalyticsKey);
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string jsonResponse = request.downloadHandler.text;
+                string sentiment = ExtractSentiment(jsonResponse);
+                connotation = sentiment;
+                callback?.Invoke(sentiment);
+            }
+            else
+            {
+                Debug.LogError(request.error);
+            }
+        }
+    }
+
+    private string ExtractSentiment(string json)
+    {
+        try
+        {
+            SentimentResponse response = JsonUtility.FromJson<SentimentResponse>(json);
+            if (response.documents.Length > 0)
+            {
+                return response.documents[0].sentiment;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex.Message);
+        }
+        return "unknown";
+    }
+
 
     public async void OnClickMicro()
     {
-
         if (!micPermissionGranted)
         {
             message = "I can't hear you. Please enable microphone access in your device settings.";
             return;
-
-
         }
-        recognizedSpeech = await GetRecognizedSpeech();
-        if (recognizedSpeech != null)
+
+        recognizedSpeechText = await GetRecognizedSpeech();
+        if (recognizedSpeechText != null)
         {
-            if (recognizedSpeech == string.Empty)
+            if (recognizedSpeechText == string.Empty)
             {
                 message = "Sorry, can you repeat it?";
                 await SpeakAsync(message, false);
             }
             else
             {
-
-                bool hasEmotion = CheckEmotionKeywords(recognizedSpeech);
+                bool hasEmotion = CheckEmotionKeywords(recognizedSpeechText);
                 if (hasEmotion)
                 {
-                    saveSystem.SaveRecordedFeeling(recognizedSpeech);
+                    saveSystem.SaveRecordedFeeling(recognizedSpeechText);
                 }
-                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeech);
+                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeechText);
                 print(tamagotchiReply);
 
                 var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
-
 
                 message = response.response;
                 emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
                 await SpeakAsync(message, false);
             }
-
         }
     }
 
@@ -162,8 +206,6 @@ public class Speech : MonoBehaviour
             message = "Please, write something.";
             return;
         }
-
-        //Clean special characters
 
         text = CleanSpecialCharacters(text);
 
@@ -211,25 +253,27 @@ public class Speech : MonoBehaviour
         return mostFrequentEmotion;
     }
 
-
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
     {
         using (HttpClient client = new HttpClient())
         {
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
-            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
+            string intro = "You are a fiendly virtual pet that has feelings and emotions and always wants to help the user feel better because you deeply undertstand the emotions, the body and feelings.";
+            string user = "The user is a child that has Neurodevelopmenta Disorders (NDDs).";
 
             string emotion = GetMostRecentEmotionMemory();
             string mostFrequentEmotion = GetMostFrequentEmotionMemory();
 
             string feeling = $"Recently the user felt {emotion} and over time, the user's most common emotion is {mostFrequentEmotion}";
-
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
+
+             string empatheticResponse = $"The user just said: '{userSpeech}' with a {connotation} connotation. Please elaborate a response with empathy and care.";
+
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
             string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
-            string prompt = intro + feeling + treatment + restrictions + format;
+            string prompt = intro + user + feeling + treatment + empatheticResponse + restrictions + format;
 
             string requestBody = $@"
             {{
@@ -254,12 +298,13 @@ public class Speech : MonoBehaviour
             }
             else
             {
-                //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+                string errorDetails = await response.Content.ReadAsStringAsync();
+                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
                 return "I'm sorry, I couldn't process that.";
+                //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
             }
         }
     }
-
 
 
     public async Task SpeakAsync(string textToSpeak, bool isQuestion = false, Action speechEvent = null)
@@ -268,7 +313,6 @@ public class Speech : MonoBehaviour
 
         message = textToSpeak;
         RunOnMainThread(() => GameUI.instance.Talk(true, textToSpeak, isQuestion, speechEvent));
-
 
         using (var synthesizer = new SpeechSynthesizer(config))
         {
@@ -307,7 +351,8 @@ public class Speech : MonoBehaviour
 
     void Start()
     {
-
+    
+        emotionSystem = GetComponent<EmotionSystem>();
 
 #if PLATFORM_ANDROID
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
@@ -322,7 +367,6 @@ public class Speech : MonoBehaviour
 #else
         micPermissionGranted = true;
 #endif
-
         //StartCoroutine(SpeakGreeting());
     }
 
@@ -349,7 +393,6 @@ public class Speech : MonoBehaviour
 
     string CleanSpecialCharacters(string text)
     {
-
         string cleanText = text;
         cleanText = cleanText.Replace("á", "a");
         cleanText = cleanText.Replace("é", "e");
@@ -379,12 +422,7 @@ public class Speech : MonoBehaviour
         cleanText = cleanText.Replace("¬", "");
 
         return cleanText;
-
-
     }
-
-
-
 
     /* 
         void Update()
@@ -405,22 +443,32 @@ public class Speech : MonoBehaviour
 
         }
     */
-    [System.Serializable]
-    public class OpenAIResponse
+    [System.Serializable] public class OpenAIResponse
     {
         public Choice[] choices;
 
-        [System.Serializable]
-        public class Choice
+        [System.Serializable] public class Choice
         {
             public Message message;
 
-            [System.Serializable]
-            public class Message
+            [System.Serializable]public class Message
             {
                 public string role;
                 public string content;
             }
         }
     }
+}
+
+[System.Serializable]
+public class SentimentResponse
+{
+    public SentimentDocument[] documents;
+}
+
+[System.Serializable]
+public class SentimentDocument
+{
+    public string id;
+    public string sentiment;  
 }
