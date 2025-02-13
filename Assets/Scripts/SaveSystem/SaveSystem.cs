@@ -88,10 +88,9 @@ public class SaveSystem : MonoBehaviour
         CombinedDataList combinedData = LoadCombinedData();
         if (combinedData.emotionDataList.Count > 0)
         {
-            // Recuperar la emoción más reciente
             return combinedData.emotionDataList[combinedData.emotionDataList.Count - 1].emotion;
         }
-        return "neutral";
+        return null;
     }
 
     public string GetMostFrequentEmotion()
