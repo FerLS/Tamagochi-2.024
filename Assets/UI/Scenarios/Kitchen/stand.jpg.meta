@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6ecd448ec5d6adc4dae8898d119b2540
+guid: 5f45c40d600d04840963c5f8eef6ea37
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1248784056254802929
-    second: image (3)_0
+      213: 2779023822413464520
+    second: stand_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,43 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image (3)_0
+      name: stand_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 5
-        width: 450
-        height: 502
+        x: 0
+        y: 0
+        width: 6750
+        height: 4500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1fb2d3a9b72945110800000000000000
-      internalID: 1248784056254802929
+      spriteID: 8c38d4d4173119620800000000000000
+      internalID: 2779023822413464520
       vertices: []
       indices: 
       edges: []
@@ -161,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      image (3)_0: 1248784056254802929
+      stand_0: 2779023822413464520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
