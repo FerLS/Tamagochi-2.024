@@ -246,11 +246,35 @@ public class Speech : MonoBehaviour
     private string MemoryBasedResponse()
 {
     string recentEmotion = GetMostRecentEmotionMemory();
-    
-    if (recentEmotion != null)
+
+    if (!string.IsNullOrEmpty(recentEmotion))
     {
+        string responseMessage;
+
+        switch (recentEmotion.ToLower())
+        {
+            case "happy":
+                responseMessage = "I'm glad to see you happy! How's your day going?";
+                break;
+            case "sad":
+                responseMessage = "I noticed you been feeling sad lately, I'm here for you.\nWant to talk about it?";
+                break;
+            case "angry":
+                responseMessage = "I sense some frustration. Want totalk about it?";
+                break;
+            case "surprised": 
+                responseMessage = "Do you have something exciting to tell me about?";
+                break;
+            case "sleepy":
+                responseMessage = "If you are feeling tired you should get some rest.\nLet me know if you feel better now?";
+                break;
+            default:
+                responseMessage = "Do you have any plans for today?";
+                break;
+        }
+
         return $@"{{
-            ""response"": ""Last time, you were feeling {recentEmotion}. How about now?"",
+            ""response"": ""{responseMessage}"",
             ""feeling"": ""{recentEmotion}"",
             ""intensity"": {UnityEngine.Random.Range(8, 32)}
         }}";
@@ -259,9 +283,10 @@ public class Speech : MonoBehaviour
     return $@"{{
         ""response"": ""I'm thinking... Give me a second!"",
         ""feeling"": ""Neutral"",
-        ""intensity"": 10
+        ""intensity"": 5
     }}";
 }
+
 
 
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
@@ -322,18 +347,17 @@ public class Speech : MonoBehaviour
         Task<string> aiResponseTask = GetTamagotchiReplyFromOpenAI(userInput);
         string quickReply = MemoryBasedResponse();
 
-        // Wait for the AI response, but with a timeout of 2 seconds
         Task delayTask = Task.Delay(3600);
 
         Task firstCompleted = await Task.WhenAny(aiResponseTask, delayTask);
 
         if (firstCompleted == aiResponseTask)
         {
-            return await aiResponseTask; // AI responded within 2 seconds
+            return await aiResponseTask; 
         }
         else
         {
-            return quickReply; // Timeout: return memory-based response
+            return quickReply; 
         }
     }
 
