@@ -43,7 +43,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject bathroomScenario;
 
     [Header("Kitchen")]
-    [SerializeField]  private GameObject kitchenScenario;
+    [SerializeField] private GameObject kitchenScenario;
 
 
     [SerializeField]
@@ -84,6 +84,7 @@ public class GameUI : MonoBehaviour
             bathroomScenario.SetActive(false);
             kitchenScenario.SetActive(false);
             elmo.OnChangeScenario();
+            TipMessage.Instance.CleanMessage();
             scenario.gameObject.SetActive(true);
         };
         if (noTrans)
