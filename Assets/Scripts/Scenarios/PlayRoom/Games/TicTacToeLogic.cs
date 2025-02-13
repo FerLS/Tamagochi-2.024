@@ -1,43 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 
 public class TicTacToeLogic : MonoBehaviour
 {
-    int spriteIndex = -1;
-
     private int[,] board = new int[3, 3];
     private bool isGameOver = false;
-
-    [Header("Tamagotchi")]
-    public GameObject tamagotchi;
-
     [Header("TicTacToe")]
-    public GameObject boardObject;
-    public GameObject backButton;
-    public Sprite[] images; 
-    public GameObject[] tokens;
-    public GameObject FinishSign;
-    public GameObject FinishText;
+    public Sprite[] images;
+    public Image[] tokens;
+    public TextMeshProUGUI FinishSign;
 
     [Header("Save System")]
     public SaveSystem saveSystem;
 
     private void OnEnable()
     {
-        FinishSign.SetActive(false);
-        FinishText.SetActive(false);
+        FinishSign.transform.parent.gameObject.SetActive(false);
         ResetBoard();
-        boardObject.SetActive(true);
-        backButton.SetActive(true);
 
-        foreach (GameObject token in tokens)
-        {
-            token.SetActive(true);
-        }
 
-        isGameOver = false; 
+
+        isGameOver = false;
     }
 
     public void PlayerMove(int tokenIndex)
@@ -47,16 +33,16 @@ public class TicTacToeLogic : MonoBehaviour
         int row = tokenIndex / 3;
         int col = tokenIndex % 3;
 
-        if (board[row, col] == 0) 
+        if (board[row, col] == 0)
         {
-            board[row, col] = 1; 
+            board[row, col] = 1;
             UpdateTokenSprite(tokenIndex, 0);
             if (CheckWinCondition(1))
             {
                 EndGame("You won!");
             }
 
-            Invoke(nameof(MachineMove), 0.5f); 
+            Invoke(nameof(MachineMove), 0.5f);
         }
     }
 
@@ -77,7 +63,7 @@ public class TicTacToeLogic : MonoBehaviour
                 UpdateTokenSprite(randomIndex, 1);
                 if (CheckWinCondition(2))
                 {
-                    EndGame("You lose :(");
+                    EndGame("You lost :(");
                 }
                 played = true;
             }
@@ -87,8 +73,9 @@ public class TicTacToeLogic : MonoBehaviour
 
     private void UpdateTokenSprite(int tokenIndex, int spriteIndex)
     {
-        SpriteRenderer spriteRenderer = tokens[tokenIndex].GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = images[spriteIndex];
+        tokens[tokenIndex].DOFade(1, 0.2f);
+        tokens[tokenIndex].transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
+        tokens[tokenIndex].sprite = images[spriteIndex];
     }
 
     private bool CheckWinCondition(int player)
@@ -126,48 +113,36 @@ public class TicTacToeLogic : MonoBehaviour
     private void EndGame(string message)
     {
         isGameOver = true;
-        FinishSign.SetActive(true);
-        foreach (GameObject token in tokens)
-        {
-            token.SetActive(false);
-        }
-        TextMeshProUGUI tmpComponent = FinishText.GetComponent<TextMeshProUGUI>();
-        if (tmpComponent != null)
-        {
-            tmpComponent.text = message;
-        }
-        FinishText.SetActive(true);
+        FinishSign.transform.parent.gameObject.SetActive(true);
+        FinishSign.text = message;
+
         if (saveSystem != null)
         {
-            saveSystem.SaveGameData("Tic-Tac-Toe", message);
+            saveSystem.SaveGameData("Tic Tac Toe", message);
         }
-    }
-
-    public void GoBack()
-    {
-        FinishSign.SetActive(false);
-        FinishText.SetActive(false);
     }
 
     private void ResetBoard()
     {
         board = new int[3, 3];
-        foreach (GameObject token in tokens)
+        foreach (Image token in tokens)
         {
-            token.GetComponent<SpriteRenderer>().sprite = null;
+            token.sprite = null;
+            token.DOFade(0, 0);
+
         }
+
     }
 
 
     public void RestartGame()
     {
-        FinishSign.SetActive(false);
-        FinishText.SetActive(false);
+        FinishSign.gameObject.SetActive(false);
         ResetBoard();
 
-        foreach (GameObject token in tokens)
+        foreach (Image token in tokens)
         {
-            token.SetActive(true);
+            token.DOFade(0, 0);
         }
 
         isGameOver = false;

@@ -7,11 +7,11 @@ public class TicTacToe : MonoBehaviour
 
     private void Start()
     {
-        logic = FindObjectOfType<TicTacToeLogic>();
+        logic = GetComponentInParent<TicTacToeLogic>();
     }
 
     private void OnMouseDown()
     {
-        logic.PlayerMove(tokenIndex); 
+        logic.PlayerMove(tokenIndex);
     }
 }

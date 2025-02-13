@@ -5,55 +5,142 @@ using UnityEngine.Events;
 
 public class EmotionSystem : MonoBehaviour
 {
-
+    [Header("Emotions")]
     public List<Emotion> emotions = new List<Emotion>();
     public string currentEmotion;
 
+    [Header("Energy Bar")]
+    public EnergyBar energyBar; 
+
+
+    [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
-
     public Animator anim;
+    public bool isSleeping = false;
 
-    // Cambiar la intensidad de una emoción
+
+    private const float TotalPercentage = 100f;
+
+    void Start()
+    {
+        InitializeEmotions();
+    }
+
+    void Update()
+    {
+        ChangeAnimation(currentEmotion); ;
+    }
+
     public void AdjustEmotion(string name, float amount)
     {
+        Emotion targetEmotion = null;
+        float totalAdjustment = 0f;
 
-        float amountToChange = 0;
         foreach (var emotion in emotions)
         {
             if (emotion.name == name)
             {
-                float prevIntensity = emotion.intensity;
-                emotion.intensity = Mathf.Clamp(emotion.intensity + amount, 0, 100);
-                amountToChange = emotion.intensity - prevIntensity;
+                targetEmotion = emotion;
+                amount = amount / 100;
+                float newIntensity = Mathf.Clamp(emotion.intensity + amount * emotion.intensity, 0, TotalPercentage);
+                totalAdjustment = newIntensity - emotion.intensity;
+                emotion.intensity = newIntensity;
                 break;
+
             }
+            
         }
-
-        int indexEmotion = 0;
-
-        emotions.Sort((a, b) => a.intensity.CompareTo(b.intensity));
-
-        while (amountToChange > 0)
+        if (targetEmotion != null)
         {
-
-            if (emotions[indexEmotion].intensity > 0 && emotions[indexEmotion].name != name)
-
-            {
-                emotions[indexEmotion].intensity -= 1;
-                amountToChange -= 1;
-            }
-
-            indexEmotion++;
-            indexEmotion = indexEmotion % emotions.Count;
+            DistributeAdjustment(targetEmotion, totalAdjustment);
         }
-
-
         UpdateCurrentEmotion();
+
+        AdjustEnergyBar();
     }
 
-    // Determinar la emoción predominante
+    public float GetEmotionIntensity(string name)
+    {
+        float intensity = 0;
+        foreach (var emotion in emotions)
+        {
+            if (emotion.name == name)
+            {
+                intensity = emotion.intensity;
+            }
+        }
+        return intensity;
+    }
+
+    public void ChangeAnimation(string emotion)
+    {
+        if (emotion=="Sleepy" && GetEnergy()>0.35)
+        {
+            return;
+        }
+        else
+        {
+            anim.CrossFade(emotion, 0.1f);
+        }
+        
+    }
+
+    private void InitializeEmotions()
+    {
+        int amount = emotions.Count;
+        float initialPercentage = TotalPercentage / amount;
+        foreach (var emotion in emotions)
+        {
+            emotion.intensity = initialPercentage;
+        }
+        UpdateCurrentEmotion();
+
+        AdjustEnergyBar();
+    }
+
+    private void DistributeAdjustment(Emotion adjustedEmotion, float adjustment)
+    {
+        //float totalIntensity = TotalPercentage - adjustedEmotion.intensity;
+        //float adjustmentPerEmotion = totalIntensity == 0 ? 0 : adjustment / totalIntensity;
+
+        float adjustmentPerEmotion = adjustment / (emotions.Count - 1);
+        foreach (var emotion in emotions)
+        {
+            if (emotion != adjustedEmotion)
+            {
+                float newIntensity = emotion.intensity - adjustmentPerEmotion;
+                //float newIntensity = Mathf.Clamp(emotion.intensity - adjustmentPerEmotion * emotion.intensity, 0, TotalPercentage);
+                emotion.intensity = newIntensity;
+            }
+        }
+        NormalizePercentages();
+    }
+
+    private void NormalizePercentages()
+    {
+        float total = 0f;
+        foreach (var emotion in emotions)
+        {
+            total += emotion.intensity;
+        }
+
+        float correction = TotalPercentage - total;
+
+        if (correction > 0)
+        {
+            int randomEmotion = Random.Range(0, emotions.Count);
+            emotions[randomEmotion].intensity = Mathf.Clamp(emotions[randomEmotion].intensity + correction, 0, TotalPercentage);
+        }
+    }
+
+
     private void UpdateCurrentEmotion()
     {
+        if (isSleeping)
+        {
+            return;
+        }
+
         Emotion dominantEmotion = emotions[0];
 
         foreach (var emotion in emotions)
@@ -66,20 +153,50 @@ public class EmotionSystem : MonoBehaviour
 
         currentEmotion = dominantEmotion.name;
         OnEmotionChange.Invoke(currentEmotion);
-        ChangeAnimation(dominantEmotion.name);
-        Debug.Log($"La emoción predominante es: {currentEmotion}");
-
-
-
-
     }
 
-
-    public void ChangeAnimation(string emotion)
+    private void AdjustEnergyBar()
     {
-        anim.CrossFade(emotion, 0.1f);
+        float positiveEmotions = 0;
+        float sleepy = 0;
+        float relation = 0;
+
+        foreach (var emotion in emotions)
+        {
+            if (emotion.name == "Happy" 
+                || emotion.name == "Surprised" 
+                || emotion.name == "Neutral")
+            {
+                positiveEmotions += emotion.intensity;
+            }
+            if (emotion.name == "Sleepy")
+            {
+                sleepy += emotion.intensity;
+            }
+        }
+
+        relation = 1 - (sleepy / positiveEmotions);
+
+        energyBar.SetEnergy(relation);
+
+    }
+    
+    public void Sleep()
+    {
+        isSleeping = true;
+        anim.SetBool("IsSleeping", true);
     }
 
+    public void WakeUp()
+    {
+        isSleeping = false;
+        anim.SetBool("IsSleeping", false);
+    }
+
+    public float GetEnergy()
+    {
+        return energyBar.GetEnergy();
+    }
 
 }
 
