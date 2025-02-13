@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Tamagochi
+  - Warning
   layers:
   - Default
   - TransparentFX
@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Sign
   - 
   - 
   - 
