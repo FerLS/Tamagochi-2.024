@@ -7,7 +7,7 @@ using System.Collections;
 using System.Net.Http;
 using System.Text;
 using System;
-using UnityEditor.ShaderGraph.Serialization;
+using Newtonsoft.Json;
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -25,7 +25,7 @@ public class Speech : MonoBehaviour
 
     private Action questionEvent;
 
-    [Header("Save System")] 
+    [Header("Save and Memory System")] 
     [SerializeField] private SaveSystem saveSystem;
 
     private bool waitingForReco;
@@ -75,7 +75,7 @@ public class Speech : MonoBehaviour
         }
     }
 
-    public async Task<string> GetRecognizedSpeech()
+    private async Task<string> GetRecognizedSpeech()
     {
         var speechConfig = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
         speechConfig.OutputFormat = OutputFormat.Detailed;
@@ -92,7 +92,6 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeechText = result.Text;
-                    Debug.Log(recognizedSpeechText);
                     StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => {}));                   
                 }
                 else if (result.Reason == ResultReason.NoMatch)
@@ -180,20 +179,7 @@ public class Speech : MonoBehaviour
             }
             else
             {
-                bool hasEmotion = CheckEmotionKeywords(recognizedSpeechText);
-                if (hasEmotion)
-                {
-                    saveSystem.SaveRecordedFeeling(recognizedSpeechText);
-                }
-                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeechText);
-                print(tamagotchiReply);
-
-                var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
-
-                message = response.response;
-                emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
-
-                await SpeakAsync(message, false);
+                await SaveAndReply(recognizedSpeechText);
             }
         }
     }
@@ -209,13 +195,17 @@ public class Speech : MonoBehaviour
 
         text = CleanSpecialCharacters(text);
 
+        await SaveAndReply(text);
+    }
+
+    private async Task SaveAndReply(string text){
         bool hasEmotion = CheckEmotionKeywords(text);
         if (hasEmotion)
         {
             saveSystem.SaveRecordedFeeling(text);
         }
 
-        string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(text);
+        string tamagotchiReply = await GetQuickestResponse(text);
         print(tamagotchiReply);
 
         var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
@@ -252,6 +242,52 @@ public class Speech : MonoBehaviour
         string mostFrequentEmotion = saveSystem.GetMostFrequentEmotion();
         return mostFrequentEmotion;
     }
+    
+    private string MemoryBasedResponse()
+{
+    string recentEmotion = GetMostRecentEmotionMemory();
+
+    if (!string.IsNullOrEmpty(recentEmotion))
+    {
+        string responseMessage;
+
+        switch (recentEmotion.ToLower())
+        {
+            case "happy":
+                responseMessage = "I'm glad to see you happy! How's your day going?";
+                break;
+            case "sad":
+                responseMessage = "I noticed you been feeling sad lately, I'm here for you.\nWant to talk about it?";
+                break;
+            case "angry":
+                responseMessage = "I sense some frustration. Want totalk about it?";
+                break;
+            case "surprised": 
+                responseMessage = "Do you have something exciting to tell me about?";
+                break;
+            case "sleepy":
+                responseMessage = "If you are feeling tired you should get some rest.\nLet me know if you feel better now?";
+                break;
+            default:
+                responseMessage = "Do you have any plans for today?";
+                break;
+        }
+
+        return $@"{{
+            ""response"": ""{responseMessage}"",
+            ""feeling"": ""{recentEmotion}"",
+            ""intensity"": {UnityEngine.Random.Range(8, 32)}
+        }}";
+    }
+
+    return $@"{{
+        ""response"": ""I'm thinking... Give me a second!"",
+        ""feeling"": ""Neutral"",
+        ""intensity"": 5
+    }}";
+}
+
+
 
     private async Task<string> GetTamagotchiReplyFromOpenAI(string userSpeech)
     {
@@ -268,7 +304,7 @@ public class Speech : MonoBehaviour
             string feeling = $"Recently the user felt {emotion} and over time, the user's most common emotion is {mostFrequentEmotion}";
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
 
-             string empatheticResponse = $"The user just said: '{userSpeech}' with a {connotation} connotation. Please elaborate a response with empathy and care.";
+            string empatheticResponse = $"The user just said: '{userSpeech}' with a {connotation} connotation. Please elaborate a response with empathy and care.";
 
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
             string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
@@ -292,7 +328,7 @@ public class Speech : MonoBehaviour
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
-                var reply = JsonUtility.FromJson<OpenAIResponse>(responseBody);
+                var reply = JsonConvert.DeserializeObject<OpenAIResponse>(responseBody);
 
                 return reply.choices[0].message.content.Trim();
             }
@@ -306,6 +342,24 @@ public class Speech : MonoBehaviour
         }
     }
 
+    private async Task<string> GetQuickestResponse(string userInput)
+    {
+        Task<string> aiResponseTask = GetTamagotchiReplyFromOpenAI(userInput);
+        string quickReply = MemoryBasedResponse();
+
+        Task delayTask = Task.Delay(3600);
+
+        Task firstCompleted = await Task.WhenAny(aiResponseTask, delayTask);
+
+        if (firstCompleted == aiResponseTask)
+        {
+            return await aiResponseTask; 
+        }
+        else
+        {
+            return quickReply; 
+        }
+    }
 
     public async Task SpeakAsync(string textToSpeak, bool isQuestion = false, Action speechEvent = null)
     {
