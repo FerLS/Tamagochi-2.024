@@ -28,15 +28,14 @@ public class Speech : MonoBehaviour
     [Header("Save System")] 
     [SerializeField] private SaveSystem saveSystem;
 
-    private string emotions;
-
-    private object threadLocker = new object();
     private bool waitingForReco;
     private string message;
 
     private bool micPermissionGranted = false;
 
     private string recognizedSpeechText;
+    
+    private string connotation;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
     private const string speechAIRegion = "eastus";
@@ -44,9 +43,7 @@ public class Speech : MonoBehaviour
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
     
-
     private string textAnalyticsEndpoint = "https://eastus.api.cognitive.microsoft.com/";
-
     private string textAnalyticsKey = "FNqXtWq1OVGooB6VqMIp9nEsjJ622bTi7VWaWUi630LuQPlhY8MbJQQJ99BBACYeBjFXJ3w3AAAaACOGxROM";
 
 
@@ -95,12 +92,8 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeechText = result.Text;
-
-                    StartCoroutine(AnalyzeEmotions(result.Text, (sentiment) => {
-                        Debug.Log($"Overall: {sentiment}");
-                        Debug.Log($"Apply Emotion"); 
-                    }));
-                    
+                    Debug.Log(recognizedSpeechText);
+                    StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => {}));                   
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
@@ -141,7 +134,7 @@ public class Speech : MonoBehaviour
             {
                 string jsonResponse = request.downloadHandler.text;
                 string sentiment = ExtractSentiment(jsonResponse);
-
+                connotation = sentiment;
                 callback?.Invoke(sentiment);
             }
             else
@@ -167,6 +160,7 @@ public class Speech : MonoBehaviour
         }
         return "unknown";
     }
+
 
     public async void OnClickMicro()
     {
@@ -265,18 +259,21 @@ public class Speech : MonoBehaviour
         {
             client.DefaultRequestHeaders.Add("api-key", azureOpenAIKey);
 
-            string intro = "You are a fiendly human that has feelings and emotions and always wants to help the user feel better.The user is a child that has NDDs. You have a great knowledge about the emotions, body and feelings. ";
+            string intro = "You are a fiendly virtual pet that has feelings and emotions and always wants to help the user feel better because you deeply undertstand the emotions, the body and feelings.";
+            string user = "The user is a child that has Neurodevelopmenta Disorders (NDDs).";
 
             string emotion = GetMostRecentEmotionMemory();
             string mostFrequentEmotion = GetMostFrequentEmotionMemory();
 
             string feeling = $"Recently the user felt {emotion} and over time, the user's most common emotion is {mostFrequentEmotion}";
-
             string treatment = "You must avoid making the child unconfortable and remarking his disorder. ";
+
+             string empatheticResponse = $"The user just said: '{userSpeech}' with a {connotation} connotation. Please elaborate a response with empathy and care.";
+
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
             string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
-            string prompt = intro + feeling + treatment + restrictions + format;
+            string prompt = intro + user + feeling + treatment + empatheticResponse + restrictions + format;
 
             string requestBody = $@"
             {{
@@ -301,8 +298,10 @@ public class Speech : MonoBehaviour
             }
             else
             {
-                //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+                string errorDetails = await response.Content.ReadAsStringAsync();
+                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
                 return "I'm sorry, I couldn't process that.";
+                //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
             }
         }
     }
