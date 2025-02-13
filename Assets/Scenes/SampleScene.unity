@@ -40596,10 +40596,10 @@ MonoBehaviour:
   - {x: 1.32, y: -8.83, z: 0}
   bathroomScenario: {fileID: 246169769}
   kitchenScenario: {fileID: 92568737}
-  scnearioButtons:
-  - {fileID: 448142781}
+  scenarioButtons:
   - {fileID: 519097412}
   - {fileID: 886677734}
+  - {fileID: 448142781}
   - {fileID: 1968936702}
   - {fileID: 1468353371}
   delayBetWalk: 4
@@ -48401,7 +48401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963eb39d8320c16478575978b621ba73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emotionSystem: {fileID: 3901171192785145037}
   saveSystem: {fileID: 1872419336}
 --- !u!114 &3901171192785145037
 MonoBehaviour:
