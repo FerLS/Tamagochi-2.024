@@ -6,12 +6,12 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 {
     private RectTransform rectTransform;
     private Vector3 startPosition; // Guarda la posición inicial
-    //public EnergyBar energyBar; // Referencia a la barra de energía
+    public EnergyBar energyBar; // Referencia a la barra de energía
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        startPosition = rectTransform.position; // Guarda la posición inicial de la comida
+        startPosition = rectTransform.position; 
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -22,20 +22,16 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp");
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
-        Debug.Log(results.Count);
 
         bool foodEaten = false;
 
         foreach (RaycastResult result in results)
         {
-            Debug.Log(result.gameObject.name);
             if (result.gameObject.CompareTag("Tamagochi"))
             {
-                Debug.Log("El Tamagotchi ha comido: " + gameObject.name);
-                
+
                 // Aumenta la energía del Tamagotchi
                 /*if (energyBar != null)
                 {
@@ -44,7 +40,7 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
                     energyBar.SetEnergy(newEnergy);
                 }*/
 
-                Destroy(gameObject); // Borra la comida después de que el Tamagotchi la come
+                gameObject.SetActive(false); // Borra la comida después de que el Tamagotchi la come
                 foodEaten = true;
                 break;
             }
