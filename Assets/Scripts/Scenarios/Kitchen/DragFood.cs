@@ -6,7 +6,7 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 {
     private RectTransform rectTransform;
     private Vector3 startPosition; // Guarda la posición inicial
-    public EnergyBar energyBar; // Referencia a la barra de energía
+    //public EnergyBar energyBar; // Referencia a la barra de energía
 
     private void Start()
     {
@@ -37,12 +37,12 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
                 Debug.Log("El Tamagotchi ha comido: " + gameObject.name);
                 
                 // Aumenta la energía del Tamagotchi
-                if (energyBar != null)
+                /*if (energyBar != null)
                 {
                     float currentEnergy = energyBar.GetEnergy(); // Obtener energía actual
                     float newEnergy = Mathf.Clamp(currentEnergy + 0.2f, 0f, 1f); // Aumenta 20% sin pasar de 100%
                     energyBar.SetEnergy(newEnergy);
-                }
+                }*/
 
                 Destroy(gameObject); // Borra la comida después de que el Tamagotchi la come
                 foodEaten = true;
