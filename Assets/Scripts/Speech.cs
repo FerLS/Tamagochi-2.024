@@ -75,7 +75,7 @@ public class Speech : MonoBehaviour
         }
     }
 
-    public async Task<string> GetRecognizedSpeech()
+    private async Task<string> GetRecognizedSpeech()
     {
         var speechConfig = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
         speechConfig.OutputFormat = OutputFormat.Detailed;
@@ -92,7 +92,6 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeechText = result.Text;
-                    Debug.Log(recognizedSpeechText);
                     StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => {}));                   
                 }
                 else if (result.Reason == ResultReason.NoMatch)
@@ -180,20 +179,7 @@ public class Speech : MonoBehaviour
             }
             else
             {
-                bool hasEmotion = CheckEmotionKeywords(recognizedSpeechText);
-                if (hasEmotion)
-                {
-                    saveSystem.SaveRecordedFeeling(recognizedSpeechText);
-                }
-                string tamagotchiReply = await GetTamagotchiReplyFromOpenAI(recognizedSpeechText);
-                print(tamagotchiReply);
-
-                var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
-
-                message = response.response;
-                emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
-
-                await SpeakAsync(message, false);
+                await SaveAndReply(recognizedSpeechText);
             }
         }
     }
@@ -209,6 +195,10 @@ public class Speech : MonoBehaviour
 
         text = CleanSpecialCharacters(text);
 
+        await SaveAndReply(text);
+    }
+
+    private async Task SaveAndReply(string text){
         bool hasEmotion = CheckEmotionKeywords(text);
         if (hasEmotion)
         {
