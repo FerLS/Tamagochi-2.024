@@ -21,8 +21,6 @@ public class TicTacToeLogic : MonoBehaviour
         FinishSign.transform.parent.gameObject.SetActive(false);
         ResetBoard();
 
-
-
         isGameOver = false;
     }
 
