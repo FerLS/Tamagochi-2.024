@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 33b7258da3c06d049b04c04f2ad31a0f
+guid: 0b9c09041eb43c4479f98c3c0f6e2725
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4980393042394730227
-    second: image (5)_0
-  - first:
-      213: 3147374587587815390
-    second: image (5)_1
-  - first:
-      213: 5577915422517475524
-    second: image (5)_2
+      213: 8386587460383133869
+    second: sponge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,17 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image (5)_0
+      name: sponge_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 31
-        width: 389
-        height: 439
+        x: 0
+        y: 60
+        width: 512
+        height: 392
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3fec3c5b519ed1540800000000000000
-      internalID: 4980393042394730227
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: image (5)_1
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 351
-        width: 131
-        height: 130
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ed7634c0388bdab20800000000000000
-      internalID: 3147374587587815390
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: image (5)_2
-      rect:
-        serializedVersion: 2
-        x: 383
-        y: 255
-        width: 98
-        height: 98
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4c8b352168cb86d40800000000000000
-      internalID: 5577915422517475524
+      spriteID: da0d1e57cd4236470800000000000000
+      internalID: 8386587460383133869
       vertices: []
       indices: 
       edges: []
@@ -188,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      image (5)_0: 4980393042394730227
-      image (5)_1: 3147374587587815390
-      image (5)_2: 5577915422517475524
+      sponge_0: 8386587460383133869
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

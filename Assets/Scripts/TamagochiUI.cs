@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
-
 public class TamagochiUI : MonoBehaviour
 {
 
@@ -19,6 +19,14 @@ public class TamagochiUI : MonoBehaviour
 
     [SerializeField]
     private Image[] Body;
+
+
+
+    [Header("Dirties")]
+    private int dirtyLevel = 0;
+    [SerializeField] private Image[] dirties;
+
+    public UnityEvent onCleaned;
 
     [Header("Customize")]
     [SerializeField]
@@ -36,11 +44,13 @@ public class TamagochiUI : MonoBehaviour
 
 
 
+
+
+
     public void OnChangeScenario()
     {
 
         targetPosition = startPos;
-
     }
 
     public void SetEyesColor()
@@ -138,6 +148,26 @@ public class TamagochiUI : MonoBehaviour
             LookTama.xTama = targetPosition.x;
         }).AsyncWaitForCompletion();
         anim.CrossFade("Idle", 0.3f);
+
+    }
+
+
+
+
+    public void SetDirtyLevel(bool clean)
+    {
+        dirtyLevel = Mathf.Clamp(dirtyLevel + (clean ? -1 : 1), 0, dirties.Length);
+
+        for (int i = 0; i < dirties.Length; i++)
+        {
+            dirties[i].DOFade(i < dirtyLevel ? 1 : 0, 0.3f);
+
+        }
+
+        if (dirtyLevel == 0)
+        {
+            onCleaned?.Invoke();
+        }
 
     }
 }

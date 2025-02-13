@@ -5,12 +5,12 @@ public class TicTacToe : MonoBehaviour
     public int tokenIndex;
     private TicTacToeLogic logic;
 
-    private void Start()
+    void Start()
     {
         logic = GetComponentInParent<TicTacToeLogic>();
     }
 
-    private void OnMouseDown()
+    void OnMouseDown()
     {
         logic.PlayerMove(tokenIndex);
     }

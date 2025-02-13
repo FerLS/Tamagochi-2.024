@@ -19,6 +19,8 @@ public class BallController : MonoBehaviour
     private Vector2 targetPosition;
     private bool isMoving = false;
 
+    [SerializeField] private TamagochiUI tama;
+
     void Start()
     {
         ball = GetComponent<Rigidbody2D>();
@@ -37,7 +39,7 @@ public class BallController : MonoBehaviour
             Top, Bottom, Left, Right
         };
 
-        
+
     }
 
     void Update()
@@ -60,6 +62,11 @@ public class BallController : MonoBehaviour
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition = mousePosition;
             isMoving = true;
+
+            if (Random.value < 0.5f)
+            {
+                tama.SetDirtyLevel(false);
+            }
         }
     }
 

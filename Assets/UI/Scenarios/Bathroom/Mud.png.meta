@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 33b7258da3c06d049b04c04f2ad31a0f
+guid: bc40fc78ddf167c4ea9dbc09183da674
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4980393042394730227
-    second: image (5)_0
-  - first:
-      213: 3147374587587815390
-    second: image (5)_1
-  - first:
-      213: 5577915422517475524
-    second: image (5)_2
+      213: -5971745814065712087
+    second: Mud_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -119,67 +113,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image (5)_0
+      name: Mud_0
       rect:
         serializedVersion: 2
-        x: 31
-        y: 31
-        width: 389
-        height: 439
+        x: 0
+        y: 0
+        width: 626
+        height: 418
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 3fec3c5b519ed1540800000000000000
-      internalID: 4980393042394730227
+      spriteID: 5ea46ff9d1351ab41bdd7709420b292c
+      internalID: 1426539325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image (5)_1
+      name: Mud_1
       rect:
         serializedVersion: 2
-        x: 238
-        y: 351
-        width: 131
-        height: 130
+        x: 626
+        y: 0
+        width: 626
+        height: 418
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: ed7634c0388bdab20800000000000000
-      internalID: 3147374587587815390
+      spriteID: 39cf5190242ea4248b9f893d0698cb81
+      internalID: -1726960491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: image (5)_2
+      name: Mud_2
       rect:
         serializedVersion: 2
-        x: 383
-        y: 255
-        width: 98
-        height: 98
+        x: 1252
+        y: 0
+        width: 626
+        height: 418
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4c8b352168cb86d40800000000000000
-      internalID: 5577915422517475524
+      spriteID: 78c2434c3cb16e6469cc7efb9c8bd9a2
+      internalID: -710709089
       vertices: []
       indices: 
       edges: []
@@ -188,7 +182,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 59d813df76e752a4a899571faf219a95
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +192,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      image (5)_0: 4980393042394730227
-      image (5)_1: 3147374587587815390
-      image (5)_2: 5577915422517475524
+      Mud_0: 1426539325
+      Mud_1: -1726960491
+      Mud_2: -710709089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
