@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Text;
 using System;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+
 
 #if PLATFORM_ANDROID
 using UnityEngine.Android;
@@ -25,7 +27,7 @@ public class Speech : MonoBehaviour
 
     private Action questionEvent;
 
-    [Header("Save and Memory System")] 
+    [Header("Save and Memory System")]
     [SerializeField] private SaveSystem saveSystem;
 
     private bool waitingForReco;
@@ -34,7 +36,7 @@ public class Speech : MonoBehaviour
     private bool micPermissionGranted = false;
 
     private string recognizedSpeechText;
-    
+
     private string connotation;
 
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
@@ -42,7 +44,7 @@ public class Speech : MonoBehaviour
 
     private const string azureOpenAIEndpoint = "https://11078-m3z4gxr9-eastus2.cognitiveservices.azure.com/openai/deployments/gpt-4/chat/completions?api-version=2024-08-01-preview";
     private const string azureOpenAIKey = "FbYZnPzs6qjYPhWOBgYlmTMVwNByahpOD8qjPrjXAhhK7ckLdNWkJQQJ99AKACHYHv6XJ3w3AAAAACOGiZ5N";
-    
+
     private string textAnalyticsEndpoint = "https://eastus.api.cognitive.microsoft.com/";
     private string textAnalyticsKey = "FNqXtWq1OVGooB6VqMIp9nEsjJ622bTi7VWaWUi630LuQPlhY8MbJQQJ99BBACYeBjFXJ3w3AAAaACOGxROM";
 
@@ -79,7 +81,7 @@ public class Speech : MonoBehaviour
     {
         var speechConfig = SpeechConfig.FromSubscription(speechAIKey, speechAIRegion);
         speechConfig.OutputFormat = OutputFormat.Detailed;
-        
+
         using (var recognizer = new SpeechRecognizer(speechConfig))
         {
             waitingForReco = true;
@@ -92,7 +94,7 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeechText = result.Text;
-                    StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => {}));                   
+                    StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => { }));
                 }
                 else if (result.Reason == ResultReason.NoMatch)
                 {
@@ -198,7 +200,16 @@ public class Speech : MonoBehaviour
         await SaveAndReply(text);
     }
 
-    private async Task SaveAndReply(string text){
+    public static string CleanJsonString(string json)
+    {
+
+        // Elimina saltos de línea
+        json = json.Replace("\n", "");
+
+        return json;
+    }
+    private async Task SaveAndReply(string text)
+    {
         bool hasEmotion = CheckEmotionKeywords(text);
         if (hasEmotion)
         {
@@ -206,7 +217,9 @@ public class Speech : MonoBehaviour
         }
 
         string tamagotchiReply = await GetQuickestResponse(text);
-        print(tamagotchiReply);
+        tamagotchiReply = CleanJsonString(tamagotchiReply);
+
+        Debug.Log(tamagotchiReply);
 
         var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
 
@@ -219,7 +232,7 @@ public class Speech : MonoBehaviour
     private bool CheckEmotionKeywords(string text)
     {
         string lowerText = text.ToLower();
-        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed", "feel", "feels"};
+        string[] keywords = new string[] { "happy", "joy", "sad", "angry", "upset", "excited", "depressed", "anxious", "calm", "feeling", "emotion", "feels", "sleepy", "dissapointed", "feel", "feels" };
 
         foreach (string keyword in keywords)
         {
@@ -242,50 +255,50 @@ public class Speech : MonoBehaviour
         string mostFrequentEmotion = saveSystem.GetMostFrequentEmotion();
         return mostFrequentEmotion;
     }
-    
+
     private string MemoryBasedResponse()
-{
-    string recentEmotion = GetMostRecentEmotionMemory();
-
-    if (!string.IsNullOrEmpty(recentEmotion))
     {
-        string responseMessage;
+        string recentEmotion = GetMostRecentEmotionMemory();
 
-        switch (recentEmotion.ToLower())
+        if (!string.IsNullOrEmpty(recentEmotion))
         {
-            case "happy":
-                responseMessage = "I'm glad to see you happy! How's your day going?";
-                break;
-            case "sad":
-                responseMessage = "I noticed you been feeling sad lately, I'm here for you.\nWant to talk about it?";
-                break;
-            case "angry":
-                responseMessage = "I sense some frustration. Want totalk about it?";
-                break;
-            case "surprised": 
-                responseMessage = "Do you have something exciting to tell me about?";
-                break;
-            case "sleepy":
-                responseMessage = "If you are feeling tired you should get some rest.\nLet me know if you feel better now?";
-                break;
-            default:
-                responseMessage = "Do you have any plans for today?";
-                break;
-        }
+            string responseMessage;
 
-        return $@"{{
+            switch (recentEmotion.ToLower())
+            {
+                case "happy":
+                    responseMessage = "I'm glad to see you happy! How's your day going?";
+                    break;
+                case "sad":
+                    responseMessage = "I noticed you been feeling sad lately, I'm here for you.\nWant to talk about it?";
+                    break;
+                case "angry":
+                    responseMessage = "I sense some frustration. Want totalk about it?";
+                    break;
+                case "surprised":
+                    responseMessage = "Do you have something exciting to tell me about?";
+                    break;
+                case "sleepy":
+                    responseMessage = "If you are feeling tired you should get some rest.\nLet me know if you feel better now?";
+                    break;
+                default:
+                    responseMessage = "Do you have any plans for today?";
+                    break;
+            }
+
+            return $@"{{
             ""response"": ""{responseMessage}"",
             ""feeling"": ""{recentEmotion}"",
             ""intensity"": {UnityEngine.Random.Range(8, 32)}
         }}";
-    }
+        }
 
-    return $@"{{
+        return $@"{{
         ""response"": ""I'm thinking... Give me a second!"",
         ""feeling"": ""Neutral"",
         ""intensity"": 5
     }}";
-}
+    }
 
 
 
@@ -330,13 +343,28 @@ public class Speech : MonoBehaviour
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var reply = JsonConvert.DeserializeObject<OpenAIResponse>(responseBody);
 
-                return reply.choices[0].message.content.Trim();
+
+
+                return reply.choices[0].message.content;
             }
             else
             {
                 string errorDetails = await response.Content.ReadAsStringAsync();
-                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
-                return "I'm sorry, I couldn't process that.";
+                //Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
+                if (errorDetails.Contains("content management policy"))
+                {
+
+                    return $@"{{
+                        ""response"": ""Hey thats not very nice"",
+                        ""feeling"": ""sad"",
+                        ""intensity"":10
+                                }}";
+                }
+                return $@"{{
+                    ""response"": ""I'm sorry, I cant speak right now"",
+                    ""feeling"": ""Neutral"",
+                    ""intensity"": 5
+                }}";
                 //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
             }
         }
@@ -353,11 +381,11 @@ public class Speech : MonoBehaviour
 
         if (firstCompleted == aiResponseTask)
         {
-            return await aiResponseTask; 
+            return await aiResponseTask;
         }
         else
         {
-            return quickReply; 
+            return quickReply;
         }
     }
 
@@ -405,7 +433,7 @@ public class Speech : MonoBehaviour
 
     void Start()
     {
-    
+
         emotionSystem = GetComponent<EmotionSystem>();
 
 #if PLATFORM_ANDROID
@@ -497,15 +525,18 @@ public class Speech : MonoBehaviour
 
         }
     */
-    [System.Serializable] public class OpenAIResponse
+    [System.Serializable]
+    public class OpenAIResponse
     {
         public Choice[] choices;
 
-        [System.Serializable] public class Choice
+        [System.Serializable]
+        public class Choice
         {
             public Message message;
 
-            [System.Serializable]public class Message
+            [System.Serializable]
+            public class Message
             {
                 public string role;
                 public string content;
@@ -524,5 +555,5 @@ public class SentimentResponse
 public class SentimentDocument
 {
     public string id;
-    public string sentiment;  
+    public string sentiment;
 }

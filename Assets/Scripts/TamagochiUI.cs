@@ -43,14 +43,20 @@ public class TamagochiUI : MonoBehaviour
     private Vector3 startPos = new Vector3(-2.06f, -7.57f, 0);
 
 
+    void Start()
+    {
+        targetPosition = startPos;
+        LookTama.xTama = targetPosition.x;
 
-
+    }
 
 
     public void OnChangeScenario()
     {
 
         targetPosition = startPos;
+        transform.DOComplete();
+        transform.position = startPos;
     }
 
     public void SetEyesColor()

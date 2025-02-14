@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameUI : MonoBehaviour
 {
@@ -19,9 +20,13 @@ public class GameUI : MonoBehaviour
 
     private Action questionEvent;
 
-    public GameObject speechBubble;
+    public Image[] speechBubble;
+
 
     public TextMeshProUGUI outputText;
+
+    public Button[] speechButtons;
+
 
     [Header("Color Theme")]
     [SerializeField] private TamagochiUI elmo;
@@ -48,12 +53,16 @@ public class GameUI : MonoBehaviour
     [Header("Scenario Buttons")]
     [SerializeField] private Image[] scenarioButtons;
 
+    [Header("Walk Around")]
     public float delayBetWalk = 3f;
+
+
 
     void Start()
     {
-        ChangeScenary(bedroomScenario, true);
         HighlightScenarioButton(scenarioButtons[2]);
+        WalkAroundScenario(bedroomScenario);
+
     }
 
     private void Awake()
@@ -68,12 +77,9 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    public void ChangeScenary(GameObject scenario)
-    {
-        ChangeScenary(scenario, false);
-    }
 
-    public void ChangeScenary(GameObject scenario, bool noTrans)
+
+    public void ChangeScenary(GameObject scenario)
     {
         Action actionInMiddle = () =>
         {
@@ -86,20 +92,13 @@ public class GameUI : MonoBehaviour
             TipMessage.Instance.CleanMessage();
             scenario.gameObject.SetActive(true);
         };
-        if (noTrans)
-        {
-            actionInMiddle();
 
-        }
-        else
-        {
-            TransitionsManager.Instance.DoTransition(
-                new TransitionsManager.Transition(
-                    TransitionsManager.TransitioType.SideBy,
-                    actionInMiddle
-                )
-            );
-        }
+        TransitionsManager.Instance.DoTransition(
+    new TransitionsManager.Transition(
+        TransitionsManager.TransitioType.SideBy,
+        actionInMiddle
+    )
+);
         WalkAroundScenario(scenario);
 
 
@@ -128,24 +127,41 @@ public class GameUI : MonoBehaviour
         }
         button.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
     }
-    public void Talk(
+    public async void Talk(
         bool isTalking,
         string message = "",
         bool isQuestion = false,
         Action questionEvent = null
     )
     {
-        speechBubble.SetActive(isTalking);
+        foreach (Button button in speechButtons)
+        {
+            button.interactable = !isTalking;
+        }
+
+
+
+        float prevPos = speechBubble[0].transform.position.y;
+        float pos = prevPos - 1;
+        if (isTalking) speechBubble[0].transform.position = new Vector3(speechBubble[0].transform.position.x, pos, speechBubble[0].transform.position.z);
+
+        speechBubble[0].transform.DOMoveY(isTalking ? prevPos : pos, 0.5f);
+        speechBubble[0].DOFade(isTalking ? 1 : 0, 0.5f);
+        speechBubble[1].DOFade(isTalking ? 36 / 255 : 0, 0.5f);
+        await outputText.DOFade(isTalking ? 1 : 0, 0.5f).AsyncWaitForCompletion();
+
+
         StartCoroutine(TypeText(message));
 
         if (isQuestion)
         {
-            speechBubble.transform.GetChild(0).gameObject.SetActive(true);
+
+            speechBubble[0].transform.GetChild(0).gameObject.SetActive(true);
             this.questionEvent = questionEvent;
         }
     }
 
-    public IEnumerator TypeText(string message, float delay = 0.02f)
+    public IEnumerator TypeText(string message, float delay = 0.04f)
     {
         outputText.text = "";
         foreach (char letter in message.ToCharArray())
@@ -157,12 +173,15 @@ public class GameUI : MonoBehaviour
 
     public void OnNoButton()
     {
+        speechBubble[0].transform.GetChild(0).gameObject.SetActive(false);
+
         Talk(false);
     }
 
     public void OnYesButton()
     {
         questionEvent?.Invoke();
+        speechBubble[0].transform.GetChild(0).gameObject.SetActive(false);
         Talk(false);
     }
 
