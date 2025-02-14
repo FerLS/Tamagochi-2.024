@@ -84,8 +84,8 @@ public class Speech : MonoBehaviour
 
         using (var recognizer = new SpeechRecognizer(speechConfig))
         {
-            waitingForReco = true;
 
+            waitingForReco = true;
             await semaphore.WaitAsync();
             try
             {
@@ -165,9 +165,12 @@ public class Speech : MonoBehaviour
 
     public async void OnClickMicro()
     {
+
         if (!micPermissionGranted)
         {
             message = "I can't hear you. Please enable microphone access in your device settings.";
+            await SpeakAsync(message, false);
+
             return;
         }
 
@@ -437,6 +440,10 @@ public class Speech : MonoBehaviour
         emotionSystem = GetComponent<EmotionSystem>();
 
 #if PLATFORM_ANDROID
+#if UNITY_EDITOR
+        micPermissionGranted = true;
+
+#endif
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             Permission.RequestUserPermission(Permission.Microphone);
@@ -449,7 +456,7 @@ public class Speech : MonoBehaviour
 #else
         micPermissionGranted = true;
 #endif
-        //StartCoroutine(SpeakGreeting());
+
     }
 
 
