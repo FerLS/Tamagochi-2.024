@@ -47225,7 +47225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2074761702
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53165,6 +53165,7 @@ MonoBehaviour:
     intensity: 0
   currentEmotion: Neutral
   energyBar: {fileID: 908660359}
+  saveSystem: {fileID: 1872419336}
   OnEmotionChange:
     m_PersistentCalls:
       m_Calls: []

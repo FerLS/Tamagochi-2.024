@@ -12,6 +12,11 @@ public class EmotionSystem : MonoBehaviour
     [Header("Energy Bar")]
     public EnergyBar energyBar; 
 
+    
+    [Header("Save System")]
+    public SaveSystem saveSystem; 
+    private string recentEmotion;
+
 
     [Header("Events and Animations")]
     public UnityEvent<string> OnEmotionChange;
@@ -23,6 +28,7 @@ public class EmotionSystem : MonoBehaviour
 
     void Start()
     {
+        recentEmotion = saveSystem.GetRecentEmotion();
         InitializeEmotions();
     }
 
@@ -87,12 +93,30 @@ public class EmotionSystem : MonoBehaviour
 
     private void InitializeEmotions()
     {
-        int amount = emotions.Count;
-        float initialPercentage = TotalPercentage / amount;
-        foreach (var emotion in emotions)
-        {
-            emotion.intensity = initialPercentage;
+        int random = Random.Range(0,100);
+        if (random%3==0){
+            int amount = emotions.Count;
+            float predominantPercentage = TotalPercentage / amount + 10;
+            float percentage = (TotalPercentage-predominantPercentage) / (amount-1);
+            foreach (var emotion in emotions)
+            {
+                if (emotion.name == recentEmotion || (emotion.name=="Neutral" && recentEmotion=="Normal")){
+                    emotion.intensity = predominantPercentage;
+                }else{
+                    emotion.intensity = percentage;
+                }   
+                
+            }
+        }else{
+            int amount = emotions.Count;
+            float percentage = TotalPercentage / amount;
+            foreach (var emotion in emotions)
+            {
+                emotion.intensity = percentage;
+            }
         }
+        
+        
         UpdateCurrentEmotion();
 
         AdjustEnergyBar();
