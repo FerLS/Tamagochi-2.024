@@ -8,6 +8,8 @@ public class TransitionsManager : MonoBehaviour
     public static TransitionsManager Instance;
     bool onTransition;
 
+    public event Action onEndTransition;
+
     public enum TransitioType
     {
         SideBy,
@@ -107,8 +109,16 @@ public class TransitionsManager : MonoBehaviour
                     .SetEase(transition.ease)
                     .AsyncWaitForCompletion();
                 transition.actionInTransition?.Invoke();
+                if (transition.inverse)
+                {
+                    transition.screen.gameObject.SetActive(false);
+                    transition
+                    .screen.DOLocalMoveY(0, 0);
+
+                }
                 break;
         }
         onTransition = false;
+        onEndTransition?.Invoke();
     }
 }

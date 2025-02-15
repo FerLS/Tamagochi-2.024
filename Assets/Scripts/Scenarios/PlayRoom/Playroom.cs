@@ -10,8 +10,12 @@ public class Playroom : MonoBehaviour
 
     private async void OnEnable()
     {
-        
-        Action speechEvent = () => EnterScreen(minigamesScreen);
+
+        Action speechEvent = () =>
+        {
+            Debug.Log("SpeechEvent");
+            EnterScreen(minigamesScreen);
+        };
 
         await Task.Delay(10);
         await Speech.instance.SpeakAsync("Do you want to play a game with me?", true, speechEvent);

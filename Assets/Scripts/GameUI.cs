@@ -67,6 +67,8 @@ public class GameUI : MonoBehaviour
         WalkAroundScenario(bedroomScenario);
 
 
+
+
     }
 
     private void Awake()
@@ -85,6 +87,8 @@ public class GameUI : MonoBehaviour
 
     public void ChangeScenary(GameObject scenario)
     {
+
+
         Action actionInMiddle = () =>
         {
             parkScenario.SetActive(false);
@@ -94,6 +98,7 @@ public class GameUI : MonoBehaviour
             kitchenScenario.SetActive(false);
             elmo.OnChangeScenario();
             TipMessage.Instance.CleanMessage();
+            Talk(false);
             scenario.gameObject.SetActive(true);
         };
 
@@ -161,6 +166,8 @@ public class GameUI : MonoBehaviour
         {
             button.interactable = !isTalking;
         }
+        if (isTalking) outputText.text = "";
+        speechBubble[0].transform.GetChild(0).gameObject.SetActive(false);
 
 
 
@@ -192,7 +199,6 @@ public class GameUI : MonoBehaviour
 
     public IEnumerator TypeText(string message, float delay = 0.04f)
     {
-        outputText.text = "";
         foreach (char letter in message.ToCharArray())
         {
             outputText.text += letter;

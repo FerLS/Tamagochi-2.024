@@ -41,6 +41,8 @@ public class Speech : MonoBehaviour
 
     private string connotation;
 
+    private string lastRespose = "None";
+
     private const string speechAIKey = "6mqkdKBT3AeTqyc1UBcniDEXdqQSFubYfHIxNwdPVDZQXAVBO5xQJQQJ99ALACYeBjFXJ3w3AAAYACOGhLrh";
     private const string speechAIRegion = "eastus";
 
@@ -332,8 +334,9 @@ public class Speech : MonoBehaviour
 
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
             string format = $"The format should be a json,without line breaks or tabs or symbols,max of 35 words, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
+            string condition = $"The previous message was {lastRespose}.";
 
-            string prompt = intro + user + feeling + treatment + empatheticResponse + restrictions + format;
+            string prompt = intro + user + feeling + treatment + empatheticResponse + restrictions + format + condition;
 
             string requestBody = $@"
             {{
@@ -356,6 +359,7 @@ public class Speech : MonoBehaviour
 
                 var reply = JsonConvert.DeserializeObject<OpenAIResponse>(responseBody);
 
+                lastRespose = JsonUtility.FromJson<ResponseData>(reply.choices[0].message.content).response;
 
 
                 return reply.choices[0].message.content;
