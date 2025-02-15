@@ -135,7 +135,7 @@ public class TicTacToeLogic : MonoBehaviour
 
     public void RestartGame()
     {
-        FinishSign.gameObject.SetActive(false);
+        FinishSign.transform.parent.gameObject.SetActive(false);
         ResetBoard();
 
         foreach (Image token in tokens)
