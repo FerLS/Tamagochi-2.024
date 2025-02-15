@@ -40,7 +40,7 @@ public class TamagochiUI : MonoBehaviour
 
     [Header("Movement")]
     private Vector3 targetPosition = Vector3.zero;
-    private Vector3 startPos = new Vector3(-2.06f, -7.57f, 0);
+    private Vector3 startPos = new Vector3(-2.06f, -7.57f, 8.36f);
 
 
     void Start()
@@ -57,6 +57,7 @@ public class TamagochiUI : MonoBehaviour
         targetPosition = startPos;
         transform.DOComplete();
         transform.position = startPos;
+        transform.localScale = Vector3.one * targetPosition.z;
     }
 
     public void SetEyesColor()
@@ -148,8 +149,10 @@ public class TamagochiUI : MonoBehaviour
 
         float speed = Vector2.Distance(targetPosition, position) / 2;
 
+
         await DOTween.To(() => targetPosition, x => targetPosition = x, position, speed).SetEase(Ease.InOutQuad).OnUpdate(() =>
         {
+            transform.localScale = Vector3.one * targetPosition.z;
             transform.position = new Vector3(transform.position.x, targetPosition.y, transform.position.z);
             LookTama.xTama = targetPosition.x;
         }).AsyncWaitForCompletion();

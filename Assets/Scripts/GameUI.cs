@@ -22,6 +22,8 @@ public class GameUI : MonoBehaviour
 
     public Image[] speechBubble;
 
+    public Animator thinkBubble;
+
 
     public TextMeshProUGUI outputText;
 
@@ -51,7 +53,8 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject kitchenScenario;
 
     [Header("Scenario Buttons")]
-    [SerializeField] private Image[] scenarioButtons;
+    [SerializeField] private Image[] scenarioButtonsIcon;
+    [SerializeField] private Button[] scenarioButtons;
 
     [Header("Walk Around")]
     public float delayBetWalk = 3f;
@@ -60,8 +63,9 @@ public class GameUI : MonoBehaviour
 
     void Start()
     {
-        HighlightScenarioButton(scenarioButtons[2]);
+        HighlightScenarioButton(scenarioButtonsIcon[2]);
         WalkAroundScenario(bedroomScenario);
+
 
     }
 
@@ -121,11 +125,23 @@ public class GameUI : MonoBehaviour
 
     public void HighlightScenarioButton(Image button)
     {
-        foreach (Image image in scenarioButtons)
+        foreach (Image image in scenarioButtonsIcon)
         {
             image.color = new Color(88f / 255f, 88f / 255f, 88f / 255f);
         }
         button.color = new Color(208f / 255f, 136f / 255f, 64f / 255f);
+    }
+
+    public void Think(bool isThinking)
+    {
+        if (isThinking)
+        {
+            thinkBubble.Play("onEnter");
+        }
+        else
+        {
+            thinkBubble.Play("onExit");
+        }
     }
     public async void Talk(
         bool isTalking,
@@ -134,6 +150,13 @@ public class GameUI : MonoBehaviour
         Action questionEvent = null
     )
     {
+
+        Think(false);
+        foreach (Button button in scenarioButtons)
+        {
+            button.interactable = !isTalking;
+        }
+
         foreach (Button button in speechButtons)
         {
             button.interactable = !isTalking;
@@ -145,7 +168,13 @@ public class GameUI : MonoBehaviour
         float pos = prevPos - 1;
         if (isTalking) speechBubble[0].transform.position = new Vector3(speechBubble[0].transform.position.x, pos, speechBubble[0].transform.position.z);
 
-        speechBubble[0].transform.DOMoveY(isTalking ? prevPos : pos, 0.5f);
+        speechBubble[0].transform.DOMoveY(isTalking ? prevPos : pos, 0.5f).OnComplete(() =>
+        {
+            if (!isTalking)
+            {
+                speechBubble[0].transform.DOMoveY(prevPos, 0);
+            }
+        });
         speechBubble[0].DOFade(isTalking ? 1 : 0, 0.5f);
         speechBubble[1].DOFade(isTalking ? 36 / 255 : 0, 0.5f);
         await outputText.DOFade(isTalking ? 1 : 0, 0.5f).AsyncWaitForCompletion();
@@ -168,6 +197,14 @@ public class GameUI : MonoBehaviour
         {
             outputText.text += letter;
             yield return new WaitForSeconds(delay);
+            if (letter == '.' || letter == '?' || letter == '!')
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            if (letter == ',')
+            {
+                yield return new WaitForSeconds(0.2f);
+            }
         }
     }
 

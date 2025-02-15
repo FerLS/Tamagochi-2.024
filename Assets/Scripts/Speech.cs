@@ -9,6 +9,8 @@ using System.Text;
 using System;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
+using DG.Tweening;
 
 
 #if PLATFORM_ANDROID
@@ -163,8 +165,13 @@ public class Speech : MonoBehaviour
     }
 
 
-    public async void OnClickMicro()
+    public async void OnClickMicro(Image micButton)
     {
+        Button button = micButton.GetComponent<Button>();
+        button.enabled = false;
+        micButton.DOColor(Color.red, 0.5f);
+        var position = micButton.transform.position.x;
+        micButton.transform.DOMoveX(position - 1, 0.5f);
 
         if (!micPermissionGranted)
         {
@@ -177,15 +184,21 @@ public class Speech : MonoBehaviour
         recognizedSpeechText = await GetRecognizedSpeech();
         if (recognizedSpeechText != null)
         {
+            micButton.DOColor(new Color(87f / 255f, 91f / 255f, 165f / 255f, 227f / 255f), 0.5f);
+            micButton.transform.DOMoveX(position, 0.5f);
+            button.enabled = true;
+
             if (recognizedSpeechText == string.Empty)
             {
                 message = "Sorry, can you repeat it?";
                 await SpeakAsync(message, false);
+
             }
             else
             {
                 await SaveAndReply(recognizedSpeechText);
             }
+
         }
     }
 
@@ -202,15 +215,6 @@ public class Speech : MonoBehaviour
 
         await SaveAndReply(text);
     }
-
-    public static string CleanJsonString(string json)
-    {
-
-        // Elimina saltos de línea
-        json = json.Replace("\n", "");
-
-        return json;
-    }
     private async Task SaveAndReply(string text)
     {
         bool hasEmotion = CheckEmotionKeywords(text);
@@ -220,16 +224,20 @@ public class Speech : MonoBehaviour
         }
 
         string tamagotchiReply = await GetQuickestResponse(text);
-        tamagotchiReply = CleanJsonString(tamagotchiReply);
 
         Debug.Log(tamagotchiReply);
 
-        var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
 
+
+        var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
         message = response.response;
         emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
         await SpeakAsync(message, false);
+
+
+
+
     }
 
     private bool CheckEmotionKeywords(string text)
@@ -323,7 +331,7 @@ public class Speech : MonoBehaviour
             string empatheticResponse = $"The user just said: '{userSpeech}' with a {connotation} connotation. Please elaborate a response with empathy and care.";
 
             string restrictions = "You do not have any knowlegde of AI, history, geography, astrology and other specific sciences, it is not your expertise. Your answer should be short because the user can be easily distracted.";
-            string format = $"The format should be a json, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
+            string format = $"The format should be a json,without line breaks or tabs or symbols,max of 35 words, with 3 properties: response, feeling (from {string.Join(", ", emotionSystem.emotions.ConvertAll(e => e.name))}) and intensity (from 0 to 75).";
 
             string prompt = intro + user + feeling + treatment + empatheticResponse + restrictions + format;
 
@@ -333,7 +341,7 @@ public class Speech : MonoBehaviour
                     {{ ""role"": ""system"", ""content"": ""{prompt}""}},
                     {{ ""role"": ""user"", ""content"": ""{userSpeech}""}}
                 ],
-                ""max_tokens"": 50
+                ""max_tokens"": 80
             }}";
 
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
@@ -344,6 +352,8 @@ public class Speech : MonoBehaviour
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
+                Debug.Log(responseBody);
+
                 var reply = JsonConvert.DeserializeObject<OpenAIResponse>(responseBody);
 
 
@@ -353,7 +363,7 @@ public class Speech : MonoBehaviour
             else
             {
                 string errorDetails = await response.Content.ReadAsStringAsync();
-                //Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
+                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
                 if (errorDetails.Contains("content management policy"))
                 {
 
@@ -375,6 +385,9 @@ public class Speech : MonoBehaviour
 
     private async Task<string> GetQuickestResponse(string userInput)
     {
+
+        GameUI.instance.Think(true);
+
         Task<string> aiResponseTask = GetTamagotchiReplyFromOpenAI(userInput);
         string quickReply = MemoryBasedResponse();
 
@@ -384,6 +397,7 @@ public class Speech : MonoBehaviour
 
         if (firstCompleted == aiResponseTask)
         {
+
             return await aiResponseTask;
         }
         else
