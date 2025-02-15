@@ -114,6 +114,32 @@ public class GameUI : MonoBehaviour
 
     }
 
+    public void EnterSeetings(RectTransform screen)
+    {
+
+
+        TransitionsManager.Instance.DoTransition(
+            new TransitionsManager.Transition(
+                TransitionsManager.TransitioType.SlideUpDown,
+                null,
+                screen: screen
+            )
+        );
+    }
+    public void ExitSeetings(RectTransform screen)
+    {
+        TransitionsManager.Transition transition = new TransitionsManager.Transition(
+    TransitionsManager.TransitioType.SlideUpDown,
+    null,
+    inverse: true,
+    screen: screen);
+
+
+        TransitionsManager.Instance.DoTransition(transition);
+
+    }
+
+
     public void OpenTypeScreen()
     {
         typeScreen.SetActive(true);

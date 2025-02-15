@@ -1656,12 +1656,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1872419335}
-        m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
-        m_MethodName: EnterScreen
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: ExitSeetings
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 1975482240}
+          m_ObjectArgument: {fileID: 2074761702}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -45449,9 +45449,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1872419335}
-        m_TargetAssemblyTypeName: GlobalUi, Assembly-CSharp
-        m_MethodName: EnterScreen
+      - m_Target: {fileID: 1975482241}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: EnterSeetings
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2074761702}
@@ -45706,7 +45706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1975482240
 RectTransform:
   m_ObjectHideFlags: 0
