@@ -46,6 +46,7 @@ public class DragFood : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
                     {
                         emotionSystem.AdjustEmotion("Angry", 5f);
                     }
+                    emotionSystem.AdjustEmotion("Sleepy", -5f);
                 }
 
                 gameObject.SetActive(false); 

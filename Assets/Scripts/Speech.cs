@@ -98,6 +98,7 @@ public class Speech : MonoBehaviour
                 if (result.Reason == ResultReason.RecognizedSpeech)
                 {
                     recognizedSpeechText = result.Text;
+                    Debug.Log($"Recognized speech from user: {recognizedSpeechText}");
                     StartCoroutine(AnalyzeEmotions(result.Text, (connotation) => { }));
                 }
                 else if (result.Reason == ResultReason.NoMatch)
@@ -214,9 +215,12 @@ public class Speech : MonoBehaviour
         }
 
         text = CleanSpecialCharacters(text);
-
+        
+        Debug.Log($"Recognized text from user: {text}");
         await SaveAndReply(text);
     }
+
+
     private async Task SaveAndReply(string text)
     {
         bool hasEmotion = CheckEmotionKeywords(text);
@@ -227,19 +231,12 @@ public class Speech : MonoBehaviour
 
         string tamagotchiReply = await GetQuickestResponse(text);
 
-        Debug.Log(tamagotchiReply);
-
-
-
         var response = JsonUtility.FromJson<ResponseData>(tamagotchiReply);
         message = response.response;
+        Debug.Log($"Tamagotchi replied: {response.response}");
         emotionSystem.AdjustEmotion(response.feeling, float.Parse(response.intensity));
 
         await SpeakAsync(message, false);
-
-
-
-
     }
 
     private bool CheckEmotionKeywords(string text)
@@ -355,7 +352,7 @@ public class Speech : MonoBehaviour
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
-                Debug.Log(responseBody);
+                Debug.Log($"AI response: {responseBody}");
 
                 var reply = JsonConvert.DeserializeObject<OpenAIResponse>(responseBody);
 
@@ -456,6 +453,7 @@ public class Speech : MonoBehaviour
     {
 
         emotionSystem = GetComponent<EmotionSystem>();
+        SpeakGreeting();
 
 #if PLATFORM_ANDROID
 #if UNITY_EDITOR

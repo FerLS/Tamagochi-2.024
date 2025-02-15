@@ -65,10 +65,6 @@ public class GameUI : MonoBehaviour
     {
         HighlightScenarioButton(scenarioButtonsIcon[2]);
         WalkAroundScenario(bedroomScenario);
-
-
-
-
     }
 
     private void Awake()
