@@ -28885,7 +28885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1240484009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45661,13 +45661,13 @@ MonoBehaviour:
   scenarioButtonsIcon:
   - {fileID: 519097412}
   - {fileID: 886677734}
+  - {fileID: 448142781}
   - {fileID: 1968936702}
   - {fileID: 1468353371}
-  - {fileID: 448142781}
   scenarioButtons:
-  - {fileID: 448142783}
   - {fileID: 519097414}
   - {fileID: 886677736}
+  - {fileID: 448142783}
   - {fileID: 1968936704}
   - {fileID: 1468353373}
   delayBetWalk: 4
