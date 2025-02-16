@@ -215,7 +215,7 @@ public class Speech : MonoBehaviour
         }
 
         text = CleanSpecialCharacters(text);
-        
+
         Debug.Log($"Recognized text from user: {text}");
         await SaveAndReply(text);
     }
@@ -341,7 +341,7 @@ public class Speech : MonoBehaviour
                     {{ ""role"": ""system"", ""content"": ""{prompt}""}},
                     {{ ""role"": ""user"", ""content"": ""{userSpeech}""}}
                 ],
-                ""max_tokens"": 80
+                ""max_tokens"": 100
             }}";
 
             var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
@@ -364,7 +364,6 @@ public class Speech : MonoBehaviour
             else
             {
                 string errorDetails = await response.Content.ReadAsStringAsync();
-                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
                 if (errorDetails.Contains("content management policy"))
                 {
 
@@ -374,11 +373,36 @@ public class Speech : MonoBehaviour
                         ""intensity"":10
                                 }}";
                 }
+                else if (errorDetails.Contains("rate limit"))
+                {
+
+                    var match = Regex.Match(errorDetails, @"after (\d+) second");
+                    if (match.Success && int.TryParse(match.Groups[1].Value, out int waitSeconds))
+                    {
+                        await Task.Delay((waitSeconds + 1) * 1000);
+                        return await GetTamagotchiReplyFromOpenAI(userSpeech);
+                    }
+
+                }
+                else if (!errorDetails.Contains("reponse"))
+                {
+
+
+                    return $@"{{
+                        ""response"": ""Hey thats not very nice, dont say that"",
+                        ""feeling"": ""sad"",
+                        ""intensity"":40
+                                }}";
+                }
+                Debug.LogError($"Error: {response.StatusCode}, {errorDetails}");
+
                 return $@"{{
-                    ""response"": ""I'm sorry, I cant speak right now"",
-                    ""feeling"": ""Neutral"",
-                    ""intensity"": 5
-                }}";
+                        ""response"": ""I'm sorry, I cant speak right now"",
+                        ""feeling"": ""Neutral"",
+                        ""intensity"": 5
+                    }}";
+
+
                 //Debug.LogError($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
             }
         }
@@ -392,7 +416,7 @@ public class Speech : MonoBehaviour
         Task<string> aiResponseTask = GetTamagotchiReplyFromOpenAI(userInput);
         string quickReply = MemoryBasedResponse();
 
-        Task delayTask = Task.Delay(3600);
+        /*Task delayTask = Task.Delay(10000);
 
         Task firstCompleted = await Task.WhenAny(aiResponseTask, delayTask);
 
@@ -404,7 +428,8 @@ public class Speech : MonoBehaviour
         else
         {
             return quickReply;
-        }
+        }*/
+        return await aiResponseTask;
     }
 
     public async Task SpeakAsync(string textToSpeak, bool isQuestion = false, Action speechEvent = null)
