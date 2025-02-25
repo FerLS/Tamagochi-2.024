@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using TMPro;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class SaveSystem : MonoBehaviour
     private string filePath;
 
     public string selectedEmotion = "";
+    
+    public TMP_InputField initialComment;
 
     private void Awake()
     {
@@ -61,6 +64,12 @@ public class SaveSystem : MonoBehaviour
         combinedData.emotionDataList.Add(emotionData);
 
         SaveCombinedData(combinedData);
+    }
+
+    public void SaveInitialComment(){
+        if (!string.IsNullOrEmpty(initialComment.text)){
+            SaveRecordedFeeling(initialComment.text);
+        }
     }
 
     public void SaveRecordedFeeling(string feeling)
